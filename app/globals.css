@@ -4,41 +4,60 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Theme mapping: semantic tokens -> Tailwind namespaces. Raw values live on
+   :root / .dark. Never hardcode a color in here; always point at a raw var so
+   dark mode works. */
 @theme inline {
+  /* Typeface stacks. The --font-geist var comes from next/font in
+     app/layout.tsx, which owns the actual family name and fallbacks.
+     One family site-wide; hierarchy is carried by weight and tracking, so
+     --font-heading stays as a slot but resolves to the same face. */
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
-  --font-heading: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Brand accent. Deliberately NOT --accent: in shadcn, --accent is the
+     hover/active surface for menu items. Putting clay there would tint every
+     dropdown hover in the app. */
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Radius ramp derives from the single --radius scalar. Change only --radius.
+     components/ui/button.tsx references var(--radius-md) directly. */
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -48,83 +67,245 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-:root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+/* Static, theme-independent scales. Plain @theme (not inline) so these are
+   emitted as real CSS variables and can be referenced from raw CSS and the
+   styleguide. */
+@theme {
+  /* Fluid type scale, computed for a 375px -> 1440px viewport. Every step is
+     `rem + vw`, never pure vw, so browser zoom keeps working (WCAG 1.4.4). */
+
+  /* Each step bakes in its weight (Tailwind v4 --font-weight sub-key) so a
+     bare `text-display-1` is already bold and tight; an explicit font-*
+     utility on the element still wins. Tracking is tuned for Geist's tall
+     x-height at heavy weights. */
+
+  --text-display-1: clamp(2.75rem, 1.6056rem + 4.8826vw, 6rem); /* 44 -> 96 */
+  --text-display-1--line-height: 1;
+  --text-display-1--letter-spacing: -0.035em;
+  --text-display-1--font-weight: 700;
+
+  --text-display-2: clamp(2.125rem, 1.4648rem + 2.8169vw, 4rem); /* 34 -> 64 */
+  --text-display-2--line-height: 1.02;
+  --text-display-2--letter-spacing: -0.03em;
+  --text-display-2--font-weight: 700;
+
+  --text-h1: clamp(1.875rem, 1.3908rem + 2.0657vw, 3.25rem); /* 30 -> 52 */
+  --text-h1--line-height: 1.05;
+  --text-h1--letter-spacing: -0.025em;
+  --text-h1--font-weight: 650;
+
+  --text-h2: clamp(1.5625rem, 1.2324rem + 1.4085vw, 2.5rem); /* 25 -> 40 */
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.02em;
+  --text-h2--font-weight: 600;
+
+  --text-h3: clamp(1.3125rem, 1.1585rem + 0.6573vw, 1.75rem); /* 21 -> 28 */
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.015em;
+  --text-h3--font-weight: 600;
+
+  --text-lead: clamp(1.125rem, 1.059rem + 0.2817vw, 1.3125rem); /* 18 -> 21 */
+  --text-lead--line-height: 1.55;
+  --text-lead--letter-spacing: -0.005em;
+  --text-lead--font-weight: 400;
+
+  /* Fluid spacing rhythm. Tailwind's 4px --spacing base is kept for everything
+     small; these named steps own page gutters and section rhythm so no page
+     hand-writes them. */
+  --spacing-gutter: clamp(1.25rem, 0.2817rem + 4.1315vw, 4rem); /* 20 -> 64 */
+  --spacing-section-sm: clamp(3.5rem, 2.7958rem + 3.0047vw, 5.5rem); /* 56 -> 88 */
+  --spacing-section: clamp(5rem, 3.6796rem + 5.6338vw, 8.75rem); /* 80 -> 140 */
+  --spacing-section-lg: clamp(7rem, 5.0634rem + 8.2629vw, 12.5rem); /* 112 -> 200 */
+
+  /* Page shell width. Used by components/layout/container.tsx. */
+  --container-shell: 88rem;
+
+  /* Motion */
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
 }
 
+/* Light theme, "Mono / Blue": white / ink / neutral grey with one blue
+   accent. Greys share the Apple grey family (hue ~286, chroma <= 0.007) so
+   nothing reads warm. All values contrast-checked; ratios noted inline. */
+:root {
+  --radius: 0.75rem;
+
+  --background: oklch(1 0 0); /* white  #FFFFFF */
+  --foreground: oklch(0.2316 0.0038 286.1); /* ink  #1D1D1F  16.83:1 AAA */
+
+  /* Cards sit on white; differentiate with border, not surface. */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2316 0.0038 286.1);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2316 0.0038 286.1);
+
+  --primary: oklch(0.2316 0.0038 286.1); /* ink — the black pill */
+  --primary-foreground: oklch(1 0 0); /* white on ink  16.83:1 AAA */
+
+  --secondary: oklch(0.9707 0.0027 286.4); /* #F5F5F7  ink on it 15.46:1 */
+  --secondary-foreground: oklch(0.2316 0.0038 286.1);
+
+  --muted: oklch(0.9707 0.0027 286.4); /* #F5F5F7 */
+  --muted-foreground: oklch(0.5399 0.0077 286.1); /* #6E6E73  5.07:1 on white, 4.66:1 on muted AA */
+
+  /* Hover/active surface for menu items; one step darker than secondary so
+     it reads on white popovers. Stays neutral, never brand. */
+  --accent: oklch(0.9324 0.0067 286.3); /* #E8E8ED */
+  --accent-foreground: oklch(0.2316 0.0038 286.1);
+
+  --brand: oklch(0.5629 0.1933 256.2); /* blue #0071E3  4.70:1 on white AA */
+  --brand-foreground: oklch(1 0 0); /* white on blue  4.70:1 AA */
+
+  --destructive: oklch(0.577 0.245 27.325);
+
+  --border: oklch(0.8652 0.0068 286.3); /* #D2D2D7  decorative hairline */
+  --input: oklch(0.6217 0.0074 286.2); /* #86868B  3.62:1 (WCAG 1.4.11) */
+  --ring: oklch(0.5629 0.1933 256.2); /* blue */
+
+  /* Monochrome + blue ramp: blue / ink / mid grey / light blue / light grey. */
+  --chart-1: oklch(0.5629 0.1933 256.2); /* #0071E3 */
+  --chart-2: oklch(0.2316 0.0038 286.1); /* #1D1D1F */
+  --chart-3: oklch(0.6217 0.0074 286.2); /* #86868B */
+  --chart-4: oklch(0.7317 0.1255 252.8); /* #6CACF5 */
+  --chart-5: oklch(0.8652 0.0068 286.3); /* #D2D2D7 */
+
+  --sidebar: oklch(0.9707 0.0027 286.4);
+  --sidebar-foreground: oklch(0.2316 0.0038 286.1);
+  --sidebar-primary: oklch(0.2316 0.0038 286.1);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.9324 0.0067 286.3);
+  --sidebar-accent-foreground: oklch(0.2316 0.0038 286.1);
+  --sidebar-border: oklch(0.8652 0.0068 286.3);
+  --sidebar-ring: oklch(0.5629 0.1933 256.2);
+}
+
+/* Dark theme. Pure neutrals (chroma 0) — no warm cast anywhere. */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --background: oklch(0.1448 0 0); /* #0A0A0A */
+  --foreground: oklch(0.9707 0.0027 286.4); /* #F5F5F7  18.18:1 AAA */
+
+  --card: oklch(0.2046 0 0); /* #171717  fg on card 16.47:1 */
+  --card-foreground: oklch(0.9707 0.0027 286.4);
+  --popover: oklch(0.2046 0 0);
+  --popover-foreground: oklch(0.9707 0.0027 286.4);
+
+  --primary: oklch(0.9707 0.0027 286.4); /* white pill in dark */
+  --primary-foreground: oklch(0.2046 0 0); /* 16.47:1 AAA */
+
+  --secondary: oklch(0.2686 0 0); /* #262626 */
+  --secondary-foreground: oklch(0.9707 0.0027 286.4);
+
+  --muted: oklch(0.2393 0 0); /* #1F1F1F */
+  --muted-foreground: oklch(0.709 0 0); /* #A1A1A1  7.66:1 on bg, 6.94:1 on card AA */
+
+  --accent: oklch(0.2686 0 0);
+  --accent-foreground: oklch(0.9707 0.0027 286.4);
+
+  /* Dark-mode link blue. brand-foreground is deliberately near-black: one
+     mid blue cannot pass AA against both white and #0A0A0A, and white on
+     #2997FF is 3.02:1 (fails). Do not "fix" back to white. */
+  --brand: oklch(0.669 0.1808 251.8); /* #2997FF  6.57:1 on bg, 5.95:1 on card AA */
+  --brand-foreground: oklch(0.1448 0 0); /* near-black on blue  6.57:1 AA */
+
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+
+  --border: oklch(0.3012 0 0); /* #2E2E2E  decorative */
+  --input: oklch(0.5103 0 0); /* #666666  3.45:1 on bg (WCAG 1.4.11) */
+  --ring: oklch(0.669 0.1808 251.8);
+
+  /* blue / white / light grey / deep blue (graphics-only) / mid grey. */
+  --chart-1: oklch(0.669 0.1808 251.8); /* #2997FF */
+  --chart-2: oklch(0.9707 0.0027 286.4); /* #F5F5F7 */
+  --chart-3: oklch(0.709 0 0); /* #A1A1A1 */
+  --chart-4: oklch(0.4913 0.1712 257.5); /* #0A5CBF */
+  --chart-5: oklch(0.4386 0 0); /* #525252 */
+
+  --sidebar: oklch(0.2046 0 0);
+  --sidebar-foreground: oklch(0.9707 0.0027 286.4);
+  --sidebar-primary: oklch(0.9707 0.0027 286.4);
+  --sidebar-primary-foreground: oklch(0.2046 0 0);
+  --sidebar-accent: oklch(0.2686 0 0);
+  --sidebar-accent-foreground: oklch(0.9707 0.0027 286.4);
+  --sidebar-border: oklch(0.3012 0 0);
+  --sidebar-ring: oklch(0.669 0.1808 251.8);
+}
+
+/* Small uppercase tracked label, e.g. "001 / LOS FELIZ / 2025". A utility
+   rather than a --text-* step so it can carry weight and transform. */
+@utility text-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hairline rule matching the editorial direction. */
+@utility rule {
+  border: 0;
+  border-top: 1px solid var(--border);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
+
+  :root {
+    color-scheme: light;
   }
+
+  .dark {
+    color-scheme: dark;
+  }
+
   html {
     @apply font-sans;
+    /* Safari/iOS: clip rather than hidden, or a sticky header silently
+       stops sticking under any ancestor that clips the x axis. */
+    overflow-x: clip;
+    /* Native smooth anchor scrolling for touch devices. On desktop Lenis
+       takes over (html gets .lenis below); the reduced-motion guard forces
+       auto either way. */
+    scroll-behavior: smooth;
+  }
+
+  /* Lenis drives scrolling programmatically; CSS smooth would make every
+     scrollTo animate twice. Lenis puts this class on <html> while mounted. */
+  html.lenis {
+    scroll-behavior: auto;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    /* No italic face is loaded — block faux-oblique and faked weights. */
+    font-synthesis: none;
+  }
+
+  ::selection {
+    /* Blue/white in light; #2997FF/near-black in dark. Both AA. */
+    background-color: var(--brand);
+    color: var(--brand-foreground);
+  }
+
+  /* Geist has proper tabular figures; use them for anything that lines up
+     in a column. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Global reduced-motion guard. Anything animated anywhere respects this. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
