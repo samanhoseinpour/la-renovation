@@ -1,0 +1,174 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+
+import { ArrowLink } from "@/components/layout/arrow-link";
+import { Container } from "@/components/layout/container";
+import { Section } from "@/components/layout/section";
+import { ContactCta } from "@/components/sections/contact-cta";
+import { ProjectGallery } from "@/components/sections/project-gallery";
+import { getAllProjects, getProject } from "@/content/projects";
+import { getService } from "@/content/services";
+import { projectCta } from "@/content/studio";
+
+type Props = {
+  // params is a Promise in Next.js 16 — synchronous access was removed.
+  params: Promise<{ slug: string }>;
+};
+
+export function generateStaticParams() {
+  return getAllProjects().map((project) => ({ slug: project.slug }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const project = getProject(slug);
+
+  if (!project) return {};
+
+  return {
+    title: project.title,
+    description: project.summary,
+    alternates: { canonical: `/projects/${project.slug}` },
+    openGraph: {
+      title: project.title,
+      description: project.summary,
+      type: "article",
+    },
+  };
+}
+
+export default async function ProjectPage({ params }: Props) {
+  const { slug } = await params;
+  const project = getProject(slug);
+
+  if (!project) notFound();
+
+  const all = getAllProjects();
+  const index = all.findIndex((p) => p.slug === project.slug);
+  const next = all[(index + 1) % all.length];
+
+  return (
+    <>
+      <Section size="sm" className="border-b border-border">
+        <Container>
+          <p className="text-eyebrow text-muted-foreground">
+            {project.index} / {project.neighborhood} / {project.year}
+          </p>
+          <h1 className="mt-6 max-w-4xl text-display-2 text-balance">
+            {project.title}
+          </h1>
+          <p className="mt-8 max-w-xl text-lead text-muted-foreground">
+            {project.summary}
+          </p>
+        </Container>
+      </Section>
+
+      <Section size="default">
+        <Container>
+          <div className="relative aspect-16/9 w-full overflow-hidden rounded-3xl bg-secondary">
+            <Image
+              src={project.image.src}
+              alt={project.image.alt}
+              fill
+              loading="eager"
+              fetchPriority="high"
+              sizes="100vw"
+              className="object-cover"
+            />
+          </div>
+
+          <div className="mt-20 grid gap-16 lg:grid-cols-12">
+            <div className="lg:col-span-7">
+              <div className="space-y-6">
+                {project.body.map((paragraph) => (
+                  <p key={paragraph.slice(0, 32)} className="text-lead">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            </div>
+
+            <aside className="lg:col-span-4 lg:col-start-9">
+              <h2 className="text-eyebrow text-muted-foreground">Project</h2>
+              <dl className="mt-6 border-t border-border">
+                {project.facts.map((fact) => (
+                  <div
+                    key={fact.label}
+                    className="flex justify-between gap-6 border-b border-border py-4"
+                  >
+                    <dt className="text-sm text-muted-foreground">
+                      {fact.label}
+                    </dt>
+                    <dd className="text-sm tabular text-right">{fact.value}</dd>
+                  </div>
+                ))}
+              </dl>
+
+              <h2 className="mt-12 text-eyebrow text-muted-foreground">
+                Services
+              </h2>
+              <ul className="mt-5 space-y-3">
+                {project.services.map((serviceSlug) => {
+                  const service = getService(serviceSlug);
+                  if (!service) return null;
+                  return (
+                    <li key={serviceSlug}>
+                      <Link
+                        href={`/services/${service.slug}`}
+                        className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                      >
+                        {service.title}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </aside>
+          </div>
+        </Container>
+      </Section>
+
+      <Section size="sm">
+        <Container>
+          <ProjectGallery images={project.gallery} />
+        </Container>
+      </Section>
+
+      <Section size="sm" className="border-t border-border">
+        <Container>
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-eyebrow text-muted-foreground">Next project</p>
+              <p className="mt-4 text-h2">{next.title}</p>
+            </div>
+            <div className="flex items-end gap-6">
+              <Link
+                href={`/projects/${next.slug}`}
+                tabIndex={-1}
+                aria-hidden
+                className="w-40 shrink-0"
+              >
+                <div className="relative aspect-4/3 overflow-hidden rounded-2xl bg-secondary">
+                  <Image
+                    src={next.image.src}
+                    alt=""
+                    fill
+                    sizes="160px"
+                    className="object-cover"
+                  />
+                </div>
+              </Link>
+              <ArrowLink href={`/projects/${next.slug}`}>
+                {next.neighborhood}
+              </ArrowLink>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      <ContactCta copy={projectCta(project.neighborhood)} />
+    </>
+  );
+}
