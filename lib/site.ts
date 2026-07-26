@@ -1,6 +1,10 @@
+export type NavPanelKey = "projects" | "services";
+
 export type NavItem = {
   label: string;
   href: string;
+  /** Opens a mega-menu panel on desktop and an accordion section on mobile. */
+  panel?: NavPanelKey;
 };
 
 /**
@@ -38,8 +42,8 @@ export const site = {
   ],
 
   nav: [
-    { label: "Projects", href: "/projects" },
-    { label: "Services", href: "/services" },
+    { label: "Projects", href: "/projects", panel: "projects" },
+    { label: "Services", href: "/services", panel: "services" },
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
   ] satisfies NavItem[],

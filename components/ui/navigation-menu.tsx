@@ -2,27 +2,23 @@ import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/naviga
 import { cva } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
-import { ChevronDownIcon } from "lucide-react"
 
+/**
+ * Rethemed from the stock base-nova navigation menu for the full-bleed mega
+ * menu: eyebrow triggers without a chevron, a hairline edge-to-edge popup
+ * instead of the floating card, and granular part exports (sheet.tsx style) so
+ * the site composition controls the Portal/Backdrop/Positioner assembly.
+ */
 function NavigationMenu({
-  align = "start",
   className,
-  children,
   ...props
-}: NavigationMenuPrimitive.Root.Props &
-  Pick<NavigationMenuPrimitive.Positioner.Props, "align">) {
+}: NavigationMenuPrimitive.Root.Props) {
   return (
     <NavigationMenuPrimitive.Root
       data-slot="navigation-menu"
-      className={cn(
-        "group/navigation-menu relative flex max-w-max flex-1 items-center justify-center",
-        className
-      )}
+      className={cn("relative flex max-w-max items-center", className)}
       {...props}
-    >
-      {children}
-      <NavigationMenuPositioner align={align} />
-    </NavigationMenuPrimitive.Root>
+    />
   )
 }
 
@@ -33,10 +29,7 @@ function NavigationMenuList({
   return (
     <NavigationMenuPrimitive.List
       data-slot="navigation-menu-list"
-      className={cn(
-        "group flex flex-1 list-none items-center justify-center gap-0",
-        className
-      )}
+      className={cn("flex list-none items-center", className)}
       {...props}
     />
   )
@@ -49,30 +42,28 @@ function NavigationMenuItem({
   return (
     <NavigationMenuPrimitive.Item
       data-slot="navigation-menu-item"
-      className={cn("relative", className)}
+      className={cn("relative flex", className)}
       {...props}
     />
   )
 }
 
+// Shared by triggers and the plain links beside them (About, Contact) so the
+// whole row keeps the eyebrow voice of the retired SiteNav.
 const navigationMenuTriggerStyle = cva(
-  "group/navigation-menu-trigger inline-flex h-9 w-max items-center justify-center rounded-lg px-2.5 py-1.5 text-sm font-medium transition-all outline-none hover:bg-muted focus:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-popup-open:bg-muted/50 data-popup-open:hover:bg-muted data-open:bg-muted/50 data-open:hover:bg-muted data-open:focus:bg-muted"
+  "text-eyebrow inline-flex select-none items-center rounded-sm text-muted-foreground transition-colors duration-200 ease-editorial outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 data-popup-open:text-foreground"
 )
 
 function NavigationMenuTrigger({
   className,
-  children,
   ...props
 }: NavigationMenuPrimitive.Trigger.Props) {
   return (
     <NavigationMenuPrimitive.Trigger
       data-slot="navigation-menu-trigger"
-      className={cn(navigationMenuTriggerStyle(), "group", className)}
+      className={cn(navigationMenuTriggerStyle(), className)}
       {...props}
-    >
-      {children}{" "}
-      <ChevronDownIcon className="relative top-px ml-1 size-3 transition duration-300 group-data-popup-open/navigation-menu-trigger:rotate-180 group-data-open/navigation-menu-trigger:rotate-180" aria-hidden="true" />
-    </NavigationMenuPrimitive.Trigger>
+    />
   )
 }
 
@@ -84,7 +75,29 @@ function NavigationMenuContent({
     <NavigationMenuPrimitive.Content
       data-slot="navigation-menu-content"
       className={cn(
-        "data-ending-style:data-activation-direction=left:translate-x-[50%] data-ending-style:data-activation-direction=right:translate-x-[-50%] data-starting-style:data-activation-direction=left:translate-x-[-50%] data-starting-style:data-activation-direction=right:translate-x-[50%] h-full w-auto p-1 transition-[opacity,transform,translate] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] group-data-[viewport=false]/navigation-menu:rounded-lg group-data-[viewport=false]/navigation-menu:bg-popover group-data-[viewport=false]/navigation-menu:text-popover-foreground group-data-[viewport=false]/navigation-menu:shadow group-data-[viewport=false]/navigation-menu:ring-1 group-data-[viewport=false]/navigation-menu:ring-foreground/10 group-data-[viewport=false]/navigation-menu:duration-300 data-ending-style:opacity-0 data-starting-style:opacity-0 data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 data-[motion^=from-]:animate-in data-[motion^=from-]:fade-in data-[motion^=to-]:animate-out data-[motion^=to-]:fade-out **:data-[slot=navigation-menu-link]:focus:ring-0 **:data-[slot=navigation-menu-link]:focus:outline-none group-data-[viewport=false]/navigation-menu:data-open:animate-in group-data-[viewport=false]/navigation-menu:data-open:fade-in-0 group-data-[viewport=false]/navigation-menu:data-open:zoom-in-95 group-data-[viewport=false]/navigation-menu:data-closed:animate-out group-data-[viewport=false]/navigation-menu:data-closed:fade-out-0 group-data-[viewport=false]/navigation-menu:data-closed:zoom-out-95",
+        "h-full transition-[opacity,translate] duration-[350ms] ease-editorial data-starting-style:opacity-0 data-ending-style:opacity-0 data-starting-style:data-[activation-direction=left]:-translate-x-6 data-starting-style:data-[activation-direction=right]:translate-x-6 data-ending-style:data-[activation-direction=left]:translate-x-6 data-ending-style:data-[activation-direction=right]:-translate-x-6",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+function NavigationMenuPortal({ ...props }: NavigationMenuPrimitive.Portal.Props) {
+  return <NavigationMenuPrimitive.Portal data-slot="navigation-menu-portal" {...props} />
+}
+
+function NavigationMenuBackdrop({
+  className,
+  ...props
+}: NavigationMenuPrimitive.Backdrop.Props) {
+  return (
+    <NavigationMenuPrimitive.Backdrop
+      data-slot="navigation-menu-backdrop"
+      // Purely visual: dismissal is document-level in Base UI, so the scrim
+      // never intercepts — the user can interact with the page through it.
+      className={cn(
+        "pointer-events-none fixed inset-0 z-30 bg-black/10 transition-opacity duration-[350ms] ease-editorial data-starting-style:opacity-0 data-ending-style:opacity-0 data-ending-style:duration-150 supports-backdrop-filter:backdrop-blur-xs",
         className
       )}
       {...props}
@@ -94,30 +107,50 @@ function NavigationMenuContent({
 
 function NavigationMenuPositioner({
   className,
-  side = "bottom",
-  sideOffset = 8,
-  align = "start",
-  alignOffset = 0,
   ...props
 }: NavigationMenuPrimitive.Positioner.Props) {
   return (
-    <NavigationMenuPrimitive.Portal>
-      <NavigationMenuPrimitive.Positioner
-        side={side}
-        sideOffset={sideOffset}
-        align={align}
-        alignOffset={alignOffset}
-        className={cn(
-          "isolate z-50 h-(--positioner-height) w-(--positioner-width) max-w-(--available-width) transition-[top,left,right,bottom] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] data-instant:transition-none data-[side=bottom]:before:top-[-10px] data-[side=bottom]:before:right-0 data-[side=bottom]:before:left-0",
-          className
-        )}
-        {...props}
-      >
-        <NavigationMenuPrimitive.Popup className="data-[ending-style]:easing-[ease] xs:w-(--popup-width) relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-lg bg-popover text-popover-foreground shadow ring-1 ring-foreground/10 transition-[opacity,transform,width,height,scale,translate] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] outline-none data-ending-style:scale-90 data-ending-style:opacity-0 data-ending-style:duration-150 data-starting-style:scale-90 data-starting-style:opacity-0">
-          <NavigationMenuPrimitive.Viewport className="relative size-full overflow-hidden" />
-        </NavigationMenuPrimitive.Popup>
-      </NavigationMenuPrimitive.Positioner>
-    </NavigationMenuPrimitive.Portal>
+    <NavigationMenuPrimitive.Positioner
+      data-slot="navigation-menu-positioner"
+      className={cn(
+        "isolate z-40 h-(--positioner-height) w-(--positioner-width) max-w-(--available-width) transition-[top,left,right,bottom] duration-[350ms] ease-editorial data-instant:transition-none",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+function NavigationMenuPopup({
+  className,
+  ...props
+}: NavigationMenuPrimitive.Popup.Props) {
+  return (
+    <NavigationMenuPrimitive.Popup
+      data-slot="navigation-menu-popup"
+      // Guards short viewports; Lenis must not hijack the panel's own scroll.
+      data-lenis-prevent=""
+      // bg-background (not popover): in dark mode the panel must read as an
+      // extension of the header surface, separated by the hairline alone.
+      className={cn(
+        "relative h-(--popup-height) max-h-(--available-height) w-(--popup-width) overflow-y-auto border-b border-border bg-background text-foreground transition-[opacity,translate,width,height] duration-[350ms] ease-editorial outline-none data-starting-style:-translate-y-2 data-starting-style:opacity-0 data-ending-style:opacity-0 data-ending-style:duration-150 data-ending-style:ease-exit",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+function NavigationMenuViewport({
+  className,
+  ...props
+}: React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.Viewport>) {
+  return (
+    <NavigationMenuPrimitive.Viewport
+      data-slot="navigation-menu-viewport"
+      className={cn("relative size-full overflow-hidden", className)}
+      {...props}
+    />
   )
 }
 
@@ -129,7 +162,7 @@ function NavigationMenuLink({
     <NavigationMenuPrimitive.Link
       data-slot="navigation-menu-link"
       className={cn(
-        "flex items-center gap-2 rounded-lg p-2 text-sm transition-all outline-none hover:bg-muted focus:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1 in-data-[slot=navigation-menu-content]:rounded-md data-active:bg-muted/50 data-active:hover:bg-muted data-active:focus:bg-muted [&_svg:not([class*='size-'])]:size-4",
+        "rounded-sm transition-colors duration-200 ease-editorial outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
         className
       )}
       {...props}
@@ -137,32 +170,17 @@ function NavigationMenuLink({
   )
 }
 
-function NavigationMenuIndicator({
-  className,
-  ...props
-}: React.ComponentPropsWithRef<typeof NavigationMenuPrimitive.Icon>) {
-  return (
-    <NavigationMenuPrimitive.Icon
-      data-slot="navigation-menu-indicator"
-      className={cn(
-        "top-full z-1 flex h-1.5 items-end justify-center overflow-hidden data-[state=hidden]:animate-out data-[state=hidden]:fade-out data-[state=visible]:animate-in data-[state=visible]:fade-in",
-        className
-      )}
-      {...props}
-    >
-      <div className="relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-border shadow-md" />
-    </NavigationMenuPrimitive.Icon>
-  )
-}
-
 export {
   NavigationMenu,
+  NavigationMenuBackdrop,
   NavigationMenuContent,
-  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
+  NavigationMenuPopup,
+  NavigationMenuPortal,
+  NavigationMenuPositioner,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-  NavigationMenuPositioner,
+  NavigationMenuViewport,
 }

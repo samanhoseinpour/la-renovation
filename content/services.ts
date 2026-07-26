@@ -14,6 +14,8 @@ export type Service = {
   duration: string;
   /** Indicative range — deliberately vague until real numbers are agreed. */
   startingAt: string;
+  /** Compact form of `startingAt` for tight meta rows like the nav panel. */
+  startingAtShort: string;
   /** Portrait card photograph. Temporary Unsplash stand-in. */
   image: SiteImage;
   /** One image per body paragraph on the detail page (three each). */
@@ -42,6 +44,7 @@ export const services: Service[] = [
     ],
     duration: "9–16 months",
     startingAt: "Projects from $450k",
+    startingAtShort: "From $450k",
     image: {
       src: unsplash("photo-1704742950992-9815a104820c"),
       alt: "Interior room under construction with exposed wooden stud framing",
@@ -82,6 +85,7 @@ export const services: Service[] = [
     ],
     duration: "3–6 months",
     startingAt: "Projects from $120k",
+    startingAtShort: "From $120k",
     image: {
       src: unsplash("photo-1765371515325-b6611765dfad"),
       alt: "Modern wooden kitchen with a marble backsplash",
@@ -122,6 +126,7 @@ export const services: Service[] = [
     ],
     duration: "8–14 months",
     startingAt: "Projects from $280k",
+    startingAtShort: "From $280k",
     image: {
       src: unsplash("photo-1635356200963-544fbe261517"),
       alt: "Minimal concrete building volume with a tree behind it",
@@ -162,6 +167,7 @@ export const services: Service[] = [
     ],
     duration: "12–20 months",
     startingAt: "Projects from $500k",
+    startingAtShort: "From $500k",
     image: {
       src: unsplash("photo-1776538229240-a4a83d29713e"),
       alt: "Ornate trim and painted detailing on a historic house",
