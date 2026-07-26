@@ -34,8 +34,4 @@ export const siteImages = {
       alt: "A Silver Lake backstreet under a late Los Angeles sunset",
     },
   ],
-  contact: {
-    src: unsplash("photo-1780523893199-8f0fdab83909"),
-    alt: "Vase with green branches on a quiet desk beside a bright window",
-  },
 } satisfies Record<string, SiteImage | SiteImage[]>;

@@ -156,6 +156,24 @@ export const contactSteps: ProcessPhase[] = [
 ];
 
 /**
+ * Budget options on the contact form. The bands bracket the published
+ * service starting prices, so an answer maps straight onto likely scope.
+ */
+export const budgetBands = [
+  "Under $150k",
+  "$150k – $300k",
+  "$300k – $500k",
+  "$500k and up",
+  "Not sure yet",
+] as const;
+
+/**
+ * Trailing project-type option for visitors who can't map their plans onto a
+ * named service. The string lands verbatim in the delivered enquiry email.
+ */
+export const projectTypeFallback = "Not sure yet";
+
+/**
  * One CTA panel component, different copy per page. The same sentence on
  * six pages reads like a template; these don't.
  */
