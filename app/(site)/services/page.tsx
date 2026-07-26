@@ -7,7 +7,7 @@ import { ContactCta } from "@/components/sections/contact-cta";
 import { FaqList } from "@/components/sections/faq-list";
 import { PageHeader } from "@/components/sections/page-header";
 import { ProcessTimeline } from "@/components/sections/process-timeline";
-import { ServiceCards } from "@/components/sections/service-cards";
+import { ServicePanorama } from "@/components/sections/service-panorama";
 import { getAllServices } from "@/content/services";
 import { ctaVariants, faqs, processPhases } from "@/content/studio";
 
@@ -29,11 +29,7 @@ export default function ServicesPage() {
 
       <Section>
         <Container>
-          <ServiceCards
-            services={getAllServices()}
-            showMeta
-            className="lg:grid-cols-4"
-          />
+          <ServicePanorama services={getAllServices()} />
         </Container>
       </Section>
 

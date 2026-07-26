@@ -14,12 +14,9 @@ import { cn } from "@/lib/utils";
  */
 export function ServiceCards({
   services,
-  showMeta = false,
   className,
 }: {
   services: Service[];
-  /** /services adds duration + indicative range under each card. */
-  showMeta?: boolean;
   className?: string;
 }) {
   return (
@@ -46,16 +43,6 @@ export function ServiceCards({
               <ArrowUpRight className="size-6 shrink-0 text-white transition-transform duration-300 ease-editorial group-hover/service:translate-x-0.5 group-hover/service:-translate-y-0.5" />
             </div>
           </div>
-          {showMeta && (
-            <div className="mt-4 flex items-baseline justify-between gap-4">
-              <p className="text-sm text-muted-foreground">
-                {service.duration}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                {service.startingAt}
-              </p>
-            </div>
-          )}
         </Link>
       ))}
     </div>
