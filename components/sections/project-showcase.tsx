@@ -12,14 +12,7 @@ import type { Project } from "@/content/projects";
  * and the bare <img> with next/image. Rows alternate sides so a long index
  * doesn't read as a table.
  */
-export function ProjectShowcase({
-  projects,
-  showFacts = false,
-}: {
-  projects: Project[];
-  /** Index page adds area + scope under the summary. */
-  showFacts?: boolean;
-}) {
+export function ProjectShowcase({ projects }: { projects: Project[] }) {
   return (
     <div className="space-y-20 md:space-y-28">
       {projects.map((project, i) => (
@@ -37,14 +30,14 @@ export function ProjectShowcase({
               <p className="mt-4 max-w-sm text-muted-foreground">
                 {project.summary}
               </p>
-              {showFacts && (
-                <p className="mt-4 text-sm text-muted-foreground">
-                  {project.scope} · {project.squareFeet.toLocaleString("en-US")}{" "}
-                  sq ft
-                </p>
-              )}
               <div className="mt-8">
-                <ArrowLink href={`/projects/${project.slug}`}>
+                {/* Hidden from AT: the image link below is the exposed one —
+                    the biggest tap target should be the accessible target. */}
+                <ArrowLink
+                  href={`/projects/${project.slug}`}
+                  aria-hidden
+                  tabIndex={-1}
+                >
                   View project
                 </ArrowLink>
               </div>
@@ -52,8 +45,7 @@ export function ProjectShowcase({
 
             <Link
               href={`/projects/${project.slug}`}
-              tabIndex={-1}
-              aria-hidden
+              aria-label={`View project: ${project.title}`}
               className={
                 i % 2 === 0
                   ? "group/media order-1 lg:order-2 lg:col-span-8"

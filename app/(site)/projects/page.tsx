@@ -4,7 +4,7 @@ import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { ContactCta } from "@/components/sections/contact-cta";
 import { PageHeader } from "@/components/sections/page-header";
-import { ProjectShowcase } from "@/components/sections/project-showcase";
+import { ProjectIndex } from "@/components/sections/project-index";
 import { getAllProjects } from "@/content/projects";
 import { ctaVariants } from "@/content/studio";
 
@@ -28,7 +28,7 @@ export default function ProjectsPage() {
 
       <Section size="default">
         <Container>
-          <ProjectShowcase projects={projects} showFacts />
+          <ProjectIndex projects={projects} />
         </Container>
       </Section>
 
