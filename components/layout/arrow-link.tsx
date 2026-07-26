@@ -27,7 +27,9 @@ export function ArrowLink({
     <Link
       href={href}
       className={cn(
-        "group/arrow inline-flex items-center gap-3 text-sm font-medium",
+        // -my cancels the padding in layout; the padding still counts toward
+        // the hit box, so the target clears 44px without shifting anything.
+        "group/arrow -my-2 inline-flex items-center gap-3 py-2 text-sm font-medium",
         "rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
         className,
       )}

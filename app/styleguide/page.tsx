@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 
 import { ArrowLink } from "@/components/layout/arrow-link";
@@ -99,9 +100,9 @@ const CHARTS = [
 
 const SPACING = [
   { cls: "w-gutter", name: "gutter", range: "20 → 64px" },
-  { cls: "w-section-sm", name: "section-sm", range: "56 → 88px" },
-  { cls: "w-section", name: "section", range: "80 → 140px" },
-  { cls: "w-section-lg", name: "section-lg", range: "112 → 200px" },
+  { cls: "w-section-sm", name: "section-sm", range: "48 → 72px" },
+  { cls: "w-section", name: "section", range: "64 → 104px" },
+  { cls: "w-section-lg", name: "section-lg", range: "80 → 128px" },
 ];
 
 const RADII = [
@@ -125,6 +126,8 @@ const VARIANTS = [
 ] as const;
 
 const SIZES = ["xs", "sm", "default", "lg", "xl"] as const;
+
+const ICON_SIZES = ["icon-xs", "icon-sm", "icon", "icon-lg", "icon-xl"] as const;
 
 function Block({
   title,
@@ -309,7 +312,31 @@ export default function StyleguidePage() {
               </div>
             </div>
           ))}
+          <div>
+            <p className="mb-4 text-xs text-muted-foreground">
+              icon sizes (ghost) — icon-sm is what ships in the header
+            </p>
+            <div className="flex flex-wrap items-center gap-4">
+              {ICON_SIZES.map((size) => (
+                <Button
+                  key={size}
+                  variant="ghost"
+                  size={size}
+                  aria-label={size}
+                >
+                  <ArrowRight />
+                </Button>
+              ))}
+            </div>
+          </div>
         </div>
+        <p className="mt-10 max-w-xl text-sm text-muted-foreground">
+          The default, brand and outline pills carry an ink-tinted shadow-xs;
+          default and brand step up to shadow-sm on hover. Hovers deepen the
+          fill with an opaque color-mix — never an opacity fade, which would
+          lighten the pill and cost contrast. On coarse pointers every shipped
+          size clears a 44px touch target.
+        </p>
       </Block>
 
       <Block title="Arrow link">
