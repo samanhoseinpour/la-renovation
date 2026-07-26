@@ -22,6 +22,8 @@ export function SmoothScroll() {
       if (mq.matches && !lenis) {
         lenis = new Lenis({
           autoRaf: true,
+          // A touch under the 0.1 default: longer glide without input lag.
+          lerp: 0.08,
           // Handle anchor clicks internally, clearing the h-16 sticky header.
           anchors: { offset: -64 },
         });

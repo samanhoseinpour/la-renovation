@@ -10,7 +10,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // `satisfies` keeps changeFrequency as its literal type; a bare array literal
   // would widen it to `string` and fail the MetadataRoute.Sitemap contract.
   const staticPages = [
-    { url: site.url, changeFrequency: "monthly", priority: 1 },
+    // Trailing slash: metadataBase + `canonical: "/"` resolves the home page to
+    // `${site.url}/`, and the sitemap has to name the same URL as the canonical.
+    { url: `${site.url}/`, changeFrequency: "monthly", priority: 1 },
     { url: `${site.url}/projects`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${site.url}/services`, changeFrequency: "yearly", priority: 0.8 },
     { url: `${site.url}/about`, changeFrequency: "yearly", priority: 0.6 },

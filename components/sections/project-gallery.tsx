@@ -24,7 +24,7 @@ export function ProjectGallery({ images }: ProjectGalleryProps) {
 
         return (
           <Reveal
-            key={image.src}
+            key={i}
             className={fullWidth ? "lg:col-span-2" : undefined}
           >
             <div className="relative aspect-4/3 overflow-hidden rounded-2xl bg-secondary">

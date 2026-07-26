@@ -1,6 +1,6 @@
 "use client";
 
-import { m } from "motion/react";
+import { m, type Transition } from "motion/react";
 
 import { cn } from "@/lib/utils";
 
@@ -31,6 +31,15 @@ export function Reveal({
 }: RevealProps) {
   const visible = { opacity: 1, y: 0 };
 
+  // Duration and ease are spelled out because motion replaces (not merges)
+  // the MotionConfig default the moment a transition prop exists; passing
+  // `{ delay }` alone silently reverts to the library's 0.3s spring.
+  const transition: Transition = {
+    delay,
+    duration: 0.6,
+    ease: [0.22, 1, 0.36, 1],
+  };
+
   return (
     <m.div
       data-reveal
@@ -42,7 +51,7 @@ export function Reveal({
             whileInView: visible,
             viewport: { once: true, amount: 0.2, margin: "0px 0px -10% 0px" },
           })}
-      transition={{ delay }}
+      transition={transition}
     >
       {children}
     </m.div>

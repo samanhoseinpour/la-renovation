@@ -75,7 +75,9 @@ export default function AboutPage() {
         heading="Founded to build what we draw."
       />
 
-      <Section size="default" surface="muted">
+      {/* Default surface: StudioStats above is already muted, and two muted
+          sections back to back read as one giant grey slab. */}
+      <Section size="default">
         <Container>
           <h2 className="text-eyebrow text-muted-foreground">How we work</h2>
           <div className="mt-14 grid gap-x-8 gap-y-12 sm:grid-cols-2">

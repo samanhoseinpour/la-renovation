@@ -82,8 +82,11 @@ export default async function ProjectPage({ params }: Props) {
           <div className="mt-20 grid gap-16 lg:grid-cols-12">
             <div className="lg:col-span-7">
               <div className="space-y-6">
-                {project.body.map((paragraph) => (
-                  <p key={paragraph.slice(0, 32)} className="text-lead">
+                {/* Index keys: the list is static content and never reorders,
+                    and a content prefix collides the moment two paragraphs
+                    open the same way. */}
+                {project.body.map((paragraph, i) => (
+                  <p key={i} className="text-lead">
                     {paragraph}
                   </p>
                 ))}
@@ -130,25 +133,25 @@ export default async function ProjectPage({ params }: Props) {
         </Container>
       </Section>
 
+      {/* Gallery and next-project share one Section: as separate sections
+          their paddings stacked into a dead band twice the intended rhythm. */}
       <Section size="sm">
         <Container>
           <ProjectGallery images={project.gallery} />
-        </Container>
-      </Section>
 
-      <Section size="sm" className="border-t border-border">
-        <Container>
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-            <div>
+          <div className="mt-16 flex flex-col gap-6 border-t border-border pt-10 sm:flex-row sm:items-end sm:justify-between">
+            <div className="min-w-0">
               <p className="text-eyebrow text-muted-foreground">Next project</p>
               <p className="mt-4 text-h2">{next.title}</p>
             </div>
             <div className="flex items-end gap-6">
+              {/* Decorative duplicate of the ArrowLink target; md+ only —
+                  between 640-900px the fixed thumb collided with the title. */}
               <Link
                 href={`/projects/${next.slug}`}
                 tabIndex={-1}
                 aria-hidden
-                className="w-40 shrink-0"
+                className="hidden w-40 shrink-0 md:block"
               >
                 <div className="relative aspect-4/3 overflow-hidden rounded-2xl bg-secondary">
                   <Image

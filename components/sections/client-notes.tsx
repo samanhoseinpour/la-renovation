@@ -20,8 +20,8 @@ export function ClientNotes({
         <h2 className="text-eyebrow text-muted-foreground">Client notes</h2>
 
         <div className="mt-14">
-          {testimonials.map((testimonial) => (
-            <Reveal key={testimonial.attribution}>
+          {testimonials.map((testimonial, i) => (
+            <Reveal key={i}>
               <figure className="flex flex-col gap-6 border-t border-border py-10 md:flex-row md:items-baseline md:justify-between md:gap-16 md:py-14">
                 <blockquote className="max-w-3xl text-h3">
                   &ldquo;{testimonial.quote}&rdquo;
