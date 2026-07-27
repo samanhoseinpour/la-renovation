@@ -3,6 +3,7 @@ import { BackToTop } from "@/components/site/back-to-top";
 import { ScrollProgress } from "@/components/site/scroll-progress";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
+import { SkipLink } from "@/components/site/skip-link";
 import { getNavPanels } from "@/content/nav";
 
 // Nothing here reads a dynamic API, so every route under this layout prerenders
@@ -18,13 +19,15 @@ export default function SiteLayout({
 }) {
   return (
     <>
+      <SkipLink />
       {/* Marketing pages only — /styleguide keeps native scroll on purpose. */}
       <SmoothScroll />
       <ScrollProgress />
       <SiteHeader panels={getNavPanels()} />
-      {/* id + tabIndex make main the back-to-top focus target; scroll-mt-16
-          keeps the 64px header contract on native-scroll paths; plain
-          outline-none so the programmatic focus never rings the whole page. */}
+      {/* id + tabIndex make main the skip-link / back-to-top focus target;
+          scroll-mt-16 keeps the 64px header contract on native-scroll paths;
+          plain outline-none (not focus-visible:) so neither the keyboard jump
+          nor the back-to-top's programmatic focus rings the whole page. */}
       <main id="main" tabIndex={-1} className="flex-1 scroll-mt-16 outline-none">
         {children}
       </main>

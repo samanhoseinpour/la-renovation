@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Archivo } from "next/font/google";
 
 import { MotionProvider } from "@/components/motion/motion-provider";
+import { ThemeColorSync } from "@/components/site/theme-color-sync";
 import { ThemeProvider } from "@/components/site/theme-provider";
 import { site } from "@/lib/site";
 
@@ -43,6 +44,8 @@ export const metadata: Metadata = {
 // `metadata` since Next.js 14. A single value, not a prefers-color-scheme
 // pair: the site defaults to light regardless of OS setting, so OS-dark
 // visitors must not get dark browser chrome over a light-first paper chrome.
+// This is only the SSR / no-JS value — after hydration ThemeColorSync keeps
+// the meta on whatever theme the header toggle has set.
 export const viewport: Viewport = {
   themeColor: "#F3F3F1",
 };
@@ -76,6 +79,7 @@ export default function RootLayout({
           defaultTheme="light"
           disableTransitionOnChange
         >
+          <ThemeColorSync />
           <MotionProvider>{children}</MotionProvider>
         </ThemeProvider>
       </body>
