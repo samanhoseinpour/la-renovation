@@ -11,6 +11,16 @@ import "lenis/dist/lenis.css";
 const QUERY =
   "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)";
 
+// Single-instance store so site chrome (back-to-top) can drive the active
+// Lenis without owning its lifecycle. Null whenever the media-query gate has
+// destroyed the instance — callers fall back to native scrolling. A non-null
+// return also means reduced motion is off: the query requires no-preference.
+let activeLenis: Lenis | null = null;
+
+export function getLenis(): Lenis | null {
+  return activeLenis;
+}
+
 export function SmoothScroll() {
   useEffect(() => {
     const mq = window.matchMedia(QUERY);
@@ -27,9 +37,11 @@ export function SmoothScroll() {
           // Handle anchor clicks internally, clearing the h-16 sticky header.
           anchors: { offset: -64 },
         });
+        activeLenis = lenis;
       } else if (!mq.matches && lenis) {
         lenis.destroy();
         lenis = undefined;
+        activeLenis = null;
       }
     };
 
@@ -38,6 +50,7 @@ export function SmoothScroll() {
     return () => {
       mq.removeEventListener("change", sync);
       lenis?.destroy();
+      activeLenis = null;
     };
   }, []);
 

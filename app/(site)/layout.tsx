@@ -1,4 +1,6 @@
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
+import { BackToTop } from "@/components/site/back-to-top";
+import { ScrollProgress } from "@/components/site/scroll-progress";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
 import { getNavPanels } from "@/content/nav";
@@ -18,9 +20,16 @@ export default function SiteLayout({
     <>
       {/* Marketing pages only — /styleguide keeps native scroll on purpose. */}
       <SmoothScroll />
+      <ScrollProgress />
       <SiteHeader panels={getNavPanels()} />
-      <main className="flex-1">{children}</main>
+      {/* id + tabIndex make main the back-to-top focus target; scroll-mt-16
+          keeps the 64px header contract on native-scroll paths; plain
+          outline-none so the programmatic focus never rings the whole page. */}
+      <main id="main" tabIndex={-1} className="flex-1 scroll-mt-16 outline-none">
+        {children}
+      </main>
       <SiteFooter />
+      <BackToTop />
     </>
   );
 }

@@ -261,6 +261,17 @@
     scroll-behavior: auto;
   }
 
+  /* Token-driven scrollbar. --input is the 3:1 non-text stroke in both
+     themes (--border, a hairline, all but disappears as a thumb); the track
+     stays transparent so the page surface shows through. Inherits into the
+     nav-panel and sheet scrollers on purpose — --input clears 3:1 on popover
+     surfaces too. No `scrollbar-width: thin`: the root bar is a primary grab
+     target. color-scheme above keeps the corner and unstyled scrollers on
+     theme. */
+  html {
+    scrollbar-color: var(--input) transparent;
+  }
+
   body {
     @apply bg-background text-foreground font-sans;
     /* No italic face is loaded — block faux-oblique and faked weights. */
