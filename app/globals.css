@@ -8,12 +8,12 @@
    :root / .dark. Never hardcode a color in here; always point at a raw var so
    dark mode works. */
 @theme inline {
-  /* Typeface stacks. The --font-geist var comes from next/font in
+  /* Typeface stacks. The --font-archivo var comes from next/font in
      app/layout.tsx, which owns the actual family name and fallbacks.
      One family site-wide; hierarchy is carried by weight and tracking, so
      --font-heading stays as a slot but resolves to the same face. */
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
   --color-background: var(--background);
@@ -81,8 +81,8 @@
 
   /* Each step bakes in its weight (Tailwind v4 --font-weight sub-key) so a
      bare `text-display-1` is already bold and tight; an explicit font-*
-     utility on the element still wins. Tracking is tuned for Geist's tall
-     x-height at heavy weights. */
+     utility on the element still wins. Tracking is tuned for Archivo's
+     proportions at heavy weights. */
 
   --text-display-1: clamp(2.75rem, 1.6056rem + 4.8826vw, 6rem); /* 44 -> 96 */
   --text-display-1--line-height: 1;
@@ -131,116 +131,85 @@
   --ease-exit: cubic-bezier(0.4, 0, 1, 1);
 }
 
-/* Light theme, "Mono / Blue": white / ink / neutral grey with one blue
-   accent. Greys share the Apple grey family (hue ~286, chroma <= 0.007) so
-   nothing reads warm. All values contrast-checked; ratios noted inline. */
+/* Light theme: paper / graphite / steel. Greys share the Araz brand family
+   (paper #F3F3F1, graphite #16181A, slate #5A6167). All values are hex for
+   clarity; they can be converted to oklch if the rendered colors match exactly. */
 :root {
   --radius: 0.75rem;
 
-  /* Ink at low alpha, not black: black shadows read warm over #F5F5F7. */
-  --shadow-color: oklch(0.2316 0.0038 286.1 / 0.08);
+  --shadow-color: oklch(0.35 0.01 240 / 0.08);
 
-  --background: oklch(1 0 0); /* white  #FFFFFF */
-  --foreground: oklch(0.2316 0.0038 286.1); /* ink  #1D1D1F  16.83:1 AAA */
-
-  /* Cards sit on white; differentiate with border, not surface. */
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2316 0.0038 286.1);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2316 0.0038 286.1);
-
-  --primary: oklch(0.2316 0.0038 286.1); /* ink — the black pill */
-  --primary-foreground: oklch(1 0 0); /* white on ink  16.83:1 AAA */
-
-  --secondary: oklch(0.9707 0.0027 286.4); /* #F5F5F7  ink on it 15.46:1 */
-  --secondary-foreground: oklch(0.2316 0.0038 286.1);
-
-  --muted: oklch(0.9707 0.0027 286.4); /* #F5F5F7 */
-  --muted-foreground: oklch(0.5399 0.0077 286.1); /* #6E6E73  5.07:1 on white, 4.66:1 on muted AA */
-
-  /* Hover/active surface for menu items; one step darker than secondary so
-     it reads on white popovers. Stays neutral, never brand. */
-  --accent: oklch(0.9324 0.0067 286.3); /* #E8E8ED */
-  --accent-foreground: oklch(0.2316 0.0038 286.1);
-
-  --brand: oklch(0.5629 0.1933 256.2); /* blue #0071E3  4.70:1 on white AA */
-  --brand-foreground: oklch(1 0 0); /* white on blue  4.70:1 AA */
-
+  --background: #F3F3F1;         /* paper — brand ground */
+  --foreground: #16181A;         /* graphite — brand ink */
+  --card: #FFFFFF;
+  --card-foreground: #16181A;
+  --popover: #FFFFFF;
+  --popover-foreground: #16181A;
+  --primary: #16181A;
+  --primary-foreground: #F3F3F1;
+  --secondary: #EAEAE6;          /* paper, one step down */
+  --secondary-foreground: #16181A;
+  --muted: #ECECE9;
+  --muted-foreground: #5A6167;   /* slate — brand secondary text */
+  --accent: #E4E5E1;             /* menu hover surface — deliberately NOT brand */
+  --accent-foreground: #16181A;
+  --border: #D9D9D4;
+  --input: #83888D;
+  --ring: #2B4A63;
+  --brand: #2B4A63;              /* steel — accent, limited */
+  --brand-foreground: #F3F3F1;
+  --chart-1: #2B4A63;
+  --chart-2: #16181A;
+  --chart-3: #5A6167;
+  --chart-4: #7A94A8;
+  --chart-5: #D9D9D4;
   --destructive: oklch(0.577 0.245 27.325);
-
-  --border: oklch(0.8652 0.0068 286.3); /* #D2D2D7  decorative hairline */
-  --input: oklch(0.6217 0.0074 286.2); /* #86868B  3.62:1 (WCAG 1.4.11) */
-  --ring: oklch(0.5629 0.1933 256.2); /* blue */
-
-  /* Monochrome + blue ramp: blue / ink / mid grey / light blue / light grey. */
-  --chart-1: oklch(0.5629 0.1933 256.2); /* #0071E3 */
-  --chart-2: oklch(0.2316 0.0038 286.1); /* #1D1D1F */
-  --chart-3: oklch(0.6217 0.0074 286.2); /* #86868B */
-  --chart-4: oklch(0.7317 0.1255 252.8); /* #6CACF5 */
-  --chart-5: oklch(0.8652 0.0068 286.3); /* #D2D2D7 */
-
-  --sidebar: oklch(0.9707 0.0027 286.4);
-  --sidebar-foreground: oklch(0.2316 0.0038 286.1);
-  --sidebar-primary: oklch(0.2316 0.0038 286.1);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.9324 0.0067 286.3);
-  --sidebar-accent-foreground: oklch(0.2316 0.0038 286.1);
-  --sidebar-border: oklch(0.8652 0.0068 286.3);
-  --sidebar-ring: oklch(0.5629 0.1933 256.2);
+  --sidebar: #EAEAE6;
+  --sidebar-foreground: #16181A;
+  --sidebar-primary: #16181A;
+  --sidebar-primary-foreground: #F3F3F1;
+  --sidebar-accent: #E4E5E1;
+  --sidebar-accent-foreground: #16181A;
+  --sidebar-border: #D9D9D4;
+  --sidebar-ring: #2B4A63;
 }
 
-/* Dark theme. Pure neutrals (chroma 0) — no warm cast anywhere. */
+/* Dark theme: graphite / paper / steel, lifted. */
 .dark {
-  --background: oklch(0.1448 0 0); /* #0A0A0A */
-
-  /* More alpha than light mode: a shadow needs weight to read on #0A0A0A. */
-  --shadow-color: oklch(0 0 0 / 0.4);
-  --foreground: oklch(0.9707 0.0027 286.4); /* #F5F5F7  18.18:1 AAA */
-
-  --card: oklch(0.2046 0 0); /* #171717  fg on card 16.47:1 */
-  --card-foreground: oklch(0.9707 0.0027 286.4);
-  --popover: oklch(0.2046 0 0);
-  --popover-foreground: oklch(0.9707 0.0027 286.4);
-
-  --primary: oklch(0.9707 0.0027 286.4); /* white pill in dark */
-  --primary-foreground: oklch(0.2046 0 0); /* 16.47:1 AAA */
-
-  --secondary: oklch(0.2686 0 0); /* #262626 */
-  --secondary-foreground: oklch(0.9707 0.0027 286.4);
-
-  --muted: oklch(0.2393 0 0); /* #1F1F1F */
-  --muted-foreground: oklch(0.709 0 0); /* #A1A1A1  7.66:1 on bg, 6.94:1 on card AA */
-
-  --accent: oklch(0.2686 0 0);
-  --accent-foreground: oklch(0.9707 0.0027 286.4);
-
-  /* Dark-mode link blue. brand-foreground is deliberately near-black: one
-     mid blue cannot pass AA against both white and #0A0A0A, and white on
-     #2997FF is 3.02:1 (fails). Do not "fix" back to white. */
-  --brand: oklch(0.669 0.1808 251.8); /* #2997FF  6.57:1 on bg, 5.95:1 on card AA */
-  --brand-foreground: oklch(0.1448 0 0); /* near-black on blue  6.57:1 AA */
-
+  --background: #16181A;         /* graphite */
+  --foreground: #F3F3F1;         /* paper */
+  --card: #1C1F23;
+  --card-foreground: #F3F3F1;
+  --popover: #1C1F23;
+  --popover-foreground: #F3F3F1;
+  --primary: #F3F3F1;
+  --primary-foreground: #16181A;
+  --secondary: #23272B;
+  --secondary-foreground: #F3F3F1;
+  --muted: #1E2226;
+  --muted-foreground: #A9B0B6;   /* slate, lifted for contrast */
+  --accent: #23272B;
+  --accent-foreground: #F3F3F1;
+  --border: #2B3036;
+  --input: #6A7076;
+  --ring: #7A99B5;
+  --brand: #7A99B5;              /* steel, lifted — dark brand is LIGHTER with dark text */
+  --brand-foreground: #16181A;
   --destructive: oklch(0.704 0.191 22.216);
-
-  --border: oklch(0.3012 0 0); /* #2E2E2E  decorative */
-  --input: oklch(0.5103 0 0); /* #666666  3.45:1 on bg (WCAG 1.4.11) */
-  --ring: oklch(0.669 0.1808 251.8);
-
-  /* blue / white / light grey / deep blue (graphics-only) / mid grey. */
-  --chart-1: oklch(0.669 0.1808 251.8); /* #2997FF */
-  --chart-2: oklch(0.9707 0.0027 286.4); /* #F5F5F7 */
-  --chart-3: oklch(0.709 0 0); /* #A1A1A1 */
-  --chart-4: oklch(0.4913 0.1712 257.5); /* #0A5CBF */
-  --chart-5: oklch(0.4386 0 0); /* #525252 */
-
-  --sidebar: oklch(0.2046 0 0);
-  --sidebar-foreground: oklch(0.9707 0.0027 286.4);
-  --sidebar-primary: oklch(0.9707 0.0027 286.4);
-  --sidebar-primary-foreground: oklch(0.2046 0 0);
-  --sidebar-accent: oklch(0.2686 0 0);
-  --sidebar-accent-foreground: oklch(0.9707 0.0027 286.4);
-  --sidebar-border: oklch(0.3012 0 0);
-  --sidebar-ring: oklch(0.669 0.1808 251.8);
+  --shadow-color: oklch(0 0 0 / 0.4);
+  --chart-1: #7A99B5;
+  --chart-2: #F3F3F1;
+  --chart-3: #A9B0B6;
+  --chart-4: #5A7E9E;
+  --chart-5: #2B3036;
+  --sidebar: #1C1F23;
+  --sidebar-foreground: #F3F3F1;
+  --sidebar-primary: #F3F3F1;
+  --sidebar-primary-foreground: #16181A;
+  --sidebar-accent: #23272B;
+  --sidebar-accent-foreground: #F3F3F1;
+  --sidebar-border: #2B3036;
+  --sidebar-ring: #7A99B5;
 }
 
 /* Small uppercase tracked label, e.g. "001 / LOS FELIZ / 2025". A utility
@@ -276,6 +245,7 @@
 
   html {
     @apply font-sans;
+    background-color: var(--background);
     /* Safari/iOS: clip rather than hidden, or a sticky header silently
        stops sticking under any ancestor that clips the x axis. */
     overflow-x: clip;
@@ -298,12 +268,12 @@
   }
 
   ::selection {
-    /* Blue/white in light; #2997FF/near-black in dark. Both AA. */
+    /* Steel/paper in light; lifted steel/graphite in dark. Both AA. */
     background-color: var(--brand);
     color: var(--brand-foreground);
   }
 
-  /* Geist has proper tabular figures; use them for anything that lines up
+  /* Archivo has proper tabular figures; use them for anything that lines up
      in a column. */
   .tabular {
     font-variant-numeric: tabular-nums;

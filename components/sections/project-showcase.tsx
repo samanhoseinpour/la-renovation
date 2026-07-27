@@ -24,7 +24,7 @@ export function ProjectShowcase({ projects }: { projects: Project[] }) {
               }
             >
               <p className="text-eyebrow text-muted-foreground">
-                {project.index} / {project.neighborhood} · {project.year}
+                {project.index} / {project.neighborhood} · {project.scope}
               </p>
               <h3 className="mt-4 text-h2">{project.title}</h3>
               <p className="mt-4 max-w-sm text-muted-foreground">

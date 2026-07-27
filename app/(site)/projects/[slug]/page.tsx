@@ -6,11 +6,12 @@ import { notFound } from "next/navigation";
 import { ArrowLink } from "@/components/layout/arrow-link";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
+import { CompareGallery } from "@/components/sections/compare-gallery";
 import { ContactCta } from "@/components/sections/contact-cta";
 import { ProjectGallery } from "@/components/sections/project-gallery";
 import { getAllProjects, getProject } from "@/content/projects";
 import { getService } from "@/content/services";
-import { projectCta } from "@/content/studio";
+import { getTestimonialFor, projectCta } from "@/content/studio";
 
 type Props = {
   // params is a Promise in Next.js 16 — synchronous access was removed.
@@ -48,13 +49,14 @@ export default async function ProjectPage({ params }: Props) {
   const all = getAllProjects();
   const index = all.findIndex((p) => p.slug === project.slug);
   const next = all[(index + 1) % all.length];
+  const testimonial = getTestimonialFor(project.slug);
 
   return (
     <>
       <Section size="sm" className="border-b border-border">
         <Container>
           <p className="text-eyebrow text-muted-foreground">
-            {project.index} / {project.neighborhood} / {project.year}
+            {project.index} / {project.neighborhood} / {project.scope}
           </p>
           <h1 className="mt-6 max-w-4xl text-display-2 text-balance">
             {project.title}
@@ -130,6 +132,17 @@ export default async function ProjectPage({ params }: Props) {
               </ul>
             </aside>
           </div>
+
+          {testimonial ? (
+            <figure className="mt-20 flex flex-col gap-6 border-t border-border pt-10 md:flex-row md:items-baseline md:justify-between md:gap-16 md:pt-14">
+              <blockquote className="max-w-3xl text-h3">
+                &ldquo;{testimonial.quote}&rdquo;
+              </blockquote>
+              <figcaption className="shrink-0 text-eyebrow text-muted-foreground">
+                {testimonial.attribution}
+              </figcaption>
+            </figure>
+          ) : null}
         </Container>
       </Section>
 
@@ -137,6 +150,12 @@ export default async function ProjectPage({ params }: Props) {
           their paddings stacked into a dead band twice the intended rhythm. */}
       <Section size="sm">
         <Container>
+          {project.compare?.length ? (
+            <div className="mb-16">
+              <CompareGallery pairs={project.compare} />
+            </div>
+          ) : null}
+
           <ProjectGallery images={project.gallery} />
 
           <div className="mt-16 flex flex-col gap-6 border-t border-border pt-10 sm:flex-row sm:items-end sm:justify-between">

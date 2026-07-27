@@ -28,7 +28,7 @@ export function ProjectIndex({ projects }: { projects: Project[] }) {
         >
           <div className="order-2 flex flex-col justify-between gap-10 p-6 md:p-10 lg:order-1 lg:p-12">
             <p className="text-eyebrow text-muted-foreground">
-              {featured.index} / {featured.neighborhood} / {featured.year}
+              {featured.index} / {featured.neighborhood}
             </p>
             <div>
               <h2 className="text-h1 text-balance">{featured.title}</h2>
@@ -36,8 +36,7 @@ export function ProjectIndex({ projects }: { projects: Project[] }) {
                 {featured.summary}
               </p>
               <p className="mt-4 text-sm text-muted-foreground">
-                {featured.scope} ·{" "}
-                {featured.squareFeet.toLocaleString("en-US")} sq ft
+                {featured.scope}
               </p>
               <span className="mt-8 inline-flex items-center gap-2 text-sm font-medium">
                 View project
@@ -69,7 +68,7 @@ export function ProjectIndex({ projects }: { projects: Project[] }) {
               className="group/card flex flex-col justify-between gap-12 border-t border-border p-6 transition-colors duration-200 ease-editorial first:border-t-0 hover:bg-muted/40 md:p-10 lg:border-t-0 lg:border-l lg:first:border-l-0 lg:p-12"
             >
               <p className="text-eyebrow text-muted-foreground">
-                {project.index} / {project.neighborhood} / {project.year}
+                {project.index} / {project.neighborhood}
               </p>
               <div>
                 <h3 className="text-h3 text-balance">{project.title}</h3>
@@ -77,8 +76,7 @@ export function ProjectIndex({ projects }: { projects: Project[] }) {
                   {project.summary}
                 </p>
                 <p className="mt-3 text-sm text-muted-foreground">
-                  {project.scope} ·{" "}
-                  {project.squareFeet.toLocaleString("en-US")} sq ft
+                  {project.scope}
                 </p>
                 <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium">
                   View project

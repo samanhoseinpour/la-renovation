@@ -45,15 +45,24 @@ export function SiteFooter() {
       <Container>
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div>
-            <p className="text-h3">{site.name}</p>
+            <div>
+              <span className="block text-2xl font-bold leading-none tracking-[0.2em]">ARAZ</span>
+              <span className="mt-1 block text-[11px] font-medium leading-none tracking-[0.42em] opacity-70">
+                CONSTRUCTION GROUP
+              </span>
+            </div>
             <p className="mt-4 max-w-xs text-sm text-muted-foreground">
               {site.tagline}
             </p>
             <address className="mt-6 text-sm not-italic text-muted-foreground">
-              {site.contact.address.street}
-              <br />
-              {site.contact.address.city}, {site.contact.address.state}{" "}
-              {site.contact.address.zip}
+              {site.contact.address.street ? (
+                <>
+                  {site.contact.address.street}
+                  <br />
+                </>
+              ) : null}
+              {site.contact.address.city}, {site.contact.address.state}
+              {site.contact.address.zip ? ` ${site.contact.address.zip}` : ""}
             </address>
           </div>
 
@@ -106,7 +115,7 @@ export function SiteFooter() {
           </div>
 
           <p className="text-eyebrow text-muted-foreground">
-            {site.license} · © {new Date().getFullYear()}
+            {site.license ? `${site.license} · ` : ""}© {new Date().getFullYear()}
           </p>
         </div>
       </Container>

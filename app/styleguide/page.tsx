@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Style guide",
-  description: "Design system reference for the LA Renovation site.",
+  description: "Design system reference for the Araz Construction Group site.",
   robots: { index: false, follow: false },
 };
 
@@ -19,44 +19,44 @@ const TYPE_SCALE = [
     cls: "text-display-1",
     label: "display-1",
     range: "44 → 96px · 700",
-    sample: "Renovating Los Angeles",
+    sample: "Ground to grid",
   },
   {
     cls: "text-display-2",
     label: "display-2",
     range: "34 → 64px · 700",
-    sample: "Homes with restraint",
+    sample: "Built from the ground up",
   },
   {
     cls: "text-h1",
     label: "h1",
     range: "30 → 52px · 650",
-    sample: "Hillside House",
+    sample: "Harbor Boulevard Mixed-Use",
   },
   {
     cls: "text-h2",
     label: "h2",
     range: "25 → 40px · 600",
-    sample: "A 1962 post-and-beam",
+    sample: "Sitework before structure",
   },
   {
     cls: "text-h3",
     label: "h3",
     range: "21 → 28px · 600",
-    sample: "Carefully undone",
+    sample: "Close the seams",
   },
   {
     cls: "text-lead",
     label: "lead",
     range: "18 → 21px",
-    sample: "We work with homeowners across the Eastside on full-house renovations.",
+    sample: "We build multifamily, commercial, and civil projects across Southern California.",
   },
   {
     cls: "text-base",
     label: "base",
     range: "16px",
     sample:
-      "Every project starts with a site visit and a fixed scope. Design and construction sit under one contract.",
+      "Every project starts with the site: soil, utilities, access, zoning. The budget and the drawings arrive together.",
   },
   {
     cls: "text-sm text-muted-foreground",
@@ -68,21 +68,21 @@ const TYPE_SCALE = [
     cls: "text-eyebrow text-muted-foreground",
     label: "eyebrow",
     range: "12px",
-    sample: "001 / Los Feliz / 2025",
+    sample: "001 / Anaheim / Mixed-use",
   },
 ];
 
 const SURFACES = [
-  { cls: "bg-background", name: "background", note: "white / #0A0A0A" },
-  { cls: "bg-card", name: "card", note: "white / #171717" },
-  { cls: "bg-muted", name: "muted", note: "#F5F5F7 tint" },
-  { cls: "bg-secondary", name: "secondary", note: "cool grey" },
+  { cls: "bg-background", name: "background", note: "#F3F3F1 / #16181A" },
+  { cls: "bg-card", name: "card", note: "#FFFFFF / #1C1F23" },
+  { cls: "bg-muted", name: "muted", note: "#ECECE9 / #1E2226" },
+  { cls: "bg-secondary", name: "secondary", note: "paper step / graphite step" },
   { cls: "bg-accent", name: "accent", note: "menu hover only" },
-  { cls: "bg-foreground", name: "foreground", note: "ink / #F5F5F7" },
+  { cls: "bg-foreground", name: "foreground", note: "#16181A / #F3F3F1" },
 ];
 
 const BRAND = [
-  { cls: "bg-brand", name: "brand", note: "blue — 4.70:1 / 6.57:1" },
+  { cls: "bg-brand", name: "brand", note: "steel — limited accent use" },
   { cls: "bg-brand/10", name: "brand/10", note: "tint surface" },
   { cls: "bg-destructive", name: "destructive", note: "semantic only" },
   { cls: "bg-border", name: "border", note: "decorative hairline" },
@@ -154,12 +154,12 @@ export default function StyleguidePage() {
           <div className="flex items-start justify-between gap-6">
             <div>
               <p className="text-eyebrow text-muted-foreground">
-                LA Renovation / Design system
+                Araz Construction Group / Design system
               </p>
-              <h1 className="mt-4 text-display-2">Mono / Blue</h1>
+              <h1 className="mt-4 text-display-2">Paper / Graphite / Steel</h1>
               <p className="mt-4 max-w-xl text-lead text-muted-foreground">
-                Geist, one family site-wide. White, ink and neutral grey with
-                a single blue accent. Light is the default; toggle to check
+                Archivo, one family site-wide. Paper, graphite and slate with
+                a single steel accent. Light is the default; toggle to check
                 dark. Smooth scroll is intentionally absent on this page.
               </p>
             </div>
@@ -188,11 +188,11 @@ export default function StyleguidePage() {
           <p className="text-h3">
             Emphasis is weight and colour, never italics —{" "}
             <em className="not-italic text-muted-foreground">
-              a 1962 post-and-beam, carefully undone.
+              from rough grade to occupancy.
             </em>
           </p>
           <p className="mt-4 text-sm tabular text-muted-foreground">
-            Tabular figures: 001 002 003 · 3,400 sq ft · 1962 / 2025
+            Tabular figures: 001 002 003 · 01–07 · 92626
           </p>
         </div>
       </Block>
@@ -235,9 +235,9 @@ export default function StyleguidePage() {
           </span>
         </div>
         <p className="mt-6 max-w-xl text-sm text-muted-foreground">
-          In dark mode the blue pill deliberately carries a near-black label:
-          white on #2997FF is 3.02:1 and fails AA. Don&rsquo;t &ldquo;fix&rdquo;
-          it back to white.
+          In dark mode the steel pill deliberately carries a dark label: graphite
+          on lifted steel ensures AA contrast. Don&rsquo;t &ldquo;fix&rdquo; it
+          to paper.
         </p>
       </Block>
 

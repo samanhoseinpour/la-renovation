@@ -1,6 +1,17 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    // Pre-rebrand service slugs still circulating in old links and search
+    // results; send them to the services index instead of a 404.
+    return ["full-renovation", "kitchen-bath", "additions-adu", "historic-restoration"].map(
+      (slug) => ({
+        source: `/services/${slug}`,
+        destination: "/services",
+        permanent: true,
+      }),
+    );
+  },
   images: {
     // Required from Next.js 16: an unrestricted quality list would let anyone
     // ask the optimizer for arbitrary renditions.

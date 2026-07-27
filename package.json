@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "images:migrate": "node scripts/migrate-images-to-avif.mjs",
+    "images:audit": "node scripts/optimize-images.mjs --dry-run",
+    "images:optimize": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
@@ -31,6 +34,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.12",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

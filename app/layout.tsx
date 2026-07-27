@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist } from "next/font/google";
+import { Archivo } from "next/font/google";
 
 import { MotionProvider } from "@/components/motion/motion-provider";
 import { ThemeProvider } from "@/components/site/theme-provider";
@@ -9,10 +9,10 @@ import "./globals.css";
 
 // Variable font (wght 100-900): no `weight` needed, and no italic style is
 // loaded on purpose — globals.css blocks font-synthesis.
-const geist = Geist({
+const archivo = Archivo({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-geist",
+  variable: "--font-archivo",
 });
 
 export const metadata: Metadata = {
@@ -42,9 +42,9 @@ export const metadata: Metadata = {
 // themeColor belongs on the viewport export; it has been deprecated inside
 // `metadata` since Next.js 14. A single value, not a prefers-color-scheme
 // pair: the site defaults to light regardless of OS setting, so OS-dark
-// visitors must not get dark browser chrome over a white page.
+// visitors must not get dark browser chrome over a light-first paper chrome.
 export const viewport: Viewport = {
-  themeColor: "#FFFFFF",
+  themeColor: "#F3F3F1",
 };
 
 export default function RootLayout({
@@ -60,7 +60,7 @@ export default function RootLayout({
       // Next.js 16 no longer overrides scroll-behavior on navigation; without
       // this attribute anchor links jump instead of scrolling.
       data-scroll-behavior="smooth"
-      className={`${geist.variable} h-full antialiased`}
+      className={`${archivo.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         {/* Reveal wrappers server-render hidden; without JS they must not

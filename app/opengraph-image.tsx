@@ -19,8 +19,8 @@ export default async function Image() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          backgroundColor: "#FFFFFF",
-          color: "#1D1D1F",
+          backgroundColor: "#F3F3F1",
+          color: "#16181A",
           padding: 72,
         }}
       >
@@ -29,7 +29,7 @@ export default async function Image() {
             display: "flex",
             fontSize: 22,
             letterSpacing: "0.16em",
-            color: "#6E6E73",
+            color: "#5A6167",
           }}
         >
           {site.name.toUpperCase()}
@@ -44,7 +44,7 @@ export default async function Image() {
             maxWidth: 920,
           }}
         >
-          Renovating Los Angeles homes with restraint.
+          Ground to grid.
         </div>
 
         <div
@@ -54,7 +54,7 @@ export default async function Image() {
             justifyContent: "space-between",
           }}
         >
-          <div style={{ display: "flex", fontSize: 26, color: "#6E6E73" }}>
+          <div style={{ display: "flex", fontSize: 26, color: "#5A6167" }}>
             {site.tagline}
           </div>
           <div
@@ -63,7 +63,7 @@ export default async function Image() {
               width: 140,
               height: 6,
               borderRadius: 3,
-              backgroundColor: "#0071E3",
+              backgroundColor: "#2B4A63",
             }}
           />
         </div>

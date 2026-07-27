@@ -1,15 +1,16 @@
 import { unsplash, type SiteImage } from "./images";
 
+/** Before/after pair rendered by components/sections/compare-gallery.tsx. */
+export type ComparePair = { before: SiteImage; after: SiteImage; caption?: string };
+
 export type Project = {
   slug: string;
   /** Two-digit index shown in the eyebrow caption, e.g. "001 / LOS FELIZ". */
   index: string;
   title: string;
   neighborhood: string;
-  year: number;
   /** Short scope label used in listings. */
   scope: string;
-  squareFeet: number;
   /** One line for cards and meta descriptions. */
   summary: string;
   /** Paragraphs for the case-study body. */
@@ -22,174 +23,240 @@ export type Project = {
   image: SiteImage;
   /** Case-study gallery, three per project. */
   gallery: SiteImage[];
+  /** Before/after pairs for the compare gallery; placeholder stock until real photography exists. */
+  compare?: ComparePair[];
 };
 
 export const projects: Project[] = [
   {
-    slug: "hillside-house",
+    slug: "harbor-mixed-use",
     index: "001",
-    title: "Hillside House",
-    neighborhood: "Los Feliz",
-    year: 2025,
-    scope: "Full renovation",
-    squareFeet: 3400,
+    title: "Harbor Boulevard Mixed-Use",
+    neighborhood: "Anaheim",
+    scope: "Podium apartments over retail",
     summary:
-      "A 1962 post-and-beam, carefully undone. We removed four decades of additions to recover the original section.",
+      "A mid-block infill site taken from rough grade to a podium building with its charging infrastructure designed in, not added on.",
     body: [
-      "The house had been renovated three times since it was built, each pass adding partitions that cut the plan away from the hillside it was designed around. Our first move was subtraction: taking the interior back to its post-and-beam frame to see what was actually there.",
-      "What emerged was a clean structural rhythm that the later work had obscured. We kept every original beam, replaced the failing glazing with thermally broken steel, and rebuilt the floor plane in a single material so the eye runs uninterrupted to the canyon.",
-      "The kitchen moved to the north wall, where it now reads as casework rather than a room. Two bedrooms were combined into one primary suite. Nothing was added to the footprint.",
+      "The site came to us as rough grade on a busy corner: a small infill lot with utilities in the wrong place and a podium building that had to hold both parking and retail frontage. We took the civil package, the deck, and the structure as one scope.",
+      "That mattered most at the podium pour. The crew forming the deck worked for the same company that had priced it, so when the soils report and the field disagreed, the fix was absorbed inside one schedule instead of negotiated between three.",
+      "The charging and electrical infrastructure was engineered alongside the structure rather than after it, which is increasingly the difference between a building that passes plan check and one that gets redesigned there.",
     ],
     facts: [
-      { label: "Location", value: "Los Feliz, Los Angeles" },
-      { label: "Completed", value: "2025" },
-      { label: "Area", value: "3,400 sq ft" },
-      { label: "Scope", value: "Full renovation, structural" },
-      { label: "Original build", value: "1962" },
+      { label: "Scope", value: "Multifamily over ground-floor retail" },
+      { label: "Delivery", value: "Negotiated GC" },
+      { label: "Divisions", value: "Civil, concrete, structure, energy" },
     ],
-    services: ["full-renovation", "kitchen-bath"],
+    services: [
+      "multifamily-mixed-use",
+      "concrete-foundation-structural",
+      "energy-infrastructure",
+    ],
     image: {
-      src: unsplash("photo-1771372578232-7c20a006f7b4", 3200),
-      alt: "Vaulted living space with exposed wood beams and a wall of black-framed windows",
+      src: unsplash("photo-1508450859948-4e04fabaa4ea", 3200),
+      alt: "Multi-story podium building under construction, concrete decks and orange safety railing against a clear sky",
     },
     gallery: [
       {
-        src: unsplash("photo-1764837599929-100bd5890c57"),
-        alt: "Steel-framed glass doors opening to a view of trees and rooftops below",
+        src: unsplash("photo-1693651005564-a8c24afbc28e"),
+        alt: "Yellow ride-on roller compacting graded dirt at a construction site, site trailers in the background",
       },
       {
-        src: unsplash("photo-1749911774364-299b0134a84c"),
-        alt: "Sunlit interior with floor-to-ceiling windows and sparse furniture",
+        src: unsplash("photo-1768677903496-becc4be07258"),
+        alt: "Worker in a hard hat and safety vest standing on a dense rebar grid ahead of a concrete pour",
       },
       {
-        src: unsplash("photo-1560449752-3fd4bdbe7df0"),
-        alt: "Warm wood-paneled study with built-in shelves and a reading chair",
+        src: unsplash("photo-1761401429082-cec0cb4080b9"),
+        alt: "Outdoor EV charging station with two cables mounted between green bollards",
+      },
+    ],
+    // Placeholder stand-in pairs reusing verified stock until this project is
+    // photographed before and after for real.
+    compare: [
+      {
+        before: {
+          src: unsplash("photo-1777919393730-463e2c0b7f4c"),
+          alt: "Multi-story concrete building under construction with exposed rebar and plywood formwork",
+        },
+        after: {
+          src: unsplash("photo-1778961419928-2968ddd57c05"),
+          alt: "Street-level view of a finished modern building with brick and glass facade",
+        },
+        caption: "Podium deck to occupied frontage",
+      },
+      {
+        before: {
+          src: unsplash("photo-1576446470246-499c738d1c8e"),
+          alt: "Open electrical panel with a row of circuit breakers and rough-in wiring",
+        },
+        after: {
+          src: unsplash("photo-1707341597123-c53bbb7e7f93"),
+          alt: "Electric vehicle plugged into a fast-charging station in a covered parking bay",
+        },
+        caption: "Electrical rough-in to charging bay",
       },
     ],
   },
   {
-    slug: "canyon-residence",
+    slug: "bristol-street-offices",
     index: "002",
-    title: "Canyon Residence",
-    neighborhood: "Laurel Canyon",
-    year: 2025,
-    scope: "Addition + renovation",
-    squareFeet: 2650,
+    title: "Bristol Street Offices",
+    neighborhood: "Santa Ana",
+    scope: "Office shell and tenant build-out",
     summary:
-      "A cramped canyon cottage gains 600 square feet without ever looking larger from the street.",
+      "Shell, core, and phased suite build-outs on an occupancy-driven schedule, priced during design rather than after it.",
     body: [
-      "Hillside setbacks and a protected oak left almost no room to build outward, so the addition went down rather than out — a lower level cut into the slope, lit from a courtyard carved on the uphill side.",
-      "From the street the house is unchanged: same roofline, same modest frontage. The new volume only reveals itself from the canyon below.",
-      "Material palette is deliberately narrow — board-formed concrete at the cut, white oak above, and a single plaster tone throughout.",
+      "An office shell with phased suite build-outs, governed the way commercial work always is: by occupancy dates. The framing was never the risk. Utility coordination and long-lead equipment were.",
+      "We front-loaded both during preconstruction, while they were still decisions. Switchgear and rooftop units were sequenced before drywall dates were promised to tenants, not after.",
+      "The suites were priced as the drawings developed, so each tenant's number arrived with their layout instead of chasing it.",
     ],
     facts: [
-      { label: "Location", value: "Laurel Canyon, Los Angeles" },
-      { label: "Completed", value: "2025" },
-      { label: "Area", value: "2,650 sq ft" },
-      { label: "Scope", value: "Lower-level addition" },
-      { label: "Original build", value: "1948" },
+      { label: "Scope", value: "Commercial shell + TI" },
+      { label: "Delivery", value: "Preconstruction-led" },
+      { label: "Divisions", value: "Commercial, preconstruction" },
     ],
-    services: ["additions-adu", "full-renovation"],
+    services: ["commercial-institutional", "preconstruction-program-management"],
     image: {
-      src: unsplash("photo-1773229323015-2dcf5be73dc6", 3200),
-      alt: "Two slender trees against a smooth board-formed concrete facade",
+      src: unsplash("photo-1481026469463-66327c86e544", 3200),
+      alt: "Low-angle view of a faceted glass curtain wall on an office building against the sky",
     },
     gallery: [
       {
-        src: unsplash("photo-1616179058441-37aa58affac8"),
-        alt: "Formed-concrete wall with visible pour lines and texture",
+        src: unsplash("photo-1644221150167-fb4fafa7f411"),
+        alt: "High-rise concrete structure under construction with a tower crane and perimeter scaffolding",
       },
       {
-        src: unsplash("photo-1653491945955-6bc68c5e013b"),
-        alt: "House perched on a brushy Southern California hilltop among trees",
+        src: unsplash("photo-1576446470246-499c738d1c8e"),
+        alt: "Open electrical panel with a row of circuit breakers and blue wiring",
       },
       {
-        src: unsplash("photo-1774516534097-76eb46de7229"),
-        alt: "Calm concrete-walled interior with wood floor and a large window",
+        src: unsplash("photo-1762146828422-50a8bd416d3c"),
+        alt: "Architectural floor plan drawings spread across a table",
+      },
+    ],
+    compare: [
+      {
+        before: {
+          src: unsplash("photo-1771530789155-b1f03fbf82b5"),
+          alt: "Empty commercial shell space with exposed ceiling ductwork and a polished concrete floor",
+        },
+        after: {
+          src: unsplash("photo-1552664730-d307ca884978"),
+          alt: "Built-out office suite in use, bright interior with large windows",
+        },
+        caption: "Shell space to built-out suites",
       },
     ],
   },
   {
-    slug: "abbot-kinney-loft",
+    slug: "tustin-legacy-site-package",
     index: "003",
-    title: "Abbot Kinney Loft",
-    neighborhood: "Venice",
-    year: 2024,
-    scope: "Interior renovation",
-    squareFeet: 1850,
+    title: "Tustin Legacy Site Package",
+    neighborhood: "Tustin",
+    scope: "Standalone civil package",
     summary:
-      "A former workshop converted to a single-volume residence, keeping the bow-truss roof fully exposed.",
+      "Grading, wet and dry utilities, and street improvements delivered as a standalone scope for another builder's vertical schedule.",
     body: [
-      "The building's value was entirely in its roof — a bow-truss span that had been hidden above a dropped ceiling for thirty years. Everything we did was in service of keeping it visible from every point in the plan.",
-      "Programme is arranged as freestanding volumes that stop short of the trusses: a kitchen block, a bathroom core, and a sleeping platform. None of them touch the roof.",
-      "Skylights were reglazed rather than replaced, and the concrete slab was ground and sealed in place.",
+      "A standalone civil scope delivered for another builder's vertical schedule: grading, wet and dry utilities, storm drainage, and street improvements.",
+      "Site packages fail quietly. Soil that behaves differently than the report, utilities that are not where the record drawings put them, drainage the agency wants redesigned. Our crews hit all three and absorbed them inside the same contract.",
+      "The vertical builder started on schedule on pads that matched the plans they were given. That is the whole job of a site package, and it is rarer than it should be.",
     ],
     facts: [
-      { label: "Location", value: "Venice, Los Angeles" },
-      { label: "Completed", value: "2024" },
-      { label: "Area", value: "1,850 sq ft" },
-      { label: "Scope", value: "Adaptive reuse" },
-      { label: "Original build", value: "1931" },
+      { label: "Scope", value: "Grading, utilities, paving" },
+      { label: "Delivery", value: "Standalone civil scope" },
+      { label: "Divisions", value: "Civil, concrete" },
     ],
-    services: ["full-renovation", "kitchen-bath"],
+    services: ["civil-site-development", "concrete-foundation-structural"],
     image: {
-      src: unsplash("photo-1718871783985-6ddaa255e922", 3200),
-      alt: "Bright white loft interior with daylight washing over minimal furniture",
+      src: unsplash("photo-1749899524117-27214916684e", 3200),
+      alt: "Excavator with bucket extended on a graded dirt lot, a white pickup truck parked nearby",
     },
     gallery: [
       {
-        src: unsplash("photo-1767279141109-e63ff1e1e3e9"),
-        alt: "Timber roof structure with skylights showing blue sky",
+        src: unsplash("photo-1693907986952-3cd372e4c9d8"),
+        alt: "Blue ductile iron water main with valve fittings exposed in an open trench",
       },
       {
-        src: unsplash("photo-1776090188651-a1ec2cf2bdb0"),
-        alt: "Open industrial room with sunlight streaming across the floor",
+        src: unsplash("photo-1565364507085-325347bae748"),
+        alt: "Excavator laying large pipes into a trench at a foggy job site",
       },
       {
-        src: unsplash("photo-1783554467905-edd4c1b08321"),
-        alt: "Industrial space with columns, large windows and a polished floor",
+        src: unsplash("photo-1776381733574-372689e246b4"),
+        alt: "Asphalt roller paving a street at dusk with its headlights on",
+      },
+    ],
+    compare: [
+      {
+        before: {
+          src: unsplash("photo-1751054770504-c69daeec4721"),
+          alt: "Yellow excavator scooping a mound of dirt on a rough-graded site",
+        },
+        after: {
+          src: unsplash("photo-1768751947846-708a2836f4b7"),
+          alt: "Finished concrete retaining wall along a paved road with a wood guardrail above",
+        },
+        caption: "Rough grade to finished streetscape",
       },
     ],
   },
   {
-    slug: "sunset-junction-adu",
+    slug: "costa-mesa-adu",
     index: "004",
-    title: "Sunset Junction ADU",
-    neighborhood: "Silver Lake",
-    year: 2024,
-    scope: "New ADU",
-    squareFeet: 740,
+    title: "Costa Mesa ADU",
+    neighborhood: "Costa Mesa",
+    scope: "Detached accessory dwelling unit",
     summary:
-      "A detached studio at the rear of a 1920s lot, built to read as a garden structure rather than a second house.",
+      "A backyard unit run like our larger work: the lot understood first, the price moving with the drawings, the systems built in.",
     body: [
-      "The brief was a working studio that could become a rental later, which meant it had to satisfy ADU code without ever feeling like a code exercise.",
-      "We set the volume against the rear property line and opened it entirely to the garden, so the remaining yard reads as the building's room rather than what's left over.",
-      "Cladding is vertical cedar left to grey. In two years it will disappear into the fence line.",
+      "A detached backyard unit, run the way we run larger work: understand the lot before promising a number.",
+      "Access, setbacks, the sewer lateral, and the panel capacity were resolved before design committed. The price developed with the drawings, so the owners watched the number settle instead of jump.",
+      "The unit went in with its electrical infrastructure sized for what the property will need next, not just what the code asked for on the day it was permitted.",
     ],
     facts: [
-      { label: "Location", value: "Silver Lake, Los Angeles" },
-      { label: "Completed", value: "2024" },
-      { label: "Area", value: "740 sq ft" },
-      { label: "Scope", value: "Detached ADU" },
-      { label: "Permitting", value: "LA ADU ordinance" },
+      { label: "Scope", value: "Detached new construction" },
+      { label: "Delivery", value: "Design alongside pricing" },
+      { label: "Divisions", value: "Single-family, energy" },
     ],
-    services: ["additions-adu"],
+    services: ["single-family", "energy-infrastructure"],
     image: {
-      src: unsplash("photo-1760067537293-6b30141d6a52", 3200),
-      alt: "Compact modern structure with wood and stone exterior cladding",
+      src: unsplash("photo-1676802037786-3697d60497ae", 3200),
+      alt: "Peaked roof trusses and wall framing on a house under construction against a blue sky",
     },
     gallery: [
       {
-        src: unsplash("photo-1781902915627-00db827a7cf9"),
-        alt: "Wood-clad garden structure framed by leaves under a blue sky",
+        src: unsplash("photo-1690719095815-549c60090c9f"),
+        alt: "Close-up of roof trusses and rafters on a wood-framed structure under construction",
       },
       {
-        src: unsplash("photo-1774311237295-a65a4c1ff38a"),
-        alt: "Small studio living space with a large window onto greenery",
+        src: unsplash("photo-1668961915523-884872e392f8"),
+        alt: "Two pipes draining into a small concrete-lined catch basin in a grassy yard",
       },
       {
-        src: unsplash("photo-1607582544956-a874e6740135"),
-        alt: "Compact white and wood kitchen inside a small studio",
+        src: unsplash("photo-1566417110090-6b15a06ec800"),
+        alt: "Industrial circuit breaker panel mounted on a wall with wiring connected",
+      },
+    ],
+    compare: [
+      {
+        before: {
+          src: unsplash("photo-1743130940742-c0d1fff97f1c"),
+          alt: "Two workers pouring concrete into a rebar-lined foundation form in a residential backyard",
+        },
+        after: {
+          src: unsplash("photo-1778164912282-c89de4d198ea"),
+          alt: "Nearly finished single-family unit with siding on and a dirt front yard",
+        },
+        caption: "Backyard pour to weather-tight unit",
+      },
+      {
+        before: {
+          src: unsplash("photo-1639953803381-e9c3f3a38253"),
+          alt: "Timber roof trusses and wall framing on a unit under construction",
+        },
+        after: {
+          src: unsplash("photo-1745187946672-2c1d8cf26a2b"),
+          alt: "Solar panels installed across a finished rooftop, seen from above",
+        },
+        caption: "Roof framing to solar array",
       },
     ],
   },

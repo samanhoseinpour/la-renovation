@@ -10,7 +10,6 @@ import { MobileNav } from "@/components/site/mobile-nav";
 import { ThemeToggle } from "@/components/site/theme-toggle";
 import { Button } from "@/components/ui/button";
 import type { NavPanels } from "@/content/nav";
-import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 /**
@@ -36,10 +35,12 @@ import { cn } from "@/lib/utils";
  * `will-change` here: combined with `backdrop-filter`, Safari drops the blur.
  */
 export function SiteHeader({ panels }: { panels: NavPanels }) {
-  const isHome = usePathname() === "/";
-  // Solid until the observer proves the hero is behind the header: the
-  // pre-hydration and no-JS fallback must stay readable on a white page.
-  const [overHero, setOverHero] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  // Home route first-paints the transparent dark bar (correct at scrollY 0
+  // where fresh loads start); the IntersectionObserver's first callback
+  // corrects scroll-restored reloads.
+  const [overHero, setOverHero] = useState(isHome);
   const [hidden, setHidden] = useState(false);
   const [panelOpen, setPanelOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
@@ -126,8 +127,12 @@ export function SiteHeader({ panels }: { panels: NavPanels }) {
         <Link
           href="/"
           className="rounded-sm text-lg font-semibold tracking-tight leading-none text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+          aria-label="Araz Construction Group — home"
         >
-          {site.name}
+          <span className="block text-base font-bold leading-none tracking-[0.2em]">ARAZ</span>
+          <span className="mt-1 block text-[9px] font-medium leading-none tracking-[0.42em] opacity-70">
+            CONSTRUCTION GROUP
+          </span>
         </Link>
 
         <MegaNav

@@ -10,7 +10,7 @@ export type Enquiry = {
   email: string;
   phone?: string;
   service?: string;
-  budget?: string;
+  stage?: string;
   message: string;
   /** Studio inbox the enquiry is sent to. */
   to: string;
@@ -36,7 +36,7 @@ export async function deliverEnquiry(enquiry: Enquiry): Promise<void> {
     `Email: ${enquiry.email}`,
     enquiry.phone ? `Phone: ${enquiry.phone}` : null,
     enquiry.service ? `Project type: ${enquiry.service}` : null,
-    enquiry.budget ? `Budget: ${enquiry.budget}` : null,
+    enquiry.stage ? `Stage: ${enquiry.stage}` : null,
     "",
     enquiry.message,
   ].filter((line): line is string => line !== null);
@@ -55,7 +55,7 @@ export async function deliverEnquiry(enquiry: Enquiry): Promise<void> {
       // "something went wrong" branch with a perfectly valid API key.
       from:
         process.env.CONTACT_FROM_EMAIL ??
-        "LA Renovation <onboarding@resend.dev>",
+        "Araz Construction Group <onboarding@resend.dev>",
       to: [enquiry.to],
       reply_to: enquiry.email,
       subject: `Enquiry from ${enquiry.name}`,

@@ -11,7 +11,7 @@ const FIELDS = [
   "email",
   "phone",
   "service",
-  "budget",
+  "stage",
   "message",
 ] as const;
 
@@ -52,10 +52,10 @@ const schema = z.object({
     .trim()
     .max(80, "Please choose a project type from the list.")
     .optional(),
-  budget: z
+  stage: z
     .string()
     .trim()
-    .max(40, "Please choose a budget from the list.")
+    .max(40, "Please choose a project stage from the list.")
     .optional(),
   message: z
     .string()

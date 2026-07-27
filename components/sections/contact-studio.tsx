@@ -29,7 +29,7 @@ const FIELD_ORDER: ContactField[] = [
   "email",
   "phone",
   "service",
-  "budget",
+  "stage",
   "message",
 ];
 
@@ -47,7 +47,7 @@ type ContactStudioProps = {
   services: { slug: string; title: string }[];
   /** Project-type option for enquiries that don't fit a named service. */
   serviceFallback: string;
-  budgets: readonly string[];
+  stages: readonly string[];
 };
 
 /**
@@ -55,7 +55,7 @@ type ContactStudioProps = {
  * the studio details opposite and the borderless underline fields. Replaced
  * its react-hook-form client state with the progressively enhanced server
  * action (useActionState), dropped its SCREAMING-CAPS treatment for the house
- * type scale, and extended the field set with phone, project type and budget.
+ * type scale, and extended the field set with phone, project type and stage.
  * Failed validation echoes values back so nothing typed is lost; on success
  * the whole form swaps for a confirmation panel.
  */
@@ -64,7 +64,7 @@ export function ContactStudio({
   lead,
   services,
   serviceFallback,
-  budgets,
+  stages,
 }: ContactStudioProps) {
   const [state, formAction, isPending] = useActionState(
     submitContact,
@@ -110,10 +110,14 @@ export function ContactStudio({
           <div>
             <h2 className="text-eyebrow text-muted-foreground">Studio</h2>
             <address className="mt-4 text-lg leading-snug font-medium not-italic">
-              {site.contact.address.street}
-              <br />
-              {site.contact.address.city}, {site.contact.address.state}{" "}
-              {site.contact.address.zip}
+              {site.contact.address.street ? (
+                <>
+                  {site.contact.address.street}
+                  <br />
+                </>
+              ) : null}
+              {site.contact.address.city}, {site.contact.address.state}
+              {site.contact.address.zip ? ` ${site.contact.address.zip}` : ""}
             </address>
             <p className="mt-3 text-sm text-muted-foreground">
               {site.contact.hours}
@@ -308,12 +312,12 @@ export function ContactStudio({
             </div>
 
             <div>
-              <Label htmlFor="contact-budget" className="sr-only">
-                Budget
+              <Label htmlFor="contact-stage" className="sr-only">
+                Project stage
               </Label>
-              <Select name="budget" defaultValue={values.budget}>
+              <Select name="stage" defaultValue={values.stage}>
                 <SelectTrigger
-                  id="contact-budget"
+                  id="contact-stage"
                   className={cn(
                     underlineField,
                     // data-[size=default]:h-12 must carry the same variant as
@@ -325,27 +329,27 @@ export function ContactStudio({
                     // a box, and this is styled as a borderless underline.
                     "w-full data-[size=default]:h-12 data-[placeholder]:text-muted-foreground dark:hover:bg-transparent",
                   )}
-                  aria-invalid={Boolean(fieldErrors.budget)}
+                  aria-invalid={Boolean(fieldErrors.stage)}
                   aria-describedby={
-                    fieldErrors.budget ? "contact-budget-error" : undefined
+                    fieldErrors.stage ? "contact-stage-error" : undefined
                   }
                 >
-                  <SelectValue placeholder="Rough budget" />
+                  <SelectValue placeholder="Project stage" />
                 </SelectTrigger>
                 <SelectContent>
-                  {budgets.map((band) => (
-                    <SelectItem key={band} value={band}>
-                      {band}
+                  {stages.map((stage) => (
+                    <SelectItem key={stage} value={stage}>
+                      {stage}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              {fieldErrors.budget && (
+              {fieldErrors.stage && (
                 <p
-                  id="contact-budget-error"
+                  id="contact-stage-error"
                   className="mt-2 text-sm text-destructive"
                 >
-                  {fieldErrors.budget}
+                  {fieldErrors.stage}
                 </p>
               )}
             </div>

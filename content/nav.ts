@@ -1,5 +1,6 @@
 import type { NavPanelKey } from "@/lib/site";
 
+import { siteImages } from "./images";
 import type { SiteImage } from "./images";
 import { getAllProjects } from "./projects";
 import { getAllServices } from "./services";
@@ -35,7 +36,7 @@ export function getNavPanels(): NavPanels {
         href: `/projects/${project.slug}`,
         index: project.index,
         title: project.title,
-        meta: `${project.neighborhood} · ${project.year}`,
+        meta: `${project.neighborhood} · ${project.scope}`,
         image: project.image,
       })),
     },
@@ -46,9 +47,19 @@ export function getNavPanels(): NavPanels {
         href: `/services/${service.slug}`,
         index: service.index,
         title: service.title,
-        meta: `${service.duration} · ${service.startingAtShort}`,
+        meta: service.scope,
         image: service.image,
       })),
+    },
+    about: {
+      allLabel: "About the company",
+      allHref: "/about",
+      items: [
+        { href: "/about#story", index: "01", title: "Our story", meta: "Built to close the seams", image: siteImages.about[0] },
+        { href: "/about#mission", index: "02", title: "Mission & vision", meta: "One roof, one schedule", image: siteImages.about[1] },
+        { href: "/about#team", index: "03", title: "Team", meta: "The people running the divisions", image: siteImages.about[2] },
+        { href: "/about#approach", index: "04", title: "Approach", meta: "How projects are priced and run", image: siteImages.about[3] },
+      ],
     },
   };
 }

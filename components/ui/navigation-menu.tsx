@@ -97,7 +97,7 @@ function NavigationMenuBackdrop({
       // Purely visual: dismissal is document-level in Base UI, so the scrim
       // never intercepts — the user can interact with the page through it.
       className={cn(
-        "pointer-events-none fixed inset-0 z-30 bg-black/10 transition-opacity duration-[350ms] ease-editorial data-starting-style:opacity-0 data-ending-style:opacity-0 data-ending-style:duration-150 supports-backdrop-filter:backdrop-blur-xs",
+        "pointer-events-none fixed inset-0 z-30 bg-black/10 dark:bg-black/45 transition-opacity duration-[350ms] ease-editorial data-starting-style:opacity-0 data-ending-style:opacity-0 data-ending-style:duration-150 supports-backdrop-filter:backdrop-blur-xs",
         className
       )}
       {...props}

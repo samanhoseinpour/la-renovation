@@ -7,8 +7,8 @@ import { ContactStudio } from "@/components/sections/contact-studio";
 import { WhatHappensNext } from "@/components/sections/what-happens-next";
 import { getAllServices } from "@/content/services";
 import {
-  budgetBands,
   contactSteps,
+  projectStages,
   projectTypeFallback,
 } from "@/content/studio";
 
@@ -34,7 +34,7 @@ export default function ContactPage() {
             lead="Every project starts with a site visit. Send a few details and we'll arrange one."
             services={services}
             serviceFallback={projectTypeFallback}
-            budgets={budgetBands}
+            stages={projectStages}
           />
         </Container>
       </Section>

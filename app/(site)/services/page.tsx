@@ -14,7 +14,7 @@ import { ctaVariants, faqs, processPhases } from "@/content/studio";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Full renovations, kitchens and baths, additions and ADUs, and historic restoration across Los Angeles.",
+    "Seven construction divisions across Southern California — multifamily, commercial, civil, energy, concrete, single-family, and preconstruction.",
   alternates: { canonical: "/services" },
 };
 
@@ -22,9 +22,9 @@ export default function ServicesPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Services"
-        title="One team for the drawings and the building."
-        lead="Design and construction sit under a single contract, which removes the gap where scope normally gets lost."
+        eyebrow="What we do"
+        title="Seven divisions. One contract."
+        lead="Most contractors coordinate. We self-perform the scopes that decide whether a project holds its schedule, and we engineer the systems that increasingly decide whether it passes inspection at all."
       />
 
       <Section>

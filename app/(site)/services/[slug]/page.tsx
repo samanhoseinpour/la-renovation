@@ -63,8 +63,7 @@ export default async function ServicePage({ params }: Props) {
             {service.summary}
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Badge variant="outline">{service.duration}</Badge>
-            <Badge variant="outline">{service.startingAt}</Badge>
+            <Badge variant="outline">{service.scope}</Badge>
           </div>
         </Container>
       </Section>

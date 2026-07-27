@@ -17,21 +17,25 @@ export function unsplash(id: string, width = 2400): string {
 
 export const siteImages = {
   homeHero: {
-    src: unsplash("photo-1785024773247-1e3d7fc81ee9", 3200),
-    alt: "Mid-century modern house with low rooflines set against the hills",
+    src: unsplash("photo-1513828583688-c52646db42da", 3200),
+    alt: "Industrial facility with blue motors and steel piping systems",
   },
   about: [
     {
-      src: unsplash("photo-1653164488636-7407bec89281"),
-      alt: "Architectural scale model of a house on a studio table",
+      src: unsplash("photo-1504384308090-c894fdcc538d"),
+      alt: "Construction workers in a modern workspace with laptops and equipment",
     },
     {
-      src: unsplash("photo-1590880795696-20c7dfadacde"),
-      alt: "Drawings and documents spread across a wooden worktable",
+      src: unsplash("photo-1552664730-d307ca884978"),
+      alt: "Team collaborating in a bright office environment with large windows",
     },
     {
-      src: unsplash("photo-1517438020812-01a8eeb72f69"),
-      alt: "A Silver Lake backstreet under a late Los Angeles sunset",
+      src: unsplash("photo-1454165804606-c3d57bc86b40"),
+      alt: "People designing and reviewing architectural blueprints together",
+    },
+    {
+      src: unsplash("photo-1493857671505-72967e2e2760"),
+      alt: "Construction project planning with architectural models and blueprints",
     },
   ],
 } satisfies Record<string, SiteImage | SiteImage[]>;

@@ -6,10 +6,9 @@ import { ContactCta } from "@/components/sections/contact-cta";
 import { HomeHero } from "@/components/sections/home-hero";
 import { ProjectShowcase } from "@/components/sections/project-showcase";
 import { ServiceCards } from "@/components/sections/service-cards";
-import { StudioStats } from "@/components/sections/studio-stats";
 import { getAllProjects } from "@/content/projects";
 import { getAllServices } from "@/content/services";
-import { ctaVariants, studioStats, testimonials } from "@/content/studio";
+import { ctaVariants, testimonials } from "@/content/studio";
 
 export default function HomePage() {
   const projects = getAllProjects().slice(0, 4);
@@ -40,7 +39,7 @@ export default function HomePage() {
             <div>
               <h2 className="text-eyebrow text-muted-foreground">What we do</h2>
               <p className="mt-6 max-w-xs text-h2">
-                Four ways in, one team throughout.
+                Seven divisions. One contract.
               </p>
               <div className="mt-8">
                 <ArrowLink href="/services">All services</ArrowLink>
@@ -51,12 +50,6 @@ export default function HomePage() {
           </div>
         </Container>
       </Section>
-
-      <StudioStats
-        eyebrow="In numbers"
-        heading="A small studio that keeps its schedule."
-        stats={studioStats}
-      />
 
       <ClientNotes testimonials={testimonials} />
 

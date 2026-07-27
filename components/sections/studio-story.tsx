@@ -5,6 +5,8 @@ import { Section } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
 
 type StudioStoryProps = {
+  id?: string;
+  className?: string;
   paragraphs: string[];
   images: { src: string; alt: string }[];
   facts: { label: string; value: string }[];
@@ -17,9 +19,19 @@ type StudioStoryProps = {
  * container/mt-* wrapper with Section/Container. The offset column ends in a
  * quiet facts <dl> instead of a fourth photo.
  */
-export function StudioStory({ paragraphs, images, facts }: StudioStoryProps) {
+export function StudioStory({
+  id,
+  className,
+  paragraphs,
+  images,
+  facts,
+}: StudioStoryProps) {
   return (
-    <Section size="default">
+    // id/className let the page anchor this section (#story) with
+    // scroll-mt-16 — same 64px as the Lenis `anchors: { offset: -64 }` and
+    // the header's IntersectionObserver rootMargin
+    // (components/motion/smooth-scroll.tsx, components/site/site-header.tsx).
+    <Section id={id} size="default" className={className}>
       <Container>
         <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
           <div className="flex flex-col gap-14 lg:gap-20">

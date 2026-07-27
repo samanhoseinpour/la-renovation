@@ -32,12 +32,9 @@ export function ProjectCard({
         />
       </div>
 
-      <div className="mt-5 flex items-baseline justify-between gap-4">
-        <p className="text-eyebrow text-muted-foreground">
-          {project.index} / {project.neighborhood}
-        </p>
-        <p className="text-eyebrow text-muted-foreground">{project.year}</p>
-      </div>
+      <p className="mt-5 text-eyebrow text-muted-foreground">
+        {project.index} / {project.neighborhood}
+      </p>
       <h3 className="mt-3 text-h3">{project.title}</h3>
       <p className="mt-2 text-sm text-muted-foreground">{project.scope}</p>
     </Link>

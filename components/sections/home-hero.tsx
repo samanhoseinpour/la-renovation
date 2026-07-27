@@ -54,19 +54,19 @@ export function HomeHero() {
       <Container className="relative pt-40 pb-14 md:pb-20">
         <Reveal mode="mount">
           <p className="text-eyebrow text-foreground/80">
-            Los Angeles · Design-build
+            Orange County · Southern California
           </p>
           <h1 className="mt-6 max-w-5xl text-display-1 text-balance text-foreground">
-            Renovating Los Angeles homes with{" "}
-            <em className="not-italic text-foreground/70">restraint.</em>
+            Ground to grid.
           </h1>
         </Reveal>
 
         <Reveal mode="mount" delay={0.08}>
           <div className="mt-10 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <p className="max-w-md border-l border-foreground/40 pl-6 text-lead text-foreground/85">
-              A design-build studio working on full-house renovations, kitchens
-              and ADUs across the Eastside and Westside.
+              Multifamily, commercial, and civil construction across Southern
+              California — site development, foundations, structure, and the
+              systems that run a building. Most of it in house.
             </p>
             <div className="flex flex-wrap items-center gap-6">
               <Button

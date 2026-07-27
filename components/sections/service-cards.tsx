@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
+import { ArrowLink } from "@/components/layout/arrow-link";
 import type { Service } from "@/content/services";
 import { cn } from "@/lib/utils";
 
@@ -32,7 +33,7 @@ export function ServiceCards({
               src={service.image.src}
               alt={service.image.alt}
               fill
-              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              sizes="(min-width: 640px) 50vw, 100vw"
               className="object-cover transition-transform duration-700 ease-editorial group-hover/service:scale-105"
             />
             <div className="absolute inset-0 bg-linear-to-b from-black/45 via-black/10 to-transparent" />
@@ -45,6 +46,12 @@ export function ServiceCards({
           </div>
         </Link>
       ))}
+
+      {/* Eighth tile completing the 4x2 grid for seven cards: a plain link
+          out rather than a photograph nobody would recognize. */}
+      <div className="relative flex aspect-3/4 items-center justify-center rounded-2xl bg-secondary sm:aspect-4/5">
+        <ArrowLink href="/services">All divisions</ArrowLink>
+      </div>
     </div>
   );
 }

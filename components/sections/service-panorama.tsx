@@ -51,7 +51,7 @@ export function ServicePanorama({ services }: { services: Service[] }) {
               {service.summary}
             </p>
             <p className="mt-5 text-eyebrow text-muted-foreground">
-              {service.duration} · {service.startingAt}
+              {service.scope}
             </p>
 
             <div className="relative mt-6 aspect-3/2 overflow-hidden rounded-2xl bg-secondary md:hidden">
