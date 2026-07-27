@@ -22,6 +22,12 @@ const nextConfig: NextConfig = {
     // pattern pins `search: ""`, which rejects Unsplash's ?q=&w= params.
     remotePatterns: [{ protocol: "https", hostname: "images.unsplash.com" }],
   },
+  experimental: {
+    // React <ViewTransition> route crossfade. Full revert: delete this key,
+    // the wrapper in app/(site)/layout.tsx and the ::view-transition block
+    // in globals.css.
+    viewTransition: true,
+  },
 };
 
 export default nextConfig;

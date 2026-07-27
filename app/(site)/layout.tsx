@@ -1,3 +1,10 @@
+import { ViewTransition } from "react";
+// ViewTransition's declarations ship only in React's canary types; a
+// type-only empty import loads them once, project-wide, with no runtime
+// trace (the runtime module "react/canary" does not exist). Do not add a
+// tsconfig "types" array for this — it would end automatic @types inclusion.
+import type {} from "react/canary";
+
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { BackToTop } from "@/components/site/back-to-top";
 import { ScrollProgress } from "@/components/site/scroll-progress";
@@ -29,7 +36,9 @@ export default function SiteLayout({
           plain outline-none (not focus-visible:) so neither the keyboard jump
           nor the back-to-top's programmatic focus rings the whole page. */}
       <main id="main" tabIndex={-1} className="flex-1 scroll-mt-16 outline-none">
-        {children}
+        {/* Route content only: header and footer stay outside the transition
+            group, so navigations crossfade the page body under static chrome. */}
+        <ViewTransition default="page-fade">{children}</ViewTransition>
       </main>
       <SiteFooter />
       <BackToTop />
