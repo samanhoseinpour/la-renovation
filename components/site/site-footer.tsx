@@ -15,11 +15,13 @@ import { site } from "@/lib/site";
 export function SiteFooter() {
   const columns = [
     {
-      title: "Studio",
+      title: "Company",
       links: [
         { label: "About", href: "/about" },
-        { label: "Contact", href: "/contact" },
         { label: "Projects", href: "/projects" },
+        { label: "Careers", href: "/careers" },
+        { label: "FAQ", href: "/faq" },
+        { label: "Contact", href: "/contact" },
       ],
     },
     {
@@ -114,9 +116,35 @@ export function SiteFooter() {
             ))}
           </div>
 
-          <p className="text-eyebrow text-muted-foreground">
-            {site.license ? `${site.license} · ` : ""}© {new Date().getFullYear()}
-          </p>
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
+            <Link
+              href="/privacy"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Privacy
+            </Link>
+            <Link
+              href="/terms"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Terms
+            </Link>
+            <Link
+              href="/accessibility"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Accessibility
+            </Link>
+            <Link
+              href="/sitemap"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Sitemap
+            </Link>
+            <p className="text-eyebrow text-muted-foreground">
+              {site.license ? `${site.license} · ` : ""}© {new Date().getFullYear()}
+            </p>
+          </div>
         </div>
       </Container>
     </Section>

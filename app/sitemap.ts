@@ -17,6 +17,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${site.url}/services`, changeFrequency: "yearly", priority: 0.8 },
     { url: `${site.url}/about`, changeFrequency: "yearly", priority: 0.6 },
     { url: `${site.url}/contact`, changeFrequency: "yearly", priority: 0.7 },
+    { url: `${site.url}/faq`, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${site.url}/careers`, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${site.url}/privacy`, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${site.url}/terms`, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${site.url}/accessibility`, changeFrequency: "yearly", priority: 0.3 },
+    { url: `${site.url}/sitemap`, changeFrequency: "yearly", priority: 0.3 },
   ] satisfies MetadataRoute.Sitemap;
 
   const staticRoutes: MetadataRoute.Sitemap = staticPages.map((entry) => ({
