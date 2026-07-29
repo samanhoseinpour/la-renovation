@@ -156,6 +156,12 @@ export const ctaVariants = {
     label: "Ask us directly",
     href: "/contact",
   },
+  licenses: {
+    heading: "Want the paperwork?",
+    lead: "Ask for it. License details and certificates of insurance, before you commit to anything.",
+    label: "Request the paperwork",
+    href: "/contact",
+  },
 } satisfies Record<string, CtaCopy>;
 
 /** Project pages personalise the panel with the project's neighborhood. */

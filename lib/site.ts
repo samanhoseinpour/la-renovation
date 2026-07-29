@@ -55,4 +55,15 @@ export const site = {
    * supplies the real CSLB number, and every consumer must render-guard it.
    */
   license: undefined as string | undefined,
+
+  /**
+   * Bond and insurance details shown on /licenses. Same rule as the license
+   * number: fabricating them is a liability, so each stays unset until the
+   * client supplies the real value, and every consumer must render-guard.
+   */
+  licensing: {
+    bond: undefined as string | undefined,
+    liability: undefined as string | undefined,
+    workersComp: undefined as string | undefined,
+  },
 } as const;
