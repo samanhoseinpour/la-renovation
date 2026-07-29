@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// optimize-images.mjs — Audit la-renovation's public/images (Araz Construction
-// Group site) and shrink any image OVER a size budget, IN PLACE, without
+// optimize-images.mjs — Audit the Araz Construction Group site's public/images
+// and shrink any image OVER a size budget, IN PLACE, without
 // visible quality loss.
 //
 // Strategy: reduce by DOWNSCALING first (images are usually higher-res than they

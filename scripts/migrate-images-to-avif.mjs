@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Convert a folder of raster images to visually-lossless AVIF for
-// la-renovation's public/images tree (Araz Construction Group site).
+// the Araz Construction Group site's public/images tree.
 //
 // Usage:
 //   node scripts/migrate-images-to-avif.mjs --src <dir> --out <dir under public/images> \

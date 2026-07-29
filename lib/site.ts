@@ -18,8 +18,7 @@ export const site = {
   tagline: "Ground to grid.",
   description:
     "Multifamily, commercial, and civil construction across Southern California.",
-  /** Placeholder until the real domain is registered. */
-  url: "https://la-renovation.vercel.app",
+  url: "https://arazconstructiongroup.com",
   locale: "en_US",
 
   contact: {

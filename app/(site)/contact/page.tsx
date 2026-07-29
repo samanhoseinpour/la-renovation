@@ -15,7 +15,7 @@ import {
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Start a renovation project in Los Angeles. Tell us about the property and we'll come and look at it.",
+    "Start a project with an Orange County general contractor. Tell us about it and we'll come take a look.",
   alternates: { canonical: "/contact" },
 };
 
