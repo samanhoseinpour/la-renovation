@@ -89,7 +89,28 @@ export function MegaNav({
             const panel = panels[item.panel];
             return (
               <NavigationMenuItem key={item.href} value={item.panel}>
+                {/* The trigger doubles as a link: hover or ArrowDown opens
+                    the panel, click navigates to the section route.
+                    preventBaseUIHandler suppresses the internal click-toggle
+                    and the explicit close keeps the panel from lingering over
+                    the next page. Touch has no hover, so taps keep the stock
+                    open/toggle behavior — the route stays reachable through
+                    the panel's "All …" link. */}
                 <NavigationMenuTrigger
+                  render={<Link href={item.href} />}
+                  nativeButton={false}
+                  aria-current={isActive ? "page" : undefined}
+                  onClick={(event) => {
+                    if (
+                      event.nativeEvent instanceof PointerEvent &&
+                      event.nativeEvent.pointerType === "touch"
+                    ) {
+                      event.preventDefault();
+                      return;
+                    }
+                    event.preventBaseUIHandler();
+                    handleValueChange(null);
+                  }}
                   className={cn(onHeroStyle, isActive && onHeroActiveStyle)}
                 >
                   {item.label}

@@ -43,6 +43,7 @@ export const site = {
   ],
 
   nav: [
+    { label: "Home", href: "/" },
     { label: "Projects", href: "/projects", panel: "projects" },
     { label: "Services", href: "/services", panel: "services" },
     { label: "About", href: "/about", panel: "about" },
