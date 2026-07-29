@@ -1,5 +1,5 @@
 import { Reveal } from "@/components/motion/reveal";
-import type { Faq } from "@/content/studio";
+import type { Faq } from "@/content/faq";
 
 /**
  * Adapted from @shadcnblocks/faq5: kept the numbered-list treatment (no

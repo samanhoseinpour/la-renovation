@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { ArrowLink } from "@/components/layout/arrow-link";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
@@ -8,8 +9,9 @@ import { FaqList } from "@/components/sections/faq-list";
 import { PageHeader } from "@/components/sections/page-header";
 import { ProcessTimeline } from "@/components/sections/process-timeline";
 import { ServicePanorama } from "@/components/sections/service-panorama";
+import { getFeaturedFaqs } from "@/content/faq";
 import { getAllServices } from "@/content/services";
-import { ctaVariants, faqs, processPhases } from "@/content/studio";
+import { ctaVariants, processPhases } from "@/content/studio";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -56,7 +58,10 @@ export default function ServicesPage() {
             </h2>
           </Reveal>
           <div className="mt-14">
-            <FaqList faqs={faqs} />
+            <FaqList faqs={getFeaturedFaqs()} />
+          </div>
+          <div className="mt-10">
+            <ArrowLink href="/faq">All questions</ArrowLink>
           </div>
         </Container>
       </Section>

@@ -1,3 +1,5 @@
+export type { Faq } from "./faq";
+
 export type Stat = {
   value: string;
   label: string;
@@ -15,11 +17,6 @@ export type ProcessPhase = {
   index: string;
   title: string;
   description: string;
-};
-
-export type Faq = {
-  question: string;
-  answer: string;
 };
 
 export type CtaCopy = {
@@ -89,39 +86,6 @@ export const processPhases: ProcessPhase[] = [
   },
 ];
 
-export const faqs: Faq[] = [
-  {
-    question: "What kind of projects do you take on?",
-    answer:
-      "Multifamily and mixed-use, commercial and institutional, and civil site development, alongside the energy, concrete, and preconstruction scopes that support them. Most projects touch several divisions at once, which is the reason we hold them under one roof.",
-  },
-  {
-    question: "Do you self-perform or subcontract?",
-    answer:
-      "We self-perform the scopes that set the schedule — sitework, foundations, structure, and the energy systems increasingly tied to permitting. Specialty trades go to licensed partners we name and stand behind, not whoever bids lowest that week.",
-  },
-  {
-    question: "How early should we bring you in?",
-    answer:
-      "At feasibility, before design commits to anything. Bring us in there and the budget develops against the site instead of getting reset by it later.",
-  },
-  {
-    question: "What will it cost?",
-    answer:
-      "There is no standard number. We develop the budget against your site during preconstruction, so you know the cost of a decision when you make it — not after.",
-  },
-  {
-    question: "Where do you work?",
-    answer:
-      "We're based in Orange County and build across Southern California. Distance is rarely the constraint — scope and schedule are.",
-  },
-  {
-    question: "Can you take just the sitework or energy scope?",
-    answer:
-      "Yes. Civil site development and energy infrastructure both run as standalone engagements, not only as part of a full build, for owners who need the ground work or the systems work without the rest of the contract.",
-  },
-];
-
 /** Shown on /contact under the form. */
 export const contactSteps: ProcessPhase[] = [
   {
@@ -184,6 +148,12 @@ export const ctaVariants = {
     heading: "Put us on your next project.",
     lead: "One number, one schedule, one company answering for the result. Start with the address.",
     label: "Get in touch",
+    href: "/contact",
+  },
+  faq: {
+    heading: "Didn't find your question?",
+    lead: "Ask it the direct way. Describe the project and we'll answer for your site, not in general terms.",
+    label: "Ask us directly",
     href: "/contact",
   },
 } satisfies Record<string, CtaCopy>;
