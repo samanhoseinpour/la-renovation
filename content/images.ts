@@ -38,6 +38,13 @@ export const siteImages = {
     src: unsplash("photo-1757030689760-3ec8be7326ae"),
     alt: "Night paving crew operating an asphalt paving machine on a road",
   },
+  /** Behind the All-divisions tile in the home grid. Rendered blurred to
+      texture, so it only needs to read as "the whole company": the handshake
+      echoes "One contract." */
+  homeAllDivisions: {
+    src: unsplash("photo-1742112125635-6f8201c6ee3f"),
+    alt: "Two site workers in hard hats shaking hands in front of stacked precast concrete panels",
+  },
   about: [
     {
       src: "/images/about/about-laguna-coastline-aerial.avif",

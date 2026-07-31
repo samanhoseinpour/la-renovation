@@ -11,30 +11,29 @@ type ArrowLinkProps = Omit<ComponentProps<typeof Link>, "href"> & {
 };
 
 /**
- * The editorial call-to-action: a label plus a boxed arrow that steps forward
- * on hover. Deliberately not a Button variant; it reads as text, not a control.
+ * The label + boxed-arrow pair without the anchor, for parents that are
+ * themselves the interactive element (a whole-card link can hold only one
+ * anchor). The hover styles key off `group/arrow`, which the interactive
+ * ancestor must carry — ArrowLink below does, and so does the All-divisions
+ * tile in division-showcase.
  */
-export function ArrowLink({
-  href,
+export function ArrowMark({
   external = false,
   className,
   children,
-  ...props
-}: ArrowLinkProps) {
+}: {
+  external?: boolean;
+  className?: string;
+  children: React.ReactNode;
+}) {
   const Glyph = external ? ArrowUpRight : ArrowRight;
 
   return (
-    <Link
-      href={href}
+    <span
       className={cn(
-        // -my cancels the padding in layout; the padding still counts toward
-        // the hit box, so the target clears 44px without shifting anything.
-        "group/arrow -my-2 inline-flex items-center gap-3 py-2 text-sm font-medium text-foreground",
-        "rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+        "inline-flex items-center gap-3 text-sm font-medium text-foreground",
         className,
       )}
-      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      {...props}
     >
       {/* border-transparent rather than border-current/0: an opacity modifier
           on `current` compiles to a color-mix() over currentcolor, which
@@ -48,6 +47,35 @@ export function ArrowLink({
       >
         <Glyph className="size-3.5 transition-transform duration-200 ease-editorial group-hover/arrow:translate-x-px" />
       </span>
+    </span>
+  );
+}
+
+/**
+ * The editorial call-to-action: a label plus a boxed arrow that steps forward
+ * on hover. Deliberately not a Button variant; it reads as text, not a control.
+ */
+export function ArrowLink({
+  href,
+  external = false,
+  className,
+  children,
+  ...props
+}: ArrowLinkProps) {
+  return (
+    <Link
+      href={href}
+      className={cn(
+        // -my cancels the padding in layout; the padding still counts toward
+        // the hit box, so the target clears 44px without shifting anything.
+        "group/arrow -my-2 inline-flex py-2",
+        "rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+        className,
+      )}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      {...props}
+    >
+      <ArrowMark external={external}>{children}</ArrowMark>
     </Link>
   );
 }

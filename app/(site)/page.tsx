@@ -5,11 +5,11 @@ import { ClientNotes } from "@/components/sections/client-notes";
 import { CompanyIntro } from "@/components/sections/company-intro";
 import { ContactCta } from "@/components/sections/contact-cta";
 import { CoverageBand } from "@/components/sections/coverage-band";
+import { DivisionShowcase } from "@/components/sections/division-showcase";
 import { FaqTeaser } from "@/components/sections/faq-teaser";
 import { HomeHero } from "@/components/sections/home-hero";
 import { ProcessStrip } from "@/components/sections/process-strip";
 import { ProjectShowcase } from "@/components/sections/project-showcase";
-import { ServiceCards } from "@/components/sections/service-cards";
 import { TeamMarquee } from "@/components/sections/team-marquee";
 import { getHomeFaqs } from "@/content/faq";
 import { companyIntro, coverage, divisionsIntro, faqIntro, processIntro, selectedWorkIntro, teamIntro } from "@/content/home";
@@ -55,23 +55,11 @@ export default function HomePage() {
 
       <Section size="default">
         <Container>
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-16">
-            <div>
-              <h2 className="text-eyebrow text-muted-foreground">
-                {divisionsIntro.eyebrow}
-              </h2>
-              <p className="mt-6 max-w-xs text-h2">
-                {divisionsIntro.heading}
-              </p>
-              <div className="mt-8">
-                <ArrowLink href={divisionsIntro.link!.href}>
-                  {divisionsIntro.link!.label}
-                </ArrowLink>
-              </div>
-            </div>
-
-            <ServiceCards services={services} className="lg:col-span-2" />
-          </div>
+          <DivisionShowcase
+            intro={divisionsIntro}
+            services={services}
+            linkImage={siteImages.homeAllDivisions}
+          />
         </Container>
       </Section>
 
