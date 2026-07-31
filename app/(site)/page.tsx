@@ -10,7 +10,7 @@ import { HomeHero } from "@/components/sections/home-hero";
 import { ProcessStrip } from "@/components/sections/process-strip";
 import { ProjectShowcase } from "@/components/sections/project-showcase";
 import { ServiceCards } from "@/components/sections/service-cards";
-import { TeamStrip } from "@/components/sections/team-strip";
+import { TeamMarquee } from "@/components/sections/team-marquee";
 import { getHomeFaqs } from "@/content/faq";
 import { companyIntro, coverage, divisionsIntro, faqIntro, processIntro, selectedWorkIntro, teamIntro } from "@/content/home";
 import { siteImages } from "@/content/images";
@@ -85,7 +85,7 @@ export default function HomePage() {
 
       <Section size="default">
         <Container>
-          <TeamStrip intro={teamIntro} members={teamMembers} />
+          <TeamMarquee intro={teamIntro} members={teamMembers} />
         </Container>
       </Section>
 
