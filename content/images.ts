@@ -45,6 +45,13 @@ export const siteImages = {
     src: unsplash("photo-1742112125635-6f8201c6ee3f"),
     alt: "Two site workers in hard hats shaking hands in front of stacked precast concrete panels",
   },
+  /** Closing CTA panel on nearly every route. Shares the All-divisions source
+      (that tile renders it blurred, so they never read as the same frame)
+      until real jobsite photography lands. */
+  contactCta: {
+    src: unsplash("photo-1742112125635-6f8201c6ee3f"),
+    alt: "Two site workers in hard hats shaking hands in front of stacked precast concrete panels",
+  },
   about: [
     {
       src: "/images/about/about-laguna-coastline-aerial.avif",

@@ -15,6 +15,7 @@ export type ProcessPhase = {
 };
 
 export type CtaCopy = {
+  eyebrow: string;
   heading: string;
   lead: string;
   label: string;
@@ -122,12 +123,14 @@ export const projectTypeFallback = "Not sure yet";
  */
 export const ctaVariants = {
   home: {
+    eyebrow: "Start a project",
     heading: "Tell us about the site.",
     lead: "Send us the address or the plans. We'll tell you what it will support and what it will cost to build there.",
     label: "Book a call",
     href: "/contact",
   },
   projects: {
+    eyebrow: "Start a project",
     heading: "Your site could be next.",
     lead: "Every project here started as a piece of ground and a set of questions. Send us yours.",
     label: "Book a site visit",
@@ -135,30 +138,35 @@ export const ctaVariants = {
   },
   /** Shown on /projects while the portfolio is unpublished. */
   projectsComingSoon: {
+    eyebrow: "Start a project",
     heading: "Be one of the first on this page.",
     lead: "The portfolio is coming. Your project could be in it. Send us the site and we'll take it from the ground up.",
     label: "Book a call",
     href: "/contact",
   },
   services: {
+    eyebrow: "Start a project",
     heading: "Not sure which division you need?",
     lead: "Describe the project and we'll tell you which scopes it touches, and which ones we'd hold ourselves.",
     label: "Book a call",
     href: "/contact",
   },
   about: {
+    eyebrow: "Start a project",
     heading: "Put us on your next project.",
     lead: "One number, one schedule, one company answering for the result. Start with the address.",
     label: "Get in touch",
     href: "/contact",
   },
   faq: {
+    eyebrow: "Get an answer",
     heading: "Didn't find your question?",
     lead: "Ask it the direct way. Describe the project and we'll answer for your site, not in general terms.",
     label: "Ask us directly",
     href: "/contact",
   },
   licenses: {
+    eyebrow: "Due diligence",
     heading: "Want the paperwork?",
     lead: "Ask for it. License details and certificates of insurance, before you commit to anything.",
     label: "Request the paperwork",
@@ -169,6 +177,7 @@ export const ctaVariants = {
 /** Project pages personalise the panel with the project's neighborhood. */
 export function projectCta(neighborhood: string): CtaCopy {
   return {
+    eyebrow: "Start a project",
     heading: `Building in ${neighborhood}?`,
     lead: "Send us the address or the plans. We'll tell you what it will support and what it will cost to build there.",
     label: "Book a site visit",
