@@ -13,10 +13,10 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Routes
 
-- `/` — home: full-bleed viewport hero and the seven divisions; the featured-projects and client-notes sections are gated off until real material lands (see Publish gates)
+- `/` — home: full-bleed viewport hero, a who-we-are intro, the seven divisions with summaries, a process strip, a Southern California coverage band, a team filmstrip, an FAQ teaser and a closing CTA; the featured-projects and client-notes sections are gated off until real material lands (see Publish gates)
 - `/projects` and `/projects/[slug]` — currently a noindexed coming-soon page: the demo portfolio sits behind `published.projects`, the detail slugs 404, and the route stays out of the nav, footer and both sitemaps. The portfolio components (featured index, before/after compare gallery, lightbox, matched client notes) stay in the repo and return when the flag flips
-- `/services` and `/services/[slug]` — index of the seven divisions (multifamily, commercial, civil, energy, concrete, single-family, preconstruction) with a sticky image pane, process timeline and FAQ; division pages carry the narrative and included scopes. The four legacy renovation slugs redirect permanently to `/services`
-- `/about` — company story, mission and vision, team, and approach, each an anchored section (`#story`, `#mission`, `#team`, `#approach`)
+- `/services` and `/services/[slug]` — index of the seven divisions (multifamily, commercial, civil, energy, concrete, single-family, preconstruction) with a sticky image pane, process timeline, a delivery-model band on who does the work (in-house crews versus named licensed partners) and a three-question featured FAQ; division pages carry the narrative and included scopes. The four legacy renovation slugs redirect permanently to `/services`
+- `/about` — company story, mission and vision, team, approach and commitments, each an anchored section (`#story`, `#mission`, `#team`, `#approach`, `#commitments`), closing with a careers band into `/careers`
 - `/contact` — enquiry form (project type and project stage) backed by a server action with email delivery
 - `/faq` — every question grouped by topic behind an xl-and-up topic rail, each group rendered through the shared `FaqList`
 - `/careers` — values grid and a general-application panel; no openings to list, so there's no listings table
@@ -30,10 +30,10 @@ Open [http://localhost:3000](http://localhost:3000).
 - `app/(site)/` — public routes, sharing one layout with header and footer
 - `components/layout/` — `Container`, `Section`, `ArrowLink` primitives
 - `components/motion/` — `Reveal` entrance animation, Lenis smooth scroll, reduced-motion-aware provider
-- `components/sections/` — page sections, composed by the route files; `compare-slider` + `compare-gallery` power the before/after viewer, `gallery-lightbox` the full-screen photo viewer, `faq-topics` the xl-gated topic rail on `/faq`, `careers-overview` the values grid and application panel on `/careers`, `legal-article` the structured renderer shared by `/privacy`, `/terms` and `/accessibility`, `sitemap-directory` the grouped page index on `/sitemap`
+- `components/sections/` — page sections, composed by the route files; `company-intro`, `process-strip`, `coverage-band`, `team-strip` and `faq-teaser` compose the expanded home; `delivery-model` is the `/services` self-perform band; `studio-commitments` and `careers-band` extend `/about`; `compare-slider` + `compare-gallery` power the before/after viewer, `gallery-lightbox` the full-screen photo viewer, `faq-topics` the xl-gated topic rail on `/faq`, `careers-overview` the values grid and application panel on `/careers`, `legal-article` the structured renderer shared by `/privacy`, `/terms` and `/accessibility`, `sitemap-directory` the grouped page index on `/sitemap`
 - `components/site/` — header, mega menu, mobile nav, footer, theme toggle, skip link, scroll-progress hairline, back-to-top button, theme-color sync
 - `components/ui/` — shadcn/ui primitives (base-nova style)
-- `content/` — projects, services, about, team and studio copy, the image manifest and the nav-panel projection; `faq.ts`, `careers.ts`, `legal.ts` and `licenses.ts` back the six support routes; `sitemap.ts` projects the site tree for `/sitemap`
+- `content/` — `home.ts` owns all home copy, including the hero's; `services.ts` also carries the `/services` page copy and delivery-model band; `about.ts` also carries the commitments and careers-band copy; alongside projects, team and studio copy, the image manifest and the nav-panel projection; `faq.ts`, `careers.ts`, `legal.ts` and `licenses.ts` back the six support routes; `sitemap.ts` projects the site tree for `/sitemap`
 - `lib/site.ts` — single source of truth for name, nav, contact details and license
 - `lib/delivery.ts` — email delivery boundary used by the contact action
 - `scripts/` — the image pipeline (AVIF migration and size auditing)
@@ -76,7 +76,7 @@ Everything else is temporary Unsplash placeholder imagery, including the project
 - The CSLB license number (footer renders it only once set)
 - `app/icon.svg` is a typed "A" monogram until the real mark arrives
 - The demo project case studies and client notes, gated behind `published` until real ones exist
-- The remaining Unsplash photography (services, project galleries, three of the four About images)
+- The remaining Unsplash photography (services, project galleries, four of the five About images, the home intro diptych and the home coverage-band photo)
 
 ## Design system
 
