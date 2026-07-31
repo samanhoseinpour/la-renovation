@@ -22,6 +22,22 @@ export const siteImages = {
     src: "/images/home/home-downtown-la-skyline-sunset.avif",
     alt: "Downtown Los Angeles skyline at sunset, high-rise towers against the San Gabriel Mountains",
   },
+  /** Two-image diptych beside the "Who we are" copy on home. */
+  homeIntro: [
+    {
+      src: unsplash("photo-1743130940742-c0d1fff97f1c"),
+      alt: "Two workers pouring concrete into a rebar-lined foundation form in a residential backyard",
+    },
+    {
+      src: unsplash("photo-1682663810771-89d21838530f"),
+      alt: "Survey equipment on a tripod with a tower crane in the background",
+    },
+  ],
+  /** Full-bleed coverage band on home. Placeholder until a client photo lands. */
+  homeCoverage: {
+    src: unsplash("photo-1757030689760-3ec8be7326ae"),
+    alt: "Night paving crew operating an asphalt paving machine on a road",
+  },
   about: [
     {
       src: "/images/about/about-laguna-coastline-aerial.avif",
