@@ -59,6 +59,7 @@ export function getNavPanels(): NavPanels {
         { href: "/about#mission", index: "02", title: "Mission & vision", meta: "One roof, one schedule", image: siteImages.about[1] },
         { href: "/about#team", index: "03", title: "Team", meta: "The people running the divisions", image: siteImages.about[2] },
         { href: "/about#approach", index: "04", title: "Approach", meta: "How projects are priced and run", image: siteImages.about[3] },
+        { href: "/about#commitments", index: "05", title: "Commitments", meta: "Safety, quality, communication", image: siteImages.about[4] },
       ],
     },
   };

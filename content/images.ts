@@ -55,5 +55,9 @@ export const siteImages = {
       src: unsplash("photo-1493857671505-72967e2e2760"),
       alt: "Construction project planning with architectural models and blueprints",
     },
+    {
+      src: unsplash("photo-1635249578213-68b0aa67fdf7"),
+      alt: "Construction worker in a hard hat crouched among structural rebar cages",
+    },
   ],
 } satisfies Record<string, SiteImage | SiteImage[]>;

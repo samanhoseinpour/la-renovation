@@ -29,3 +29,21 @@ export const approach = [
   { title: "Own the critical path", body: "Earthwork, concrete, and structure set the schedule. We self-perform them so the risk sits with us instead of moving between parties while the clock runs." },
   { title: "Build the systems in", body: "Energy infrastructure is no longer an add-on. We engineer it as part of the building rather than fitting it around one." },
 ];
+
+export type Commitment = { title: string; body: string };
+
+/** #commitments on /about — written as how we work, never as records or certifications. */
+export const commitments: Commitment[] = [
+  {
+    title: "Safety",
+    body: "Planning the work includes planning how it's done without hurting anyone. Sequencing, protection, and housekeeping are part of the schedule, and anyone on site can stop work that doesn't look right without being asked to justify it later.",
+  },
+  {
+    title: "Quality",
+    body: "Quality is decided when the work is set up, not when it's inspected. We build to what the drawings intend, flag what won't hold up while it can still be corrected, and don't cover work we wouldn't stand behind.",
+  },
+  {
+    title: "Communication",
+    body: "The update you get is the one we'd want as an owner: what changed, what it touches, and what we're doing about it, delivered while there's still time to decide instead of after the fact.",
+  },
+];

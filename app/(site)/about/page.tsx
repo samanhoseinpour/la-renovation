@@ -4,10 +4,11 @@ import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { ContactCta } from "@/components/sections/contact-cta";
 import { PageHeader } from "@/components/sections/page-header";
+import { StudioCommitments } from "@/components/sections/studio-commitments";
 import { StudioMission } from "@/components/sections/studio-mission";
 import { StudioStory } from "@/components/sections/studio-story";
 import { StudioTeam } from "@/components/sections/studio-team";
-import { aboutFacts, aboutIntro, aboutStory, approach, mission, vision } from "@/content/about";
+import { aboutFacts, aboutIntro, aboutStory, approach, commitments, mission, vision } from "@/content/about";
 import { siteImages } from "@/content/images";
 import { ctaVariants } from "@/content/studio";
 import { teamMembers } from "@/content/team";
@@ -61,6 +62,8 @@ export default function AboutPage() {
           </div>
         </Container>
       </Section>
+
+      <StudioCommitments id="commitments" items={commitments} />
 
       <ContactCta copy={ctaVariants.about} />
     </>
