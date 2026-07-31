@@ -54,9 +54,9 @@ export function ScrollProgress() {
     <div
       ref={ref}
       aria-hidden
-      className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-0.5"
+      className="pointer-events-none fixed inset-x-0 top-0 z-60 h-0.5"
     >
-      <div className="h-full w-full origin-left bg-brand [transform:scaleX(var(--progress,0))]" />
+      <div className="h-full w-full origin-left bg-brand transform-[scaleX(var(--progress,0))]" />
     </div>
   );
 }

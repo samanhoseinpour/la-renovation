@@ -281,7 +281,7 @@ export function ContactStudio({
                     // dark:hover:bg-transparent kills the trigger's baked
                     // dark:hover:bg-input/50 — a grey fill on hover reads as
                     // a box, and this is styled as a borderless underline.
-                    "w-full data-[size=default]:h-12 data-[placeholder]:text-muted-foreground dark:hover:bg-transparent",
+                    "w-full data-[size=default]:h-12 data-placeholder:text-muted-foreground dark:hover:bg-transparent",
                   )}
                   aria-invalid={Boolean(fieldErrors.service)}
                   aria-describedby={
@@ -330,7 +330,7 @@ export function ContactStudio({
                     // dark:hover:bg-transparent kills the trigger's baked
                     // dark:hover:bg-input/50 — a grey fill on hover reads as
                     // a box, and this is styled as a borderless underline.
-                    "w-full data-[size=default]:h-12 data-[placeholder]:text-muted-foreground dark:hover:bg-transparent",
+                    "w-full data-[size=default]:h-12 data-placeholder:text-muted-foreground dark:hover:bg-transparent",
                   )}
                   aria-invalid={Boolean(fieldErrors.stage)}
                   aria-describedby={
