@@ -3,6 +3,8 @@ export type Faq = {
   answer: string;
   /** Marks the subset shown on /services. */
   featured?: boolean;
+  /** Marks the subset shown on the home teaser — keep disjoint from `featured`. */
+  homeFeatured?: boolean;
 };
 
 export type FaqTopic = {
@@ -27,6 +29,7 @@ export const faqTopics: FaqTopic[] = [
         question: "What actually happens during feasibility?",
         answer:
           "We walk the site and test what it supports: soil, utilities, access, zoning, and what the agency is likely to approve. You get a straight read on what the ground will hold, what it will take to build there, and where the risk sits. Design starts from that instead of from assumptions.",
+        homeFeatured: true,
       },
       {
         question: "How do permits and agency approvals work?",
@@ -54,6 +57,7 @@ export const faqTopics: FaqTopic[] = [
         question: "How does pricing work — fixed price or cost-plus?",
         answer:
           "Both. The contract form should match the risk. A fully drawn scope on understood ground can carry a fixed number; a project still moving through design is better held in a structure that prices decisions as they're made. We recommend a form once we've seen the drawings and the site, and we tell you why.",
+        homeFeatured: true,
       },
       {
         question: "How do change orders work?",
@@ -70,6 +74,7 @@ export const faqTopics: FaqTopic[] = [
         question: "Are you licensed and insured?",
         answer:
           "Yes — licensed as a California contractor and insured for the work we take on. Don't take that on faith, from us or from anyone: every contractor's license can be verified with the CSLB, and we'd rather you look ours up than wonder. The paperwork is available before you sign anything.",
+        homeFeatured: true,
       },
       {
         question: "Do your crews or your subs carry the insurance on site?",
@@ -91,6 +96,7 @@ export const faqTopics: FaqTopic[] = [
         question: "What kind of projects do you take on?",
         answer:
           "Multifamily and mixed-use, commercial and institutional, and civil site development, alongside the energy, concrete, and preconstruction scopes that support them. Most projects touch several divisions at once, which is the reason we hold them under one roof.",
+        homeFeatured: true,
       },
       {
         question: "Do you self-perform or subcontract?",
@@ -121,4 +127,9 @@ export const faqTopics: FaqTopic[] = [
 /** The 3–4 questions surfaced on /services, in topic order. */
 export function getFeaturedFaqs(): Faq[] {
   return faqTopics.flatMap((topic) => topic.faqs.filter((faq) => faq.featured));
+}
+
+/** The four questions on the home teaser, one per topic, disjoint from the /services set. */
+export function getHomeFaqs(): Faq[] {
+  return faqTopics.flatMap((topic) => topic.faqs.filter((faq) => faq.homeFeatured));
 }

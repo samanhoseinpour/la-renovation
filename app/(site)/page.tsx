@@ -5,12 +5,14 @@ import { ClientNotes } from "@/components/sections/client-notes";
 import { CompanyIntro } from "@/components/sections/company-intro";
 import { ContactCta } from "@/components/sections/contact-cta";
 import { CoverageBand } from "@/components/sections/coverage-band";
+import { FaqTeaser } from "@/components/sections/faq-teaser";
 import { HomeHero } from "@/components/sections/home-hero";
 import { ProcessStrip } from "@/components/sections/process-strip";
 import { ProjectShowcase } from "@/components/sections/project-showcase";
 import { ServiceCards } from "@/components/sections/service-cards";
 import { TeamStrip } from "@/components/sections/team-strip";
-import { companyIntro, coverage, divisionsIntro, processIntro, selectedWorkIntro, teamIntro } from "@/content/home";
+import { getHomeFaqs } from "@/content/faq";
+import { companyIntro, coverage, divisionsIntro, faqIntro, processIntro, selectedWorkIntro, teamIntro } from "@/content/home";
 import { siteImages } from "@/content/images";
 import { getAllProjects } from "@/content/projects";
 import { getAllServices } from "@/content/services";
@@ -84,6 +86,12 @@ export default function HomePage() {
       <Section size="default">
         <Container>
           <TeamStrip intro={teamIntro} members={teamMembers} />
+        </Container>
+      </Section>
+
+      <Section size="default" surface="muted">
+        <Container>
+          <FaqTeaser intro={faqIntro} faqs={getHomeFaqs()} />
         </Container>
       </Section>
 
