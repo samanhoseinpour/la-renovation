@@ -66,9 +66,13 @@ export function TeamMarquee({
             {paused ? "Play team photos" : "Pause team photos"}
           </button>
         )}
+        {/* rfm centers its flex tracks, which lets a two-line role shove its
+            card off the shared top edge; pin both containers to flex-start.
+            The ! is load-bearing: rfm injects its CSS un-layered at runtime,
+            which outranks anything in @layer utilities. */}
         <div
           aria-hidden
-          className="[mask-image:linear-gradient(to_right,transparent,black_3rem,black_calc(100%_-_3rem),transparent)]"
+          className="[mask-image:linear-gradient(to_right,transparent,black_3rem,black_calc(100%_-_3rem),transparent)] [&_.rfm-marquee]:items-start! [&_.rfm-initial-child-container]:items-start!"
         >
           <Marquee
             autoFill
