@@ -47,3 +47,18 @@ export const commitments: Commitment[] = [
     body: "The update you get is the one we'd want as an owner: what changed, what it touches, and what we're doing about it, delivered while there's still time to decide instead of after the fact.",
   },
 ];
+
+export type AboutCareersCopy = {
+  eyebrow: string;
+  statement: string;
+  body: string;
+  link: { label: string; href: string };
+};
+
+/** Careers hinge band on /about. Deliberately not a careersValues reuse — those are /careers' own outline. */
+export const aboutCareers: AboutCareersCopy = {
+  eyebrow: "Careers",
+  statement: "Built by people who'd rather build than broker.",
+  body: "The scopes that decide a project run under this roof, and so do the people who run them. If building the critical path sounds better than administering it, we'd like to hear from you.",
+  link: { label: "Explore careers", href: "/careers" },
+};

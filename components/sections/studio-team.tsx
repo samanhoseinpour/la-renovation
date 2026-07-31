@@ -14,7 +14,7 @@ type StudioTeamProps = {
  * Adapted from @shadcnblocks/team6: kept the eyebrow-plus-heading intro over
  * a four-across card grid; swapped its circular avatars for full-bleed 3:4
  * next/image frames, dropped the department badges and the "Explore
- * Careers" band (there are no openings to link to), and replaced its
+ * Careers" band (returned later as careers-band.tsx), and replaced its
  * gradient surface and py-24/container shell with Section/Container and
  * semantic tokens.
  */

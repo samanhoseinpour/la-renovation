@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
+import { CareersBand } from "@/components/sections/careers-band";
 import { ContactCta } from "@/components/sections/contact-cta";
 import { PageHeader } from "@/components/sections/page-header";
 import { StudioCommitments } from "@/components/sections/studio-commitments";
 import { StudioMission } from "@/components/sections/studio-mission";
 import { StudioStory } from "@/components/sections/studio-story";
 import { StudioTeam } from "@/components/sections/studio-team";
-import { aboutFacts, aboutIntro, aboutStory, approach, commitments, mission, vision } from "@/content/about";
+import { aboutCareers, aboutFacts, aboutIntro, aboutStory, approach, commitments, mission, vision } from "@/content/about";
 import { siteImages } from "@/content/images";
 import { ctaVariants } from "@/content/studio";
 import { teamMembers } from "@/content/team";
@@ -64,6 +65,8 @@ export default function AboutPage() {
       </Section>
 
       <StudioCommitments id="commitments" items={commitments} />
+
+      <CareersBand copy={aboutCareers} />
 
       <ContactCta copy={ctaVariants.about} />
     </>
