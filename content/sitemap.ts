@@ -8,8 +8,6 @@ export type SitemapEntry = {
   href: string;
   index: string;
   title: string;
-  /** Pre-composed meta line — the separator and phrasing are copy decisions. */
-  meta?: string;
 };
 
 export type SitemapGroup = {
@@ -21,27 +19,24 @@ export type SitemapGroup = {
 export const sitemapHeader = {
   eyebrow: "Sitemap",
   title: "The whole site, one page.",
-  lead: "Every page on the site in one list, from the main pages down to the fine print.",
+  lead: "Every page on the site in one place, from the main pages down to the fine print.",
 };
 
 /**
  * Lean projection of the site tree for the /sitemap directory. Only live
- * routes belong here, and /styleguide stays internal. Project/service meta
- * lines match content/nav.ts — change the two together.
+ * routes belong here, and /styleguide stays internal.
  */
 export function getSitemapGroups(): SitemapGroup[] {
   // Indices are derived, not hand-numbered, so gated entries (Projects while
   // unpublished) never leave a gap in the count.
   const pages = [
     { href: "/", title: "Home" },
-    ...(published.projects
-      ? [{ href: "/projects", title: "Projects", meta: "Built and current work" }]
-      : []),
-    { href: "/services", title: "Services", meta: "What we take on" },
-    { href: "/about", title: "About", meta: "Story, mission, team" },
-    { href: "/faq", title: "FAQ", meta: "Answers, grouped by topic" },
-    { href: "/careers", title: "Careers", meta: "Working here" },
-    { href: "/contact", title: "Contact", meta: "Start a conversation" },
+    ...(published.projects ? [{ href: "/projects", title: "Projects" }] : []),
+    { href: "/services", title: "Services" },
+    { href: "/about", title: "About" },
+    { href: "/faq", title: "FAQ" },
+    { href: "/careers", title: "Careers" },
+    { href: "/contact", title: "Contact" },
   ];
 
   const groups: SitemapGroup[] = [
@@ -58,7 +53,6 @@ export function getSitemapGroups(): SitemapGroup[] {
         href: `/projects/${project.slug}`,
         index: project.index,
         title: project.title,
-        meta: `${project.neighborhood} · ${project.scope}`,
       })),
     },
     {
@@ -67,7 +61,6 @@ export function getSitemapGroups(): SitemapGroup[] {
         href: `/services/${service.slug}`,
         index: service.index,
         title: service.title,
-        meta: service.scope,
       })),
     },
     {

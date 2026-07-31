@@ -22,7 +22,7 @@ Open [http://localhost:3000](http://localhost:3000).
 - `/careers` — values grid and a general-application panel; no openings to list, so there's no listings table
 - `/licenses` — how to verify a contractor's license, plus a bond/insurance summary; exists on disk but isn't linked from the footer or sitemap until the real CSLB number lands
 - `/privacy`, `/terms`, `/accessibility` — legal pages sharing one structured long-form renderer
-- `/sitemap` — a designed index of every page, grouped into pages, projects, services and legal; browsers that open `/sitemap.xml` land here through an Accept-header redirect while crawlers still receive the XML
+- `/sitemap` — a compact columned directory of every page, grouped into pages, projects, services and legal; browsers that open `/sitemap.xml` land here through an Accept-header redirect while crawlers still receive the XML
 - `/styleguide` — internal design reference (tokens, type scale, components)
 
 ## Where things live
@@ -30,7 +30,7 @@ Open [http://localhost:3000](http://localhost:3000).
 - `app/(site)/` — public routes, sharing one layout with header and footer
 - `components/layout/` — `Container`, `Section`, `ArrowLink` primitives
 - `components/motion/` — `Reveal` entrance animation, Lenis smooth scroll, reduced-motion-aware provider
-- `components/sections/` — page sections, composed by the route files; `company-intro`, `division-showcase`, `process-strip`, `coverage-band`, `team-marquee` and `faq-teaser` compose the expanded home; `delivery-model` is the `/services` self-perform band; `studio-commitments` and `careers-band` extend `/about`; `compare-slider` + `compare-gallery` power the before/after viewer, `gallery-lightbox` the full-screen photo viewer, `faq-topics` the xl-gated topic rail on `/faq`, `careers-overview` the values grid and application panel on `/careers`, `legal-article` the structured renderer shared by `/privacy`, `/terms` and `/accessibility`, `sitemap-directory` the grouped page index on `/sitemap`
+- `components/sections/` — page sections, composed by the route files; `company-intro`, `division-showcase`, `process-strip`, `coverage-band`, `team-marquee` and `faq-teaser` compose the expanded home; `delivery-model` is the `/services` self-perform band; `studio-commitments` and `careers-band` extend `/about`; `compare-slider` + `compare-gallery` power the before/after viewer, `gallery-lightbox` the full-screen photo viewer, `faq-topics` the xl-gated topic rail on `/faq`, `careers-overview` the values grid and application panel on `/careers`, `legal-article` the structured renderer shared by `/privacy`, `/terms` and `/accessibility`, `sitemap-directory` the columned page index on `/sitemap`
 - `components/site/` — header, mega menu, mobile nav, footer, theme toggle, skip link, scroll-progress hairline, back-to-top button, theme-color sync
 - `components/ui/` — shadcn/ui primitives (base-nova style)
 - `content/` — `home.ts` owns all home copy, including the hero's; `services.ts` also carries the `/services` page copy and delivery-model band; `about.ts` also carries the commitments and careers-band copy; alongside projects, team and studio copy, the image manifest and the nav-panel projection; `faq.ts`, `careers.ts`, `legal.ts` and `licenses.ts` back the six support routes; `sitemap.ts` projects the site tree for `/sitemap`

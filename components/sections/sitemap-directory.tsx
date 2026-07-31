@@ -10,47 +10,43 @@ type SitemapDirectoryProps = {
 };
 
 /**
- * The /sitemap directory: the mega-panel row list re-rendered as a static
- * page, one group per section. Server-only — no image pane, so none of the
- * menu's hover state comes along.
+ * The /sitemap directory: every group side by side in one compact columned
+ * index, so the page stays near one screen as routes accumulate. Rows keep
+ * the mega panel's index-and-title shorthand, not its full ledger rows.
+ * Server-only.
  */
 export function SitemapDirectory({ groups }: SitemapDirectoryProps) {
   return (
-    <>
-      {groups.map((group) => (
-        <Section key={group.label} size="sm">
-          <Container>
-            <Reveal>
+    <Section size="sm">
+      <Container>
+        <div className="grid grid-cols-1 gap-x-gutter gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+          {groups.map((group, i) => (
+            <Reveal key={group.label} delay={i * 0.08}>
               <h2 className="text-eyebrow text-muted-foreground">
                 {group.label}
               </h2>
-            </Reveal>
-            <Reveal delay={0.1}>
               {/* role="list": the list-style reset strips list semantics in VoiceOver */}
-              <ul role="list" className="mt-10 border-b border-border">
+              <ul role="list" className="mt-5 border-t border-border pt-3">
                 {group.entries.map((entry) => (
                   <li key={entry.href}>
                     <Link
                       href={entry.href}
-                      className="group/row grid grid-cols-[3.5rem_1fr] items-baseline gap-x-6 border-t border-border py-5 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:grid-cols-[3.5rem_1fr_auto]"
+                      className="group/row grid grid-cols-[2.75rem_1fr] items-baseline py-2 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
                     >
                       <span className="text-eyebrow tabular text-muted-foreground transition-colors duration-200 ease-editorial group-hover/row:text-foreground group-focus-visible/row:text-foreground">
                         {entry.index}
                       </span>
-                      <span className="text-h3">{entry.title}</span>
-                      {entry.meta ? (
-                        <span className="hidden text-eyebrow text-muted-foreground sm:block">
-                          {entry.meta}
-                        </span>
-                      ) : null}
+                      <span className="text-base font-medium">
+                        {entry.title}
+                      </span>
                     </Link>
                   </li>
                 ))}
               </ul>
             </Reveal>
-          </Container>
-        </Section>
-      ))}
-    </>
+          ))}
+        </div>
+      </Container>
+    </Section>
   );
 }
