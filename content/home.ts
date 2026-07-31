@@ -1,5 +1,3 @@
-import type { SiteImage } from "./images";
-
 /** Eyebrow label plus optional sentence, lead and ArrowLink for a home section. */
 export type SectionIntro = {
   eyebrow: string;
