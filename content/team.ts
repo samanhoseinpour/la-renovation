@@ -9,6 +9,7 @@ export const teamMembers: TeamMember[] = [
   { name: "Mazen Khoudeir", role: "Architectural Project Manager", photo: { src: "/images/team/mazen-khoudeir.avif", alt: "Mazen Khoudeir" } },
   { name: "Mounir Khoudeir", role: "Sustainable Energy Integration Advisor", photo: { src: "/images/team/mounir-khoudeir.avif", alt: "Mounir Khoudeir" } },
   { name: "Daniel Zhang", role: "Global Partnerships Manager", photo: { src: "/images/team/daniel-zhang.avif", alt: "Daniel Zhang" } },
+  { name: "Payam Shirazi", role: "Business Development", photo: { src: "/images/team/payam-shirazi.avif", alt: "Payam Shirazi" } },
   { name: "Michelle Taylor", role: "Marketing Coordinator", photo: { src: "/images/team/michelle-taylor.avif", alt: "Michelle Taylor" } },
   { name: "Arshia Esmaeili", role: "Sales and Marketing Specialist", photo: { src: "/images/team/arshia-esmaeili.avif", alt: "Arshia Esmaeili" } },
 ];
