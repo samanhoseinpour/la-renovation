@@ -1,10 +1,5 @@
 export type { Faq } from "./faq";
 
-export type Stat = {
-  value: string;
-  label: string;
-};
-
 export type Testimonial = {
   quote: string;
   /** Role + city, not a name. Clients asked to stay anonymous. */
