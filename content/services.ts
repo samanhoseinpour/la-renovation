@@ -298,3 +298,27 @@ export function getService(slug: string): Service | undefined {
 export function getServiceSlugs(): string[] {
   return services.map((service) => service.slug);
 }
+
+export type ServicesPageCopy = {
+  header: { eyebrow: string; title: string; lead: string };
+  process: { eyebrow: string; heading: string };
+  faq: { eyebrow: string; heading: string; allLabel: string };
+};
+
+/** /services page strings. Section structure stays in the route file. */
+export const servicesPage: ServicesPageCopy = {
+  header: {
+    eyebrow: "What we do",
+    title: "Seven divisions. One contract.",
+    lead: "Most contractors coordinate. We self-perform the scopes that decide whether a project holds its schedule, and we engineer the systems that increasingly decide whether it passes inspection at all.",
+  },
+  process: {
+    eyebrow: "How it runs",
+    heading: "One contract, five phases.",
+  },
+  faq: {
+    eyebrow: "Questions",
+    heading: "Asked on almost every first call.",
+    allLabel: "All questions",
+  },
+};

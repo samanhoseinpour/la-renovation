@@ -10,7 +10,7 @@ import { PageHeader } from "@/components/sections/page-header";
 import { ProcessTimeline } from "@/components/sections/process-timeline";
 import { ServicePanorama } from "@/components/sections/service-panorama";
 import { getFeaturedFaqs } from "@/content/faq";
-import { getAllServices } from "@/content/services";
+import { getAllServices, servicesPage } from "@/content/services";
 import { ctaVariants, processPhases } from "@/content/studio";
 
 export const metadata: Metadata = {
@@ -24,9 +24,9 @@ export default function ServicesPage() {
   return (
     <>
       <PageHeader
-        eyebrow="What we do"
-        title="Seven divisions. One contract."
-        lead="Most contractors coordinate. We self-perform the scopes that decide whether a project holds its schedule, and we engineer the systems that increasingly decide whether it passes inspection at all."
+        eyebrow={servicesPage.header.eyebrow}
+        title={servicesPage.header.title}
+        lead={servicesPage.header.lead}
       />
 
       <Section>
@@ -38,9 +38,9 @@ export default function ServicesPage() {
       <Section surface="muted">
         <Container>
           <Reveal>
-            <p className="text-eyebrow text-muted-foreground">How it runs</p>
+            <p className="text-eyebrow text-muted-foreground">{servicesPage.process.eyebrow}</p>
             <h2 className="mt-6 max-w-2xl text-h2 text-balance">
-              One contract, five phases.
+              {servicesPage.process.heading}
             </h2>
           </Reveal>
           <div className="mt-14">
@@ -52,16 +52,16 @@ export default function ServicesPage() {
       <Section>
         <Container>
           <Reveal>
-            <p className="text-eyebrow text-muted-foreground">Questions</p>
+            <p className="text-eyebrow text-muted-foreground">{servicesPage.faq.eyebrow}</p>
             <h2 className="mt-6 max-w-2xl text-h2 text-balance">
-              Asked on almost every first call.
+              {servicesPage.faq.heading}
             </h2>
           </Reveal>
           <div className="mt-14">
             <FaqList faqs={getFeaturedFaqs()} />
           </div>
           <div className="mt-10">
-            <ArrowLink href="/faq">All questions</ArrowLink>
+            <ArrowLink href="/faq">{servicesPage.faq.allLabel}</ArrowLink>
           </div>
         </Container>
       </Section>
