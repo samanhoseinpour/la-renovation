@@ -322,3 +322,32 @@ export const servicesPage: ServicesPageCopy = {
     allLabel: "All questions",
   },
 };
+
+export type DeliveryModelCopy = {
+  eyebrow: string;
+  heading: string;
+  lead: string;
+  columns: { title: string; body: string }[];
+  image: SiteImage;
+};
+
+/** The self-perform story on /services. Re-authored from the FAQ answers, not quoted. */
+export const deliveryModel: DeliveryModelCopy = {
+  eyebrow: "Who does the work",
+  heading: "Self-performed where it decides the outcome.",
+  lead: "A project's schedule is set by a handful of scopes and lost in the seams between the companies performing them. We keep those scopes on our own payroll and hold everything under one agreement, so when conditions change on site there is no negotiation over whose problem it is.",
+  columns: [
+    {
+      title: "Our crews",
+      body: "Sitework, foundations, structural concrete, and the energy systems that increasingly shape approvals are performed by people who work here, priced by the office that employs them and accountable to the same schedule as everything else.",
+    },
+    {
+      title: "Licensed partners",
+      body: "Specialty trades are carried by licensed partners we name before work begins and stand behind after it's done. Their coverage is verified before they mobilize, and their work runs inside our schedule, not alongside it.",
+    },
+  ],
+  image: {
+    src: unsplash("photo-1742112125635-6f8201c6ee3f"),
+    alt: "Two site workers in hard hats shaking hands in front of stacked precast concrete panels",
+  },
+};

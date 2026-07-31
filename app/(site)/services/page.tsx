@@ -5,12 +5,13 @@ import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
 import { ContactCta } from "@/components/sections/contact-cta";
+import { DeliveryModel } from "@/components/sections/delivery-model";
 import { FaqList } from "@/components/sections/faq-list";
 import { PageHeader } from "@/components/sections/page-header";
 import { ProcessTimeline } from "@/components/sections/process-timeline";
 import { ServicePanorama } from "@/components/sections/service-panorama";
 import { getFeaturedFaqs } from "@/content/faq";
-import { getAllServices, servicesPage } from "@/content/services";
+import { deliveryModel, getAllServices, servicesPage } from "@/content/services";
 import { ctaVariants, processPhases } from "@/content/studio";
 
 export const metadata: Metadata = {
@@ -50,6 +51,18 @@ export default function ServicesPage() {
       </Section>
 
       <Section>
+        <Container>
+          <Reveal>
+            <p className="text-eyebrow text-muted-foreground">{deliveryModel.eyebrow}</p>
+            <h2 className="mt-6 max-w-2xl text-h2 text-balance">{deliveryModel.heading}</h2>
+          </Reveal>
+          <div className="mt-14">
+            <DeliveryModel copy={deliveryModel} />
+          </div>
+        </Container>
+      </Section>
+
+      <Section surface="muted">
         <Container>
           <Reveal>
             <p className="text-eyebrow text-muted-foreground">{servicesPage.faq.eyebrow}</p>

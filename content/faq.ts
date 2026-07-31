@@ -102,7 +102,6 @@ export const faqTopics: FaqTopic[] = [
         question: "Do you self-perform or subcontract?",
         answer:
           "We self-perform the scopes that set the schedule — sitework, foundations, structure, and the energy systems increasingly tied to permitting. Specialty trades go to licensed partners we name and stand behind, not whoever bids lowest that week.",
-        featured: true,
       },
       {
         question: "Can you take just the sitework or energy scope?",
