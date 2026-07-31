@@ -31,7 +31,7 @@ Open [http://localhost:3000](http://localhost:3000).
 - `components/layout/` — `Container`, `Section`, `ArrowLink` primitives
 - `components/motion/` — `Reveal` entrance animation, Lenis smooth scroll, reduced-motion-aware provider
 - `components/sections/` — page sections, composed by the route files; `company-intro`, `division-showcase`, `process-strip`, `coverage-band`, `team-marquee` and `faq-teaser` compose the expanded home; `delivery-model` is the `/services` self-perform band; `studio-commitments` and `careers-band` extend `/about`; `compare-slider` + `compare-gallery` power the before/after viewer, `gallery-lightbox` the full-screen photo viewer, `faq-topics` the xl-gated topic rail on `/faq`, `careers-overview` the values grid and application panel on `/careers`, `legal-article` the structured renderer shared by `/privacy`, `/terms` and `/accessibility`, `sitemap-directory` the columned page index on `/sitemap`
-- `components/site/` — header, mega menu, mobile nav, footer, theme toggle, skip link, scroll-progress hairline, back-to-top button, theme-color sync
+- `components/site/` — header, mega menu, mobile nav, footer, theme toggle, skip link, scroll-progress hairline, overlay scroll thumb, back-to-top button, theme-color sync
 - `components/ui/` — shadcn/ui primitives (base-nova style)
 - `content/` — `home.ts` owns all home copy, including the hero's; `services.ts` also carries the `/services` page copy and delivery-model band; `about.ts` also carries the commitments and careers-band copy; alongside projects, team and studio copy, the image manifest and the nav-panel projection; `faq.ts`, `careers.ts`, `legal.ts` and `licenses.ts` back the six support routes; `sitemap.ts` projects the site tree for `/sitemap`
 - `lib/site.ts` — single source of truth for name, nav, contact details and license
@@ -44,7 +44,7 @@ Site copy and data live in `content/` and `lib/site.ts`, not in components. Copy
 
 Desktop navigation is an animated mega menu with a Home link up front: Services and About each open a full-width panel under the header (Projects rejoins them once the portfolio publishes), with a live image that follows the hovered row. The triggers are links too — hover opens the panel, click goes straight to the section route; on touch, where there is no hover, a tap opens the panel instead. The About panel links to the anchored sections of `/about`; anchor landings clear the sticky header from both same-page and cross-page navigation. The header hides on scroll down and returns on scroll up, staying pinned while a menu is open. On mobile the same three groups expand in place inside the sheet. Panel data is projected from `content/` by `content/nav.ts`, so the menu stays in sync with the portfolio.
 
-A steel hairline along the top of the viewport tracks reading position, and a back-to-top button fades in once the page is about two screens deep — smooth-scrolling through Lenis on desktop, instantly for reduced-motion users. Keyboard users get a skip-to-content link ahead of the header. Route changes crossfade through the View Transitions API behind Next's experimental `viewTransition` flag; browsers without support simply swap.
+A steel hairline along the top of the viewport tracks reading position. The native scrollbar is hidden — its opaque gutter would sit as a light strip beside the full-bleed photo bands — and a slim steel thumb floats over the right edge of the content in its place on desktop. A back-to-top button fades in once the page is about two screens deep — smooth-scrolling through Lenis on desktop, instantly for reduced-motion users. Keyboard users get a skip-to-content link ahead of the header. Route changes crossfade through the View Transitions API behind Next's experimental `viewTransition` flag; browsers without support simply swap.
 
 ## Contact form delivery
 
@@ -80,7 +80,7 @@ Everything else is temporary Unsplash placeholder imagery, including the project
 
 ## Design system
 
-Design tokens (color, type scale, spacing, radii) are defined in `app/globals.css`. The `/styleguide` route renders them live. Light theme is the default; dark mode is available through the header toggle. The scrollbar and the browser's `theme-color` chrome follow the active theme through the same tokens.
+Design tokens (color, type scale, spacing, radii) are defined in `app/globals.css`. The `/styleguide` route renders them live. Light theme is the default; dark mode is available through the header toggle. The overlay scroll thumb and the browser's `theme-color` chrome follow the active theme through the same tokens.
 
 ## License
 

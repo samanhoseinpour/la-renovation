@@ -271,16 +271,24 @@
     scroll-behavior: auto;
   }
 
-  /* Token-driven scrollbar: steel thumb (--brand, the styleguide accent) on
-     a transparent track so the page surface shows through. Brand clears 3:1
-     non-text contrast in both themes — #2B4A63 on paper, #7A99B5 on
-     graphite. Inherits into the sheet scroller on purpose; the mega panel
-     suppresses its bar with scrollbar-none instead. No `scrollbar-width:
-     thin`: the root bar is a primary grab target. color-scheme above keeps
-     the corner and unstyled scrollers on theme. Firefox/Chromium honor
-     scrollbar-color; Safari only from 26.2, older ones keep the native bar. */
+  /* Root scrollbar hidden by choice: a classic bar's gutter sits beside the
+     viewport and can only ever paint the page background — over the
+     full-bleed dark bands (hero, coverage, contact CTA) that is a glaring
+     light strip, and no engine draws the photo under it. The overlay
+     scroll thumb (components/site/scroll-thumb.tsx) floats over the content
+     in its place; wheel, keys and trackpad scrolling are untouched.
+     scrollbar-color stays for the
+     embedded scrollers that inherit it (nav sheet, steel thumb on
+     transparent): scrollbar-width does not inherit, so only the root bar
+     hides. The webkit rule covers Safari before 18.2; in Chromium the
+     standard properties override it. */
   html {
     scrollbar-color: var(--brand) transparent;
+    scrollbar-width: none;
+  }
+
+  html::-webkit-scrollbar {
+    display: none;
   }
 
   body {
