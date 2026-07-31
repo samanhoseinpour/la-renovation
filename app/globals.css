@@ -230,6 +230,16 @@
   border-top: 1px solid var(--border);
 }
 
+/* Scroll container with the bar suppressed (mega panel). Wheel, touch and
+   keyboard scrolling all keep working; the standard property covers modern
+   engines, the webkit pseudo older Safari. */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -261,15 +271,16 @@
     scroll-behavior: auto;
   }
 
-  /* Token-driven scrollbar. --input is the 3:1 non-text stroke in both
-     themes (--border, a hairline, all but disappears as a thumb); the track
-     stays transparent so the page surface shows through. Inherits into the
-     nav-panel and sheet scrollers on purpose — --input clears 3:1 on popover
-     surfaces too. No `scrollbar-width: thin`: the root bar is a primary grab
-     target. color-scheme above keeps the corner and unstyled scrollers on
-     theme. */
+  /* Token-driven scrollbar: steel thumb (--brand, the styleguide accent) on
+     a transparent track so the page surface shows through. Brand clears 3:1
+     non-text contrast in both themes — #2B4A63 on paper, #7A99B5 on
+     graphite. Inherits into the sheet scroller on purpose; the mega panel
+     suppresses its bar with scrollbar-none instead. No `scrollbar-width:
+     thin`: the root bar is a primary grab target. color-scheme above keeps
+     the corner and unstyled scrollers on theme. Firefox/Chromium honor
+     scrollbar-color; Safari only from 26.2, older ones keep the native bar. */
   html {
-    scrollbar-color: var(--input) transparent;
+    scrollbar-color: var(--brand) transparent;
   }
 
   body {

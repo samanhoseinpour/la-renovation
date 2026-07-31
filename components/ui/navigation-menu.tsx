@@ -129,11 +129,13 @@ function NavigationMenuPopup({
     <NavigationMenuPrimitive.Popup
       data-slot="navigation-menu-popup"
       // Guards short viewports; Lenis must not hijack the panel's own scroll.
+      // scrollbar-none keeps that overflow path but suppresses the bar — the
+      // page scrollbar is the only one on screen while the panel is open.
       data-lenis-prevent=""
       // bg-background (not popover): in dark mode the panel must read as an
       // extension of the header surface, separated by the hairline alone.
       className={cn(
-        "relative h-(--popup-height) max-h-(--available-height) w-(--popup-width) overflow-y-auto border-b border-border bg-background text-foreground transition-[opacity,translate,width,height] duration-[350ms] ease-editorial outline-none data-starting-style:-translate-y-2 data-starting-style:opacity-0 data-ending-style:opacity-0 data-ending-style:duration-150 data-ending-style:ease-exit",
+        "relative h-(--popup-height) max-h-(--available-height) w-(--popup-width) overflow-y-auto scrollbar-none border-b border-border bg-background text-foreground transition-[opacity,translate,width,height] duration-[350ms] ease-editorial outline-none data-starting-style:-translate-y-2 data-starting-style:opacity-0 data-ending-style:opacity-0 data-ending-style:duration-150 data-ending-style:ease-exit",
         className
       )}
       {...props}

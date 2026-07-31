@@ -116,14 +116,18 @@ export function SiteHeader({ panels }: { panels: NavPanels }) {
       className={cn(
         // Tailwind v4 translate utilities set the `translate` property, so the
         // transition list must name it — `transition-transform` would snap.
-        "sticky top-0 z-50 border-b transition-[translate,color,background-color,border-color] duration-300 ease-editorial",
+        // h-16 lives on the bordered box so the border counts inside the 64px
+        // total. On the inner Container it sat outside, the header ran 65px,
+        // and every -64px contract (hero -mt-16, Lenis anchors, observer
+        // rootMargin) missed by 1px — page background showed above the hero.
+        "sticky top-0 z-50 h-16 border-b transition-[translate,color,background-color,border-color] duration-300 ease-editorial",
         hidden && !pinned && "-translate-y-full focus-within:translate-y-0",
         heroBar
           ? "dark border-transparent bg-transparent"
           : "border-border bg-background/80 backdrop-blur-md",
       )}
     >
-      <Container as="div" className="flex h-16 items-center justify-between gap-8">
+      <Container as="div" className="flex h-full items-center justify-between gap-8">
         <Link
           href="/"
           className="rounded-sm text-lg font-semibold tracking-tight leading-none text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
