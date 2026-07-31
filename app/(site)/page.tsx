@@ -2,13 +2,15 @@ import { ArrowLink } from "@/components/layout/arrow-link";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { ClientNotes } from "@/components/sections/client-notes";
+import { CompanyIntro } from "@/components/sections/company-intro";
 import { ContactCta } from "@/components/sections/contact-cta";
 import { HomeHero } from "@/components/sections/home-hero";
 import { ProjectShowcase } from "@/components/sections/project-showcase";
 import { ServiceCards } from "@/components/sections/service-cards";
-import { divisionsIntro, selectedWorkIntro } from "@/content/home";
+import { companyIntro, divisionsIntro, selectedWorkIntro } from "@/content/home";
 import { getAllProjects } from "@/content/projects";
 import { getAllServices } from "@/content/services";
+import { siteImages } from "@/content/images";
 import { ctaVariants, testimonials } from "@/content/studio";
 import { published } from "@/lib/site";
 
@@ -40,6 +42,12 @@ export default function HomePage() {
       )}
 
       <Section size="default" surface="muted">
+        <Container>
+          <CompanyIntro copy={companyIntro} images={siteImages.homeIntro} />
+        </Container>
+      </Section>
+
+      <Section size="default">
         <Container>
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-16">
             <div>
