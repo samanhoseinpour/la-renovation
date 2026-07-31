@@ -9,11 +9,13 @@ import { HomeHero } from "@/components/sections/home-hero";
 import { ProcessStrip } from "@/components/sections/process-strip";
 import { ProjectShowcase } from "@/components/sections/project-showcase";
 import { ServiceCards } from "@/components/sections/service-cards";
-import { companyIntro, coverage, divisionsIntro, processIntro, selectedWorkIntro } from "@/content/home";
+import { TeamStrip } from "@/components/sections/team-strip";
+import { companyIntro, coverage, divisionsIntro, processIntro, selectedWorkIntro, teamIntro } from "@/content/home";
 import { siteImages } from "@/content/images";
 import { getAllProjects } from "@/content/projects";
 import { getAllServices } from "@/content/services";
 import { ctaVariants, processPhases, testimonials } from "@/content/studio";
+import { teamMembers } from "@/content/team";
 import { published } from "@/lib/site";
 
 export default function HomePage() {
@@ -78,6 +80,12 @@ export default function HomePage() {
       </Section>
 
       <CoverageBand copy={coverage} image={siteImages.homeCoverage} />
+
+      <Section size="default">
+        <Container>
+          <TeamStrip intro={teamIntro} members={teamMembers} />
+        </Container>
+      </Section>
 
       {published.testimonials && <ClientNotes testimonials={testimonials} />}
 
