@@ -4,7 +4,7 @@ import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { getAllProjects } from "@/content/projects";
 import { getAllServices } from "@/content/services";
-import { site } from "@/lib/site";
+import { published, site } from "@/lib/site";
 
 /**
  * Rethemed from @shadcnblocks/footer5. The four-column responsive grid is the
@@ -13,12 +13,16 @@ import { site } from "@/lib/site";
  * badges, and the fixed py-32 — vertical rhythm comes from <Section>.
  */
 export function SiteFooter() {
+  // Columns that gate down to nothing (Selected work while the portfolio is
+  // unpublished) drop out entirely rather than rendering a bare heading.
   const columns = [
     {
       title: "Company",
       links: [
         { label: "About", href: "/about" },
-        { label: "Projects", href: "/projects" },
+        ...(published.projects
+          ? [{ label: "Projects", href: "/projects" }]
+          : []),
         { label: "Careers", href: "/careers" },
         { label: "FAQ", href: "/faq" },
         { label: "Contact", href: "/contact" },
@@ -40,12 +44,16 @@ export function SiteFooter() {
           href: `/projects/${project.slug}`,
         })),
     },
-  ];
+  ].filter((column) => column.links.length > 0);
 
   return (
     <Section as="footer" size="sm" className="mt-auto border-t border-border">
       <Container>
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+        <div
+          className={`grid gap-12 md:grid-cols-2 ${
+            columns.length >= 3 ? "lg:grid-cols-4" : "lg:grid-cols-3"
+          }`}
+        >
           <div>
             <div>
               <span className="block text-2xl font-bold leading-none tracking-[0.2em]">ARAZ</span>
@@ -63,7 +71,10 @@ export function SiteFooter() {
                   <br />
                 </>
               ) : null}
-              {site.contact.address.city}, {site.contact.address.state}
+              {site.contact.address.city
+                ? `${site.contact.address.city}, `
+                : ""}
+              {site.contact.address.state}
               {site.contact.address.zip ? ` ${site.contact.address.zip}` : ""}
             </address>
           </div>

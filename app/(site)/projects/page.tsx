@@ -1,29 +1,58 @@
 import type { Metadata } from "next";
 
+import { ArrowLink } from "@/components/layout/arrow-link";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { ContactCta } from "@/components/sections/contact-cta";
 import { PageHeader } from "@/components/sections/page-header";
 import { ProjectIndex } from "@/components/sections/project-index";
-import { getAllProjects } from "@/content/projects";
+import {
+  getAllProjects,
+  projectsComingSoon,
+  projectsHeader,
+} from "@/content/projects";
 import { ctaVariants } from "@/content/studio";
+import { published } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description:
-    "Selected renovations, additions and ADUs across Los Angeles — Los Feliz, Laurel Canyon, Venice and Silver Lake.",
+  description: published.projects
+    ? projectsHeader.metaDescription
+    : projectsComingSoon.metaDescription,
   alternates: { canonical: "/projects" },
+  // Unindex while the portfolio is unpublished — same rule as /licenses.
+  ...(published.projects ? {} : { robots: { index: false, follow: false } }),
 };
 
 export default function ProjectsPage() {
   const projects = getAllProjects();
 
+  if (projects.length === 0) {
+    return (
+      <>
+        <PageHeader
+          eyebrow={projectsComingSoon.eyebrow}
+          title={projectsComingSoon.title}
+          lead={projectsComingSoon.lead}
+        />
+
+        <Section size="default">
+          <Container>
+            <ArrowLink href="/services">See what we take on</ArrowLink>
+          </Container>
+        </Section>
+
+        <ContactCta copy={ctaVariants.projectsComingSoon} />
+      </>
+    );
+  }
+
   return (
     <>
       <PageHeader
         eyebrow={`Selected work · ${projects.length} projects`}
-        title="Houses we have taken apart and put back together."
-        lead="Most of our work is on Los Angeles housing stock built between 1920 and 1970. The constraints are rarely where people expect."
+        title={projectsHeader.title}
+        lead={projectsHeader.lead}
       />
 
       <Section size="default">

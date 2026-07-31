@@ -8,6 +8,27 @@ export type NavItem = {
 };
 
 /**
+ * Build-time publish gates for content that exists in the repo but isn't
+ * ready to show: demo projects, client notes with no real clients behind
+ * them. Flip a flag to true and every gated surface (nav, home, footer,
+ * sitemaps, routes) comes back on its own — nothing else needs editing.
+ */
+export const published: { projects: boolean; testimonials: boolean } = {
+  projects: false,
+  testimonials: false,
+};
+
+// The Projects item stays defined while unpublished so the flag flip
+// restores it; the filter inside `site` is what keeps it out of the header.
+const navItems: readonly NavItem[] = [
+  { label: "Home", href: "/" },
+  { label: "Projects", href: "/projects", panel: "projects" },
+  { label: "Services", href: "/services", panel: "services" },
+  { label: "About", href: "/about", panel: "about" },
+  { label: "Contact", href: "/contact" },
+];
+
+/**
  * Single source of truth for site-wide copy, navigation and contact details.
  * Anything that appears in more than one place belongs here.
  */
@@ -25,12 +46,12 @@ export const site = {
     email: "office@arazconstruction.example", // placeholder — client to supply
     phone: "+1 (714) 555-0163", // placeholder — client to supply
     phoneHref: "tel:+17145550163",
-    // City-level only until the client sends a real street address; street
-    // and zip stay blank rather than fabricated. Consumers must render-guard
-    // both.
+    // The client dropped the county-level base claim (the site speaks
+    // Southern California only), so street, city and zip all stay blank
+    // until a real address lands. Consumers must render-guard every field.
     address: {
       street: "",
-      city: "Orange County",
+      city: "",
       state: "California",
       zip: "",
     },
@@ -42,13 +63,9 @@ export const site = {
     { label: "LinkedIn", href: "https://linkedin.com" },
   ],
 
-  nav: [
-    { label: "Home", href: "/" },
-    { label: "Projects", href: "/projects", panel: "projects" },
-    { label: "Services", href: "/services", panel: "services" },
-    { label: "About", href: "/about", panel: "about" },
-    { label: "Contact", href: "/contact" },
-  ] satisfies NavItem[],
+  nav: navItems.filter(
+    (item) => item.panel !== "projects" || published.projects,
+  ),
 
   /**
    * Shown in the footer. CA contractors are required to display this, but a

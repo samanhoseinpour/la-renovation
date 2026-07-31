@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { getAllProjects } from "@/content/projects";
 import { getAllServices } from "@/content/services";
-import { site } from "@/lib/site";
+import { published, site } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
@@ -25,10 +25,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${site.url}/sitemap`, changeFrequency: "yearly", priority: 0.3 },
   ] satisfies MetadataRoute.Sitemap;
 
-  const staticRoutes: MetadataRoute.Sitemap = staticPages.map((entry) => ({
-    ...entry,
-    lastModified,
-  }));
+  // /projects stays out of the XML while the portfolio is unpublished; a
+  // filter (not a conditional spread inside the literal) keeps `satisfies`
+  // narrowing changeFrequency.
+  const staticRoutes: MetadataRoute.Sitemap = staticPages
+    .filter(
+      (entry) => published.projects || entry.url !== `${site.url}/projects`,
+    )
+    .map((entry) => ({
+      ...entry,
+      lastModified,
+    }));
 
   const projectRoutes: MetadataRoute.Sitemap = getAllProjects().map(
     (project) => ({

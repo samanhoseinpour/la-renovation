@@ -138,6 +138,13 @@ export const ctaVariants = {
     label: "Book a site visit",
     href: "/contact",
   },
+  /** Shown on /projects while the portfolio is unpublished. */
+  projectsComingSoon: {
+    heading: "Be one of the first on this page.",
+    lead: "The portfolio is coming. Your project could be in it — send us the site and we'll take it from the ground up.",
+    label: "Book a call",
+    href: "/contact",
+  },
   services: {
     heading: "Not sure which division you need?",
     lead: "Describe the project and we'll tell you which scopes it touches — and which ones we'd hold ourselves.",

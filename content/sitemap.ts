@@ -1,3 +1,5 @@
+import { published } from "@/lib/site";
+
 import { accessibilityStatement, privacyPolicy, termsOfUse } from "./legal";
 import { getAllProjects } from "./projects";
 import { getAllServices } from "./services";
@@ -28,18 +30,27 @@ export const sitemapHeader = {
  * lines match content/nav.ts — change the two together.
  */
 export function getSitemapGroups(): SitemapGroup[] {
-  return [
+  // Indices are derived, not hand-numbered, so gated entries (Projects while
+  // unpublished) never leave a gap in the count.
+  const pages = [
+    { href: "/", title: "Home" },
+    ...(published.projects
+      ? [{ href: "/projects", title: "Projects", meta: "Built and current work" }]
+      : []),
+    { href: "/services", title: "Services", meta: "What we take on" },
+    { href: "/about", title: "About", meta: "Story, mission, team" },
+    { href: "/faq", title: "FAQ", meta: "Answers, grouped by topic" },
+    { href: "/careers", title: "Careers", meta: "Working here" },
+    { href: "/contact", title: "Contact", meta: "Start a conversation" },
+  ];
+
+  const groups: SitemapGroup[] = [
     {
       label: "Pages",
-      entries: [
-        { href: "/", index: "01", title: "Home" },
-        { href: "/projects", index: "02", title: "Projects", meta: "Built and current work" },
-        { href: "/services", index: "03", title: "Services", meta: "What we take on" },
-        { href: "/about", index: "04", title: "About", meta: "Story, mission, team" },
-        { href: "/faq", index: "05", title: "FAQ", meta: "Answers, grouped by topic" },
-        { href: "/careers", index: "06", title: "Careers", meta: "Working here" },
-        { href: "/contact", index: "07", title: "Contact", meta: "Start a conversation" },
-      ],
+      entries: pages.map((page, i) => ({
+        ...page,
+        index: String(i + 1).padStart(2, "0"),
+      })),
     },
     {
       label: "Projects",
@@ -70,4 +81,8 @@ export function getSitemapGroups(): SitemapGroup[] {
       ],
     },
   ];
+
+  // Groups that gate down to nothing (Projects while unpublished) drop out
+  // rather than rendering a heading over an empty list.
+  return groups.filter((group) => group.entries.length > 0);
 }

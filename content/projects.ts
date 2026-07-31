@@ -1,3 +1,5 @@
+import { published } from "@/lib/site";
+
 import { unsplash, type SiteImage } from "./images";
 
 /** Before/after pair rendered by components/sections/compare-gallery.tsx. */
@@ -262,14 +264,39 @@ export const projects: Project[] = [
   },
 ];
 
+/**
+ * The gate the rest of the site reads through. While the portfolio is
+ * unpublished this is empty, which drains the nav panel, footer column,
+ * sitemaps and home showcase, and 404s the detail routes — the demo data
+ * above stays intact for the flip back.
+ */
+const publishedProjects: Project[] = published.projects ? projects : [];
+
 export function getAllProjects(): Project[] {
-  return projects;
+  return publishedProjects;
 }
 
 export function getProject(slug: string): Project | undefined {
-  return projects.find((project) => project.slug === slug);
+  return publishedProjects.find((project) => project.slug === slug);
 }
 
 export function getProjectSlugs(): string[] {
-  return projects.map((project) => project.slug);
+  return publishedProjects.map((project) => project.slug);
 }
+
+/** /projects header while the portfolio is unpublished. */
+export const projectsComingSoon = {
+  eyebrow: "Projects",
+  title: "The portfolio comes after the work.",
+  lead: "We'd rather show finished projects than mockups, so this page stays quiet until the first ones are built and photographed. The services pages cover what we take on in the meantime.",
+  metaDescription:
+    "Project case studies from Araz Construction Group are on the way. Until then, see the services we take on across Southern California.",
+};
+
+/** /projects header once the portfolio is published. */
+export const projectsHeader = {
+  title: "Built from the ground, wired to the grid.",
+  lead: "Multifamily, commercial, and civil work across Southern California, each project taken from site development through the systems that run the building.",
+  metaDescription:
+    "Selected multifamily, commercial, and civil construction projects by Araz Construction Group across Southern California.",
+};
