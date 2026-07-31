@@ -4,11 +4,12 @@ import { Section } from "@/components/layout/section";
 import { ClientNotes } from "@/components/sections/client-notes";
 import { CompanyIntro } from "@/components/sections/company-intro";
 import { ContactCta } from "@/components/sections/contact-cta";
+import { CoverageBand } from "@/components/sections/coverage-band";
 import { HomeHero } from "@/components/sections/home-hero";
 import { ProcessStrip } from "@/components/sections/process-strip";
 import { ProjectShowcase } from "@/components/sections/project-showcase";
 import { ServiceCards } from "@/components/sections/service-cards";
-import { companyIntro, divisionsIntro, processIntro, selectedWorkIntro } from "@/content/home";
+import { companyIntro, coverage, divisionsIntro, processIntro, selectedWorkIntro } from "@/content/home";
 import { siteImages } from "@/content/images";
 import { getAllProjects } from "@/content/projects";
 import { getAllServices } from "@/content/services";
@@ -75,6 +76,8 @@ export default function HomePage() {
           <ProcessStrip intro={processIntro} phases={processPhases} />
         </Container>
       </Section>
+
+      <CoverageBand copy={coverage} image={siteImages.homeCoverage} />
 
       {published.testimonials && <ClientNotes testimonials={testimonials} />}
 
