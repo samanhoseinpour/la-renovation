@@ -5,13 +5,13 @@ import { ClientNotes } from "@/components/sections/client-notes";
 import { CompanyIntro } from "@/components/sections/company-intro";
 import { ContactCta } from "@/components/sections/contact-cta";
 import { HomeHero } from "@/components/sections/home-hero";
-import { ProjectShowcase } from "@/components/sections/project-showcase";
 import { ProcessStrip } from "@/components/sections/process-strip";
+import { ProjectShowcase } from "@/components/sections/project-showcase";
 import { ServiceCards } from "@/components/sections/service-cards";
+import { siteImages } from "@/content/images";
 import { companyIntro, divisionsIntro, processIntro, selectedWorkIntro } from "@/content/home";
 import { getAllProjects } from "@/content/projects";
 import { getAllServices } from "@/content/services";
-import { siteImages } from "@/content/images";
 import { ctaVariants, processPhases, testimonials } from "@/content/studio";
 import { published } from "@/lib/site";
 
