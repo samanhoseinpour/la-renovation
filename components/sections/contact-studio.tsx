@@ -116,7 +116,10 @@ export function ContactStudio({
                   <br />
                 </>
               ) : null}
-              {site.contact.address.city}, {site.contact.address.state}
+              {site.contact.address.city
+                ? `${site.contact.address.city}, `
+                : ""}
+              {site.contact.address.state}
               {site.contact.address.zip ? ` ${site.contact.address.zip}` : ""}
             </address>
             <p className="mt-3 text-sm text-muted-foreground">
