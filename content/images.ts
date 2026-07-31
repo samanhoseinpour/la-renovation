@@ -1,8 +1,10 @@
 /**
- * Temporary placeholder photography, hotlinked from Unsplash while real
- * project photos are shot. Swapping an image means editing one line here or
- * in content/projects.ts / content/services.ts — nothing lives in JSX.
- * next.config.ts allows images.unsplash.com; the optimizer does the rest.
+ * Site-wide imagery. The home hero and the About lead photo are the client's
+ * own banners, stored as AVIF under public/images/. The rest is temporary
+ * placeholder photography hotlinked from Unsplash (next.config.ts allows
+ * images.unsplash.com) until real project photos are shot. Swapping an image
+ * means editing one line here or in content/projects.ts /
+ * content/services.ts — nothing lives in JSX.
  */
 
 export type SiteImage = {
@@ -17,13 +19,13 @@ export function unsplash(id: string, width = 2400): string {
 
 export const siteImages = {
   homeHero: {
-    src: unsplash("photo-1513828583688-c52646db42da", 3200),
-    alt: "Industrial facility with blue motors and steel piping systems",
+    src: "/images/home/home-downtown-la-skyline-sunset.avif",
+    alt: "Downtown Los Angeles skyline at sunset, high-rise towers against the San Gabriel Mountains",
   },
   about: [
     {
-      src: unsplash("photo-1504384308090-c894fdcc538d"),
-      alt: "Construction workers in a modern workspace with laptops and equipment",
+      src: "/images/about/about-laguna-coastline-aerial.avif",
+      alt: "Aerial view of the Laguna Beach coastline, homes on the bluffs above a curving Pacific shoreline",
     },
     {
       src: unsplash("photo-1552664730-d307ca884978"),

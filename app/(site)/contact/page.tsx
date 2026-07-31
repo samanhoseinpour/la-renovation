@@ -15,7 +15,7 @@ import {
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Start a project with an Orange County general contractor. Tell us about it and we'll come take a look.",
+    "Start a project with a Southern California general contractor. Tell us about it and we'll come take a look.",
   alternates: { canonical: "/contact" },
 };
 
@@ -30,7 +30,7 @@ export default function ContactPage() {
       <Section size="default">
         <Container>
           <ContactStudio
-            title="Tell us about the house."
+            title="Tell us about the project."
             lead="Every project starts with a site visit. Send a few details and we'll arrange one."
             services={services}
             serviceFallback={projectTypeFallback}

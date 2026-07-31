@@ -8,7 +8,6 @@ export const aboutStory = [
 ];
 
 export const aboutFacts = [
-  { label: "Base", value: "Orange County" },
   { label: "Reach", value: "Southern California" },
   { label: "Divisions", value: "Seven" },
   { label: "Model", value: "Self-perform first" },

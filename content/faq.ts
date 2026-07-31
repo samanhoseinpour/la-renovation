@@ -112,7 +112,7 @@ export const faqTopics: FaqTopic[] = [
       {
         question: "Where do you work?",
         answer:
-          "We're based in Orange County and build across Southern California. Distance is rarely the constraint — scope and schedule are.",
+          "We build across Southern California. Distance is rarely the constraint — scope and schedule are.",
       },
     ],
   },

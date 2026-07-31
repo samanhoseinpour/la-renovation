@@ -7,6 +7,7 @@ import { Container } from "@/components/layout/container";
 import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import { siteImages } from "@/content/images";
+import { published } from "@/lib/site";
 
 /**
  * Adapted from @shadcnblocks/hero157: kept the full-bleed viewport photograph
@@ -54,7 +55,7 @@ export function HomeHero() {
       <Container className="relative pt-40 pb-14 md:pb-20">
         <Reveal mode="mount">
           <p className="text-eyebrow text-foreground/80">
-            Orange County · Southern California
+            Southern California
           </p>
           <h1 className="mt-6 max-w-5xl text-display-1 text-balance text-foreground">
             Ground to grid.
@@ -78,7 +79,11 @@ export function HomeHero() {
                 Book a call
                 <ArrowRight data-icon="inline-end" />
               </Button>
-              <ArrowLink href="/projects">View selected work</ArrowLink>
+              {published.projects ? (
+                <ArrowLink href="/projects">View selected work</ArrowLink>
+              ) : (
+                <ArrowLink href="/services">Explore the services</ArrowLink>
+              )}
             </div>
           </div>
         </Reveal>
