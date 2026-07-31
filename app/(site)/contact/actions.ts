@@ -61,12 +61,12 @@ const schema = z.object({
     .string()
     .trim()
     .min(10, "A sentence or two about the project, please.")
-    .max(5000, "That's a bit long for a first message — the key points will do."),
+    .max(5000, "That's a bit long for a first message. The key points will do."),
 });
 
 const SUCCESS: ContactState = {
   status: "success",
-  message: "Thank you — we'll be in touch within two working days.",
+  message: "Thank you. We'll be in touch within two working days.",
 };
 
 // Best-effort, per-instance limit: enough to blunt a naive script without a
@@ -134,7 +134,7 @@ export async function submitContact(
     recentByIp.set(ip, recent);
     return {
       status: "error",
-      message: `That's a few messages in a row — email us at ${site.contact.email} instead.`,
+      message: `That's a few messages in a row. Email us at ${site.contact.email} instead.`,
       values,
     };
   }
@@ -147,7 +147,7 @@ export async function submitContact(
     if (error instanceof DeliveryNotConfiguredError) {
       return {
         status: "error",
-        message: `The form isn't connected up yet — email us directly at ${site.contact.email}.`,
+        message: `The form isn't connected up yet. Email us directly at ${site.contact.email}.`,
         values,
       };
     }

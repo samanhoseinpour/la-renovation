@@ -53,7 +53,7 @@ export const processPhases: ProcessPhase[] = [
     index: "01",
     title: "Feasibility",
     description:
-      "We test what the site supports — soil, utilities, access, zoning — before design spends money on assumptions.",
+      "Soil, utilities, access, zoning: we test what the site supports before design spends money on assumptions.",
   },
   {
     index: "02",
@@ -86,7 +86,7 @@ export const contactSteps: ProcessPhase[] = [
   {
     index: "01",
     title: "Tell us about the site",
-    description: "Send the address or the plans — either is enough to start.",
+    description: "Send the address or the plans. Either is enough to start.",
   },
   {
     index: "02",
@@ -136,13 +136,13 @@ export const ctaVariants = {
   /** Shown on /projects while the portfolio is unpublished. */
   projectsComingSoon: {
     heading: "Be one of the first on this page.",
-    lead: "The portfolio is coming. Your project could be in it — send us the site and we'll take it from the ground up.",
+    lead: "The portfolio is coming. Your project could be in it. Send us the site and we'll take it from the ground up.",
     label: "Book a call",
     href: "/contact",
   },
   services: {
     heading: "Not sure which division you need?",
-    lead: "Describe the project and we'll tell you which scopes it touches — and which ones we'd hold ourselves.",
+    lead: "Describe the project and we'll tell you which scopes it touches, and which ones we'd hold ourselves.",
     label: "Book a call",
     href: "/contact",
   },

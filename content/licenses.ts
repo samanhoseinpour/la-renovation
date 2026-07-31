@@ -1,6 +1,6 @@
 /** PageHeader lead for /licenses. */
 export const licensesIntro =
-  "A contractor's license is a public record, not a claim on a website. Here is where we stand and how to check it — ours or anyone's.";
+  "A contractor's license is a public record, not a claim on a website. Here is where we stand and how to check it, ours or anyone's.";
 
 /** The stance: verification over claims. Shown on /licenses. */
 export const licensesStance: string[] = [

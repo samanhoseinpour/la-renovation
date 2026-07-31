@@ -154,7 +154,7 @@ export function CompareSlider({
               setPosition(value + (event.key === "ArrowRight" ? 10 : -10));
             }
           }}
-          aria-label={label ?? `Compare before and after — ${before.alt}`}
+          aria-label={label ?? `Compare before and after: ${before.alt}`}
           aria-valuetext={`${value}% before photo revealed`}
           className="peer pointer-events-none absolute inset-0 size-full opacity-0"
         />

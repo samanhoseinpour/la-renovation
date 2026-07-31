@@ -42,7 +42,7 @@ export const privacyPolicy: LegalDoc = {
     {
       heading: "Where it lives",
       paragraphs: [
-        "A form submission becomes an email. It travels through our delivery provider, Resend, and lands in our inbox with your address set as the reply-to. We keep no copy in a database — there isn't one. If delivery isn't working, the form says so plainly and nothing is stored anywhere.",
+        "A form submission becomes an email. It travels through our delivery provider, Resend, and lands in our inbox with your address set as the reply-to. We keep no copy in a database; there isn't one. If delivery isn't working, the form says so plainly and nothing is stored anywhere.",
         "The site is hosted on Vercel, which keeps the standard server logs any host keeps. Pages, photographs, and fonts are all served through the site itself, so your browser makes no requests to third-party trackers or font services.",
       ],
     },
@@ -143,7 +143,7 @@ export const accessibilityStatement: LegalDoc = {
   title: "Accessibility",
   updated: "2026-07-28",
   intro:
-    "This site should work whether you navigate by mouse, keyboard, or screen reader — and without motion if you've asked your device for less of it. Here's where that stands.",
+    "This site should work whether you navigate by mouse, keyboard, or screen reader, and without motion if you've asked your device for less of it. Here's where that stands.",
   sections: [
     {
       heading: "Our commitment",

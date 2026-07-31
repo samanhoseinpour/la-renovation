@@ -10,7 +10,7 @@ export const careersIntro =
 export const careersValues: CareersValue[] = [
   {
     title: "Build, don't broker",
-    body: "Earthwork, concrete, structure, energy systems — the scopes that decide a project run under this roof, and the people who run them work here. You'd be building the critical path, not administering it.",
+    body: "Earthwork, concrete, structure, energy systems: the scopes that decide a project run under this roof, and the people who run them work here. You'd be building the critical path, not administering it.",
   },
   {
     title: "Field and office, one schedule",

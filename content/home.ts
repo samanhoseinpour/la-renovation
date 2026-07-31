@@ -15,7 +15,7 @@ export type CompanyIntroCopy = SectionIntro & { paragraphs: string[] };
 export const homeHero = {
   eyebrow: "Southern California",
   heading: "Ground to grid.",
-  lead: "Multifamily, commercial, and civil construction across Southern California — site development, foundations, structure, and the systems that run a building. Most of it in house.",
+  lead: "Multifamily, commercial, and civil construction across Southern California: site development, foundations, structure, and the systems that run a building. Most of it in house.",
   primaryCta: { label: "Book a call", href: "/contact" },
   secondaryCta: {
     published: { label: "View selected work", href: "/projects" },

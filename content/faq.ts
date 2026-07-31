@@ -50,11 +50,11 @@ export const faqTopics: FaqTopic[] = [
       {
         question: "What will it cost?",
         answer:
-          "There is no standard number. We develop the budget against your site during preconstruction, so you know the cost of a decision when you make it — not after.",
+          "There is no standard number. We develop the budget against your site during preconstruction, so you know the cost of a decision when you make it, not after.",
         featured: true,
       },
       {
-        question: "How does pricing work — fixed price or cost-plus?",
+        question: "Fixed price or cost-plus?",
         answer:
           "Both. The contract form should match the risk. A fully drawn scope on understood ground can carry a fixed number; a project still moving through design is better held in a structure that prices decisions as they're made. We recommend a form once we've seen the drawings and the site, and we tell you why.",
         homeFeatured: true,
@@ -73,7 +73,7 @@ export const faqTopics: FaqTopic[] = [
       {
         question: "Are you licensed and insured?",
         answer:
-          "Yes — licensed as a California contractor and insured for the work we take on. Don't take that on faith, from us or from anyone: every contractor's license can be verified with the CSLB, and we'd rather you look ours up than wonder. The paperwork is available before you sign anything.",
+          "Yes. Licensed as a California contractor and insured for the work we take on. Don't take that on faith, from us or from anyone: every contractor's license can be verified with the CSLB, and we'd rather you look ours up than wonder. The paperwork is available before you sign anything.",
         homeFeatured: true,
       },
       {
@@ -101,7 +101,7 @@ export const faqTopics: FaqTopic[] = [
       {
         question: "Do you self-perform or subcontract?",
         answer:
-          "We self-perform the scopes that set the schedule — sitework, foundations, structure, and the energy systems increasingly tied to permitting. Specialty trades go to licensed partners we name and stand behind, not whoever bids lowest that week.",
+          "We self-perform the scopes that set the schedule: sitework, foundations, structure, and the energy systems increasingly tied to permitting. Specialty trades go to licensed partners we name and stand behind, not whoever bids lowest that week.",
       },
       {
         question: "Can you take just the sitework or energy scope?",
@@ -117,7 +117,7 @@ export const faqTopics: FaqTopic[] = [
       {
         question: "Where do you work?",
         answer:
-          "We build across Southern California. Distance is rarely the constraint — scope and schedule are.",
+          "We build across Southern California. Distance is rarely the constraint; scope and schedule are.",
       },
     ],
   },

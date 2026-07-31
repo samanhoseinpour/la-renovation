@@ -127,7 +127,7 @@ export function SiteHeader({ panels }: { panels: NavPanels }) {
         <Link
           href="/"
           className="rounded-sm text-lg font-semibold tracking-tight leading-none text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-          aria-label="Araz Construction Group — home"
+          aria-label="Araz Construction Group, home"
         >
           <span className="block text-base font-bold leading-none tracking-[0.2em]">ARAZ</span>
           <span className="mt-1 block text-[9px] font-medium leading-none tracking-[0.42em] opacity-70">
