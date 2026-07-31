@@ -6,12 +6,13 @@ import { CompanyIntro } from "@/components/sections/company-intro";
 import { ContactCta } from "@/components/sections/contact-cta";
 import { HomeHero } from "@/components/sections/home-hero";
 import { ProjectShowcase } from "@/components/sections/project-showcase";
+import { ProcessStrip } from "@/components/sections/process-strip";
 import { ServiceCards } from "@/components/sections/service-cards";
-import { companyIntro, divisionsIntro, selectedWorkIntro } from "@/content/home";
+import { companyIntro, divisionsIntro, processIntro, selectedWorkIntro } from "@/content/home";
 import { getAllProjects } from "@/content/projects";
 import { getAllServices } from "@/content/services";
 import { siteImages } from "@/content/images";
-import { ctaVariants, testimonials } from "@/content/studio";
+import { ctaVariants, processPhases, testimonials } from "@/content/studio";
 import { published } from "@/lib/site";
 
 export default function HomePage() {
@@ -66,6 +67,12 @@ export default function HomePage() {
 
             <ServiceCards services={services} className="lg:col-span-2" />
           </div>
+        </Container>
+      </Section>
+
+      <Section size="default" surface="muted">
+        <Container>
+          <ProcessStrip intro={processIntro} phases={processPhases} />
         </Container>
       </Section>
 
