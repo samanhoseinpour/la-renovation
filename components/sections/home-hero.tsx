@@ -6,6 +6,7 @@ import { ArrowLink } from "@/components/layout/arrow-link";
 import { Container } from "@/components/layout/container";
 import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
+import { homeHero } from "@/content/home";
 import { siteImages } from "@/content/images";
 import { published } from "@/lib/site";
 
@@ -23,6 +24,8 @@ import { published } from "@/lib/site";
  * -mt-16 pulls the section under the h-16 sticky header, which runs
  * transparent while any part of the hero is behind it (see site-header.tsx,
  * which observes #home-hero).
+ *
+ * Copy lives in content/home.ts.
  */
 export function HomeHero() {
   return (
@@ -55,34 +58,36 @@ export function HomeHero() {
       <Container className="relative pt-40 pb-14 md:pb-20">
         <Reveal mode="mount">
           <p className="text-eyebrow text-foreground/80">
-            Southern California
+            {homeHero.eyebrow}
           </p>
           <h1 className="mt-6 max-w-5xl text-display-1 text-balance text-foreground">
-            Ground to grid.
+            {homeHero.heading}
           </h1>
         </Reveal>
 
         <Reveal mode="mount" delay={0.08}>
           <div className="mt-10 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <p className="max-w-md border-l border-foreground/40 pl-6 text-lead text-foreground/85">
-              Multifamily, commercial, and civil construction across Southern
-              California — site development, foundations, structure, and the
-              systems that run a building. Most of it in house.
+              {homeHero.lead}
             </p>
             <div className="flex flex-wrap items-center gap-6">
               <Button
                 size="xl"
                 variant="brand"
-                render={<Link href="/contact" />}
+                render={<Link href={homeHero.primaryCta.href} />}
                 nativeButton={false}
               >
-                Book a call
+                {homeHero.primaryCta.label}
                 <ArrowRight data-icon="inline-end" />
               </Button>
               {published.projects ? (
-                <ArrowLink href="/projects">View selected work</ArrowLink>
+                <ArrowLink href={homeHero.secondaryCta.published.href}>
+                  {homeHero.secondaryCta.published.label}
+                </ArrowLink>
               ) : (
-                <ArrowLink href="/services">Explore the services</ArrowLink>
+                <ArrowLink href={homeHero.secondaryCta.unpublished.href}>
+                  {homeHero.secondaryCta.unpublished.label}
+                </ArrowLink>
               )}
             </div>
           </div>

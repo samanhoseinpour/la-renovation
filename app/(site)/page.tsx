@@ -6,6 +6,7 @@ import { ContactCta } from "@/components/sections/contact-cta";
 import { HomeHero } from "@/components/sections/home-hero";
 import { ProjectShowcase } from "@/components/sections/project-showcase";
 import { ServiceCards } from "@/components/sections/service-cards";
+import { divisionsIntro, selectedWorkIntro } from "@/content/home";
 import { getAllProjects } from "@/content/projects";
 import { getAllServices } from "@/content/services";
 import { ctaVariants, testimonials } from "@/content/studio";
@@ -24,9 +25,11 @@ export default function HomePage() {
           <Container>
             <div className="flex items-baseline justify-between gap-8">
               <h2 className="text-eyebrow text-muted-foreground">
-                Selected work
+                {selectedWorkIntro.eyebrow}
               </h2>
-              <ArrowLink href="/projects">All projects</ArrowLink>
+              <ArrowLink href={selectedWorkIntro.link!.href}>
+                {selectedWorkIntro.link!.label}
+              </ArrowLink>
             </div>
 
             <div className="mt-14">
@@ -40,12 +43,16 @@ export default function HomePage() {
         <Container>
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-16">
             <div>
-              <h2 className="text-eyebrow text-muted-foreground">What we do</h2>
+              <h2 className="text-eyebrow text-muted-foreground">
+                {divisionsIntro.eyebrow}
+              </h2>
               <p className="mt-6 max-w-xs text-h2">
-                Seven divisions. One contract.
+                {divisionsIntro.heading}
               </p>
               <div className="mt-8">
-                <ArrowLink href="/services">All services</ArrowLink>
+                <ArrowLink href={divisionsIntro.link!.href}>
+                  {divisionsIntro.link!.label}
+                </ArrowLink>
               </div>
             </div>
 
