@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 
 import { MotionProvider } from "@/components/motion/motion-provider";
 import { ThemeColorSync } from "@/components/site/theme-color-sync";
@@ -82,6 +83,7 @@ export default function RootLayout({
           <ThemeColorSync />
           <MotionProvider>{children}</MotionProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
