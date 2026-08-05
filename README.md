@@ -55,6 +55,10 @@ form shows an honest "email us directly" error instead of a fake success.
 `CONTACT_FROM_EMAIL` overrides the onboarding sender once the company's domain
 is verified.
 
+## Measurement
+
+The root layout mounts Vercel Web Analytics — cookieless, aggregate page counts with nothing stored on the visitor's device. It's enabled per-project in the Vercel dashboard and no-ops locally. Speed Insights was deliberately not purchased (it's a paid add-on; Search Console's Core Web Vitals report covers field data for free). `/privacy` describes exactly what measurement collects, so that page must move in the same commit as any measurement change.
+
 ## Images
 
 Team portraits are self-hosted AVIFs in `public/images/team/`, cropped 3:4 and kept under 100KB each; roster members without a portrait yet render a neutral person-glyph frame. The home hero and the intro's EV-charging photo (`public/images/home/`), the About lead photo (`public/images/about/`) and the concrete division's card (`public/images/services/`) are the client's own images, also AVIF and inside the default 150KB budget. Three more About images (the story pair and the approach nav thumbnail) are Unsplash placeholders self-hosted in `public/images/about/`, inside the same budget: next/image fetches remote sources server-side, and the dev machine can't reach Unsplash, so hotlinked entries break in `next dev`. The four partner logos in `public/images/partners/` are ink-normalized marks: black plus alpha, trimmed, painted with the current theme's foreground token via CSS mask, so one small AVIF serves light and dark. The pipeline lives in `scripts/`:

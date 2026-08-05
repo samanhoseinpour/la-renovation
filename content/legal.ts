@@ -16,14 +16,14 @@ export type LegalDoc = {
 export const privacyPolicy: LegalDoc = {
   slug: "privacy",
   title: "Privacy policy",
-  updated: "2026-07-28",
+  updated: "2026-08-05",
   intro:
     "This site is a brochure, not a platform. It collects almost nothing, and this page describes the little it does.",
   sections: [
     {
       heading: "What we collect",
       paragraphs: [
-        "You can browse every page of this site without an account, and the site sets no cookies while you do. There are no analytics, no advertising trackers, and no third-party scripts.",
+        "You can browse every page of this site without an account, and the site sets no cookies while you do. There are no advertising trackers and nothing that follows you to other sites; the only measurement running is the cookieless kind described below.",
         "The one place you can hand us information is the contact form, and it asks only for what a reply needs:",
       ],
       items: [
@@ -44,6 +44,13 @@ export const privacyPolicy: LegalDoc = {
       paragraphs: [
         "A form submission becomes an email. It travels through our delivery provider, Resend, and lands in our inbox with your address set as the reply-to. We keep no copy in a database; there isn't one. If delivery isn't working, the form says so plainly and nothing is stored anywhere.",
         "The site is hosted on Vercel, which keeps the standard server logs any host keeps. Pages, photographs, and fonts are all served through the site itself, so your browser makes no requests to third-party trackers or font services.",
+      ],
+    },
+    {
+      heading: "How traffic is measured",
+      paragraphs: [
+        "The site counts its visits with Vercel Web Analytics, the measurement built into the platform that hosts it. It runs without cookies: nothing is planted on your device, and no profile of you is built or carried between sites.",
+        "What reaches us is aggregate. We can see which pages get viewed, what country visits come from, and what kind of device and browser they arrive on. None of it is tied to your name, your email, or anything you type into the contact form.",
       ],
     },
     {
