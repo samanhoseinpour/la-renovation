@@ -11,7 +11,10 @@
 // fetched at 16px through the images.weserv.nl proxy because this machine
 // cannot reach images.unsplash.com directly (TLS reset; see AGENTS.md).
 // Keyed by photo id. A fetch failure skips that key with a warning — call
-// sites degrade to no placeholder rather than breaking.
+// sites degrade to no placeholder rather than breaking. Content sitting
+// behind an off `published` gate (lib/site.ts) is skipped entirely: its ids
+// would only bloat the map and burn proxy fetches while nothing renders
+// them. Rerun after flipping a gate.
 //
 // Rerun after adding, replacing or removing site imagery:
 //   npm run images:placeholders
@@ -85,10 +88,20 @@ async function localEntries() {
   return { entries, failed };
 }
 
+// The only gated content file carrying imagery is content/projects.ts,
+// keyed to published.projects. Extend this map if another gate grows images.
+async function gatedFiles() {
+  const site = await readFile(path.join(root, 'lib', 'site.ts'), 'utf8');
+  const projectsPublished = /export const published[^}]*\bprojects:\s*true/s.test(site);
+  return projectsPublished ? new Set() : new Set(['projects.ts']);
+}
+
 async function remoteEntries() {
+  const skip = await gatedFiles();
   const ids = new Set();
   for (const name of await readdir(contentDir)) {
     if (!name.endsWith('.ts') || name.endsWith('.generated.ts')) continue;
+    if (skip.has(name)) continue;
     const source = await readFile(path.join(contentDir, name), 'utf8');
     for (const m of source.matchAll(/unsplash\("(photo-[A-Za-z0-9_-]+)"/g)) ids.add(m[1]);
   }
