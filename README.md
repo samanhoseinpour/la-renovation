@@ -22,7 +22,7 @@ Open [http://localhost:3000](http://localhost:3000).
 - `/careers` — values grid and a general-application panel; no openings to list, so there's no listings table
 - `/licenses` — how to verify a contractor's license, plus a bond/insurance summary; exists on disk but isn't linked from the footer or sitemap until the real CSLB number lands
 - `/privacy`, `/terms`, `/accessibility` — legal pages sharing one structured long-form renderer
-- `/sitemap` — a compact columned directory of every page, grouped into pages, projects, services and legal; `/sitemap.xml` serves its raw XML to everyone, crawlers and curious visitors alike, with no redirect between the two
+- `/sitemap` — a compact columned directory of every page, grouped into pages, projects, services and legal; `/sitemap.xml` serves its raw XML to everyone, crawlers and curious visitors alike, with no redirect between the two; `/llms.txt` is the same map in markdown for AI assistants, honoring the same publish gates
 - `/styleguide` — internal design reference (tokens, type scale, components)
 - Every unmatched URL — a chrome-less 404 with the wordmark holding its header slot: a brand plumb line drops onto a survey marker above a per-section verdict (projects, services, about and the rest each carry their own message, picked from the dead URL on the client), the attempted address prints struck through in the mono face, and two exits lead back to the studio and the sitemap
 
@@ -35,8 +35,10 @@ Open [http://localhost:3000](http://localhost:3000).
 - `components/site/` — header, mega menu, mobile nav, footer, theme toggle, skip link, scroll-progress hairline, overlay scroll thumb, back-to-top button, theme-color sync
 - `components/ui/` — shadcn/ui primitives (base-nova style)
 - `content/` — `home.ts` owns all home copy, including the hero's; `services.ts` also carries the `/services` page copy, the delivery-model band and each division's optional in-depth band, statement and closing CTA; `about.ts` also carries the commitments and careers-band copy; `studio.ts` the process phases, CTA variants, brand statements and contact-page copy; alongside projects, team and studio copy, the image manifest and the nav-panel projection; `partners.ts` the partner strip's intro and roster; `faq.ts`, `careers.ts`, `legal.ts` and `licenses.ts` back the six support routes; `sitemap.ts` projects the site tree for `/sitemap`; `not-found.ts` holds the per-section 404 verdicts and both exit labels
-- `lib/site.ts` — single source of truth for name, nav, contact details and license
+- `lib/site.ts` — single source of truth for name, nav, contact details, license and external profiles
 - `lib/delivery.ts` — email delivery boundary used by the contact action
+- `lib/seo.tsx` — the JSON-LD graph builders behind every route's structured data
+- `lib/og/template.tsx` — the shared social-card template (Archivo TTFs vendored in `assets/fonts/`)
 - `scripts/` — the image pipeline (AVIF migration, size auditing and blur-up generation)
 
 Site copy and data live in `content/` and `lib/site.ts`, not in components. Copy stays in a no-figures register: no prices, durations, square footage or invented history anywhere on the site. The one exception is the home hero lead, which is the client's own positioning paragraph kept verbatim.
@@ -59,9 +61,17 @@ is verified.
 
 The root layout mounts Vercel Web Analytics — cookieless, aggregate page counts with nothing stored on the visitor's device. It's enabled per-project in the Vercel dashboard and no-ops locally. Speed Insights was deliberately not purchased (it's a paid add-on; Search Console's Core Web Vitals report covers field data for free). `/privacy` describes exactly what measurement collects, so that page must move in the same commit as any measurement change.
 
+## Search & AI visibility
+
+Every route ships complete metadata: a unique title on the shared `Page · Araz Construction Group` template with the page heading mirroring the title's core, a hand-written description, a canonical URL, and an Open Graph card generated per page from the design tokens — dark canvas, Archivo, the page title over the brand rule — by `lib/og/template.tsx`. The cards are PNG on purpose (AVIF share images still fail on most platforms) and small enough for WhatsApp's preview ceiling. `app/apple-icon.tsx` renders the monogram tile iOS and iMessage fall back to, and `app/manifest.ts` completes the icon set.
+
+Structured data is a schema.org graph in JSON-LD, server-rendered because AI crawlers execute no JavaScript: a `GeneralContractor` organization node carrying the verified contact details, a `WebSite` node that anchors the site-name line in Google results, and per-page `WebPage`, breadcrumb, `Service` and FAQ nodes stitched together by stable `@id` anchors. Nothing unverified is asserted — the placeholder email, the CSLB number and the social profiles each join the graph automatically once real values land in `lib/site.ts` — and gated content stays out of it until its flag flips, like every other surface.
+
+`app/robots.ts` deliberately allows all crawlers, AI included: visibility in AI answers is the point of a marketing site, and `/llms.txt` gives assistants a markdown map of the pages. The XML sitemap lists each page's self-hosted imagery for Google Images and carries no fabricated modification dates.
+
 ## Images
 
-Every image the live site renders is a self-hosted AVIF under `public/images/`, inside the default 150KB budget. The home hero, the intro's EV-charging photo, the About lead, the concrete division's card and the CEO's portrait are the client's own photography. Team portraits sit in `public/images/team/`, cropped 3:4 and kept under 100KB each; roster members without a portrait yet render a neutral person-glyph frame. Everything else — the division cards, the detail-row photos, the coverage band, the closing CTA panel and the About story set — is Unsplash placeholder photography landed locally through the same pipeline (downloaded via the images.weserv.nl proxy, since next/image fetches remote sources server-side and the dev machine can't reach Unsplash directly). The four partner logos in `public/images/partners/` are ink-normalized marks: black plus alpha, trimmed, painted with the current theme's foreground token via CSS mask, so one small AVIF serves light and dark. The pipeline lives in `scripts/`:
+Every image the live site renders is a self-hosted AVIF under `public/images/`, inside the default 150KB budget. The home hero, the intro's EV-charging photo, the About lead and the concrete division's card are the client's own photography. So are the team portraits, which sit in `public/images/team/` cropped 3:4 and kept under 100KB each; roster members without a portrait yet render a neutral person-glyph frame. Everything else — the division cards, the detail-row photos, the coverage band, the closing CTA panel and the About story set — is Unsplash placeholder photography landed locally through the same pipeline (downloaded via the images.weserv.nl proxy, since next/image fetches remote sources server-side and the dev machine can't reach Unsplash directly). The four partner logos in `public/images/partners/` are ink-normalized marks: black plus alpha, trimmed, painted with the current theme's foreground token via CSS mask, so one small AVIF serves light and dark. The pipeline lives in `scripts/`:
 
 ```bash
 npm run images:migrate       # convert source photos to AVIF (supports --aspect W:H cover crops)
@@ -81,7 +91,8 @@ The gated demo project case studies and their before/after pairs still reference
 ## Placeholders awaiting client data
 
 - Contact email in `lib/site.ts` (phone and street address are the client's real ones)
-- The CSLB license number (footer renders it only once set)
+- The CSLB license number (footer renders it only once set; the schema graph picks it up as an identifier the same way)
+- External profiles for `site.profiles` in `lib/site.ts` — the schema graph gains `sameAs` links once real ones (LinkedIn, Google Business Profile) exist
 - `app/icon.svg` is a typed "A" monogram until the real mark arrives
 - The demo project case studies and client notes, gated behind `published` until real ones exist
 - Real project photography to replace the self-hosted Unsplash placeholders (service imagery, four of the five About images, the second home-intro photo, the coverage band and the CTA panel) and the gated demo project galleries
