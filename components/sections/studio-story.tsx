@@ -9,22 +9,19 @@ type StudioStoryProps = {
   className?: string;
   paragraphs: string[];
   images: { src: string; alt: string }[];
-  facts: { label: string; value: string }[];
 };
 
 /**
  * Adapted from @shadcnblocks/about28: kept the two-column zigzag of image and
  * text pairs with rounded-2xl frames and the lg column stagger; dropped the
  * demo copy and careers CTA, swapped <img> for next/image, and replaced the
- * container/mt-* wrapper with Section/Container. The offset column ends in a
- * quiet facts <dl> instead of a fourth photo.
+ * container/mt-* wrapper with Section/Container.
  */
 export function StudioStory({
   id,
   className,
   paragraphs,
   images,
-  facts,
 }: StudioStoryProps) {
   return (
     // id/className let the page anchor this section (#story) with
@@ -54,26 +51,6 @@ export function StudioStory({
               <div className="space-y-8">
                 <StoryImage image={images[2]} portrait />
                 <p className="max-w-xl text-lead">{paragraphs[2]}</p>
-              </div>
-            </Reveal>
-            <Reveal>
-              <div>
-                <h2 className="text-eyebrow text-muted-foreground">Studio</h2>
-                <dl className="mt-6 border-t border-border">
-                  {facts.map((fact) => (
-                    <div
-                      key={fact.label}
-                      className="flex justify-between gap-6 border-b border-border py-4"
-                    >
-                      <dt className="text-sm text-muted-foreground">
-                        {fact.label}
-                      </dt>
-                      <dd className="text-sm tabular text-right">
-                        {fact.value}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
               </div>
             </Reveal>
           </div>

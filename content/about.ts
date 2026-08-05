@@ -7,12 +7,6 @@ export const aboutStory = [
   "We built this company to close those seams. Civil, concrete, foundations, structure, and energy infrastructure are divisions here, staffed, equipped, and accountable to the same schedule. When something changes in the field, one company absorbs it.",
 ];
 
-export const aboutFacts = [
-  { label: "Reach", value: "Southern California" },
-  { label: "Divisions", value: "Seven" },
-  { label: "Model", value: "Self-perform first" },
-];
-
 export const mission = {
   title: "Close the seams.",
   body: "Most of what goes wrong in construction happens where one company's work ends and another's begins. Our mission is to hold the critical scopes under one roof: one number, one schedule, one company answering for the result.",

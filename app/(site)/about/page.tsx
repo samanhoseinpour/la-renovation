@@ -9,7 +9,7 @@ import { StudioCommitments } from "@/components/sections/studio-commitments";
 import { StudioMission } from "@/components/sections/studio-mission";
 import { StudioStory } from "@/components/sections/studio-story";
 import { StudioTeam } from "@/components/sections/studio-team";
-import { aboutCareers, aboutFacts, aboutIntro, aboutStory, approach, commitments, mission, vision } from "@/content/about";
+import { aboutCareers, aboutIntro, aboutStory, approach, commitments, mission, vision } from "@/content/about";
 import { siteImages } from "@/content/images";
 import { ctaVariants } from "@/content/studio";
 import { teamMembers } from "@/content/team";
@@ -34,7 +34,6 @@ export default function AboutPage() {
         className="scroll-mt-16"
         paragraphs={aboutStory}
         images={siteImages.about}
-        facts={aboutFacts}
       />
 
       <StudioMission id="mission" mission={mission} vision={vision} />
