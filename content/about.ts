@@ -1,5 +1,5 @@
 export const aboutIntro =
-  "Araz Construction Group builds across Southern California, from the ground up.";
+  "Araz Construction Group builds sustainable energy infrastructure alongside commercial, civil, and multifamily projects across Southern California, from the ground up.";
 
 export const aboutStory = [
   "Araz Construction Group was built around a straightforward observation: the parts of a project that go wrong are usually the parts that get handed off.",

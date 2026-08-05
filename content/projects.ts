@@ -296,7 +296,7 @@ export const projectsComingSoon = {
 /** /projects header once the portfolio is published. */
 export const projectsHeader = {
   title: "Built from the ground, wired to the grid.",
-  lead: "Multifamily, commercial, and civil work across Southern California, each project taken from site development through the systems that run the building.",
+  lead: "Energy, commercial, civil, and multifamily work across Southern California, each project taken from site development through the systems that run the building.",
   metaDescription:
-    "Selected multifamily, commercial, and civil construction projects by Araz Construction Group across Southern California.",
+    "Selected energy, commercial, civil, and multifamily construction projects by Araz Construction Group across Southern California.",
 };

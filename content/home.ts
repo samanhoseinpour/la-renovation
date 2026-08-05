@@ -15,7 +15,9 @@ export type CompanyIntroCopy = SectionIntro & { paragraphs: string[] };
 export const homeHero = {
   eyebrow: "Southern California",
   heading: "Ground to grid.",
-  lead: "Multifamily, commercial, and civil construction across Southern California: site development, foundations, structure, and the systems that run a building. Most of it in house.",
+  // Client-supplied paragraph, kept verbatim (their wording overrides the
+  // house no-figures register here).
+  lead: "Araz Construction Group is a Southern California general contractor specializing in sustainable energy infrastructure, including EV charging and geothermal projects, alongside commercial, civil, and multifamily developments. Dedicated to environmental stewardship and reducing carbon footprints, Araz self-performs critical scopes, such as sitework, foundations, and engineering structures, while seamlessly integrating renewable systems into every build. By consolidating these phases under a single contract, Araz eliminates communication gaps, minimizes delays, and ensures strict accountability from ground to grid, all driven by the decades of collective hands-on engineering, project management, and field execution experience of its team.",
   primaryCta: { label: "Book a call", href: "/contact" },
   secondaryCta: {
     published: { label: "View selected work", href: "/projects" },
@@ -32,9 +34,12 @@ export const selectedWorkIntro: SectionIntro = {
 export const companyIntro: CompanyIntroCopy = {
   eyebrow: "Who we are",
   heading: "One company, from the ground up.",
+  // The hero above states what Araz is (the client's verbatim paragraph);
+  // this section carries the why instead, so home doesn't read twice.
   paragraphs: [
-    "Araz Construction Group is a Southern California general contractor that keeps the deciding scopes of a project inside one company: sitework, concrete, structure, and energy, all on one schedule.",
-    "Handoffs are where budgets move and schedules slip, so we built a company with fewer of them. When something changes in the field, there is no seam to argue over.",
+    "Most projects are built by a chain of companies: one grades the site, another pours the structure, a third shows up late to fit the systems in. Every handoff in that chain is a seam, and seams are where budgets move and schedules slip.",
+    "We structured Araz so the seams never open: sitework, concrete, structure, and energy are divisions of one company, priced by one office, accountable to one schedule.",
+    "It's also why energy leads the divisions rather than trailing the trades: the systems a building is approved on are engineered in from the first drawing, not fitted around a finished shell.",
   ],
   link: { label: "The full story", href: "/about" },
 };
@@ -54,7 +59,7 @@ export const processIntro: SectionIntro = {
 export const coverage: SectionIntro = {
   eyebrow: "Where we build",
   heading: "All of Southern California.",
-  lead: "Multifamily, commercial, and civil projects across the region, from raw ground to running systems. If the site is in Southern California, we'll come walk it.",
+  lead: "Energy, commercial, civil, and multifamily projects across the region, from raw ground to running systems. If the site is in Southern California, we'll come walk it.",
   link: { label: "Tell us about the site", href: "/contact" },
 };
 

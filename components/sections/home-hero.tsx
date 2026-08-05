@@ -31,7 +31,7 @@ export function HomeHero() {
   return (
     <section
       id="home-hero"
-      className="dark relative -mt-16 flex min-h-svh max-h-[1400px] flex-col justify-end overflow-hidden"
+      className="dark relative -mt-16 flex min-h-svh max-h-350 flex-col justify-end overflow-hidden"
     >
       <Image
         src={siteImages.homeHero.src}
@@ -67,7 +67,10 @@ export function HomeHero() {
 
         <Reveal mode="mount" delay={0.08}>
           <div className="mt-10 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-            <p className="max-w-md border-l border-foreground/40 pl-6 text-lead text-foreground/85">
+            {/* The lead is the client's full positioning paragraph, not a
+                one-liner: body size at xl width keeps it from rivalling the
+                headline while holding a readable measure. */}
+            <p className="max-w-xl border-l border-foreground/40 pl-6 text-base text-foreground/85">
               {homeHero.lead}
             </p>
             <div className="flex flex-wrap items-center gap-6">

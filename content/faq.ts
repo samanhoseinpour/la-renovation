@@ -95,7 +95,7 @@ export const faqTopics: FaqTopic[] = [
       {
         question: "What kind of projects do you take on?",
         answer:
-          "Multifamily and mixed-use, commercial and institutional, and civil site development, alongside the energy, concrete, and preconstruction scopes that support them. Most projects touch several divisions at once, which is the reason we hold them under one roof.",
+          "Sustainable energy infrastructure, EV charging and geothermal among it, alongside commercial and institutional, civil site development, and multifamily and mixed-use work, with the concrete and preconstruction scopes that support them. Most projects touch several divisions at once, which is the reason we hold them under one roof.",
         homeFeatured: true,
       },
       {

@@ -49,7 +49,7 @@ const TYPE_SCALE = [
     cls: "text-lead",
     label: "lead",
     range: "18 → 21px",
-    sample: "We build multifamily, commercial, and civil projects across Southern California.",
+    sample: "We build energy, commercial, civil, and multifamily projects across Southern California.",
   },
   {
     cls: "text-base",

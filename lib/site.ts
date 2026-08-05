@@ -38,7 +38,7 @@ export const site = {
   shortName: "ARAZ",
   tagline: "Ground to grid.",
   description:
-    "Multifamily, commercial, and civil construction across Southern California.",
+    "Sustainable energy infrastructure alongside commercial, civil, and multifamily construction across Southern California.",
   url: "https://arazconstructiongroup.com",
   locale: "en_US",
 
