@@ -1,81 +1,12 @@
-import { ImageResponse } from "next/og";
-
+import { brandCard, ogSize } from "@/lib/og/template";
 import { site } from "@/lib/site";
 
-export const alt = `${site.name}. ${site.tagline}`;
-export const size = { width: 1200, height: 630 };
+// Home and every route without its own card: the tagline carries the line
+// and the footer holds the full positioning sentence.
+export const alt = `${site.name} · ${site.tagline}`;
+export const size = ogSize;
 export const contentType = "image/png";
 
-// Satori (which renders this) needs explicit `display: flex` on any element
-// with children, and cannot read our CSS variables — hence literal hex values
-// from the light palette.
-export default async function Image() {
-  return new ImageResponse(
-    (
-      <div
-        style={{
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          backgroundColor: "#F3F3F1",
-          color: "#16181A",
-          padding: 72,
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            fontSize: 22,
-            letterSpacing: "0.16em",
-            color: "#5A6167",
-          }}
-        >
-          {site.name.toUpperCase()}
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            fontSize: 78,
-            lineHeight: 1.04,
-            letterSpacing: "-0.025em",
-            maxWidth: 920,
-          }}
-        >
-          {site.tagline}
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              fontSize: 24,
-              color: "#5A6167",
-              maxWidth: 880,
-            }}
-          >
-            {site.description}
-          </div>
-          <div
-            style={{
-              display: "flex",
-              width: 140,
-              height: 6,
-              borderRadius: 3,
-              backgroundColor: "#2B4A63",
-            }}
-          />
-        </div>
-      </div>
-    ),
-    { ...size },
-  );
+export default function Image() {
+  return brandCard({ title: site.tagline, footer: site.description });
 }
