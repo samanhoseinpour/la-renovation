@@ -44,16 +44,15 @@ export const site = {
 
   contact: {
     email: "office@arazconstruction.example", // placeholder — client to supply
-    phone: "+1 (714) 555-0163", // placeholder — client to supply
-    phoneHref: "tel:+17145550163",
-    // The client dropped the county-level base claim (the site speaks
-    // Southern California only), so street, city and zip all stay blank
-    // until a real address lands. Consumers must render-guard every field.
+    phone: "+1 (424) 500-4930",
+    phoneHref: "tel:+14245004930",
+    // Consumers render-guard every address field, so a blank stays invisible
+    // rather than printing an empty line.
     address: {
-      street: "",
-      city: "",
-      state: "California",
-      zip: "",
+      street: "355 S Grand Ave",
+      city: "Los Angeles",
+      state: "CA",
+      zip: "90071",
     },
     hours: "Mon–Fri, 8am–5pm PT",
   },
