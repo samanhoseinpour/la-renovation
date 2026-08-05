@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
+import { blurProps } from "@/content/images";
 
 type StudioStoryProps = {
   id?: string;
@@ -80,6 +81,7 @@ function StoryImage({
       <Image
         src={image.src}
         alt={image.alt}
+        {...blurProps(image.src)}
         fill
         sizes="(min-width: 1024px) 45vw, 100vw"
         className="object-cover"

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { blurProps } from "@/content/images";
 import type { Project } from "@/content/projects";
 import { cn } from "@/lib/utils";
 
@@ -26,6 +27,7 @@ export function ProjectCard({
         <Image
           src={project.image.src}
           alt={project.image.alt}
+          {...blurProps(project.image.src)}
           fill
           sizes={sizes}
           className="object-cover transition-transform duration-700 ease-editorial group-hover/card:scale-105"

@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { ArrowLink } from "@/components/layout/arrow-link";
 import { Reveal } from "@/components/motion/reveal";
+import { blurProps } from "@/content/images";
 import type { Project } from "@/content/projects";
 
 /**
@@ -56,6 +57,7 @@ export function ProjectShowcase({ projects }: { projects: Project[] }) {
                 <Image
                   src={project.image.src}
                   alt={project.image.alt}
+                  {...blurProps(project.image.src)}
                   fill
                   sizes="(min-width: 1024px) 60vw, 100vw"
                   className="object-cover transition-transform duration-700 ease-editorial group-hover/media:scale-[1.03]"

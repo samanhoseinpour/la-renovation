@@ -9,7 +9,7 @@ import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
-import { siteImages } from "@/content/images";
+import { blurProps, siteImages } from "@/content/images";
 import type { CtaCopy } from "@/content/studio";
 
 /**
@@ -43,6 +43,7 @@ export function ContactCta({ copy }: { copy: CtaCopy }) {
               <Image
                 src={siteImages.contactCta.src}
                 alt={siteImages.contactCta.alt}
+                {...blurProps(siteImages.contactCta.src)}
                 fill
                 sizes="100vw"
                 className="object-cover"

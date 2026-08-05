@@ -5,7 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 import { ArrowLink, ArrowMark } from "@/components/layout/arrow-link";
 import { Reveal } from "@/components/motion/reveal";
 import type { SectionIntro } from "@/content/home";
-import type { SiteImage } from "@/content/images";
+import { blurProps, type SiteImage } from "@/content/images";
 import type { Service } from "@/content/services";
 
 /**
@@ -49,6 +49,7 @@ export function DivisionShowcase({
               <Image
                 src={service.image.src}
                 alt={service.image.alt}
+                {...blurProps(service.image.src)}
                 fill
                 sizes="(min-width: 640px) 50vw, 100vw"
                 className="object-cover transition-transform duration-700 ease-editorial group-hover/division:scale-105"
@@ -83,6 +84,7 @@ export function DivisionShowcase({
           <Image
             src={linkImage.src}
             alt=""
+            {...blurProps(linkImage.src)}
             fill
             sizes="(min-width: 640px) 50vw, 100vw"
             className="scale-105 object-cover blur-md"

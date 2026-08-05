@@ -7,7 +7,7 @@ import { Container } from "@/components/layout/container";
 import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import { homeHero } from "@/content/home";
-import { siteImages } from "@/content/images";
+import { blurProps, siteImages } from "@/content/images";
 import { published } from "@/lib/site";
 
 /**
@@ -36,6 +36,7 @@ export function HomeHero() {
       <Image
         src={siteImages.homeHero.src}
         alt={siteImages.homeHero.alt}
+        {...blurProps(siteImages.homeHero.src)}
         fill
         preload
         sizes="100vw"

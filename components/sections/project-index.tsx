@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Reveal } from "@/components/motion/reveal";
+import { blurProps } from "@/content/images";
 import type { Project } from "@/content/projects";
 
 /**
@@ -50,6 +51,7 @@ export function ProjectIndex({ projects }: { projects: Project[] }) {
               <Image
                 src={featured.image.src}
                 alt={featured.image.alt}
+                {...blurProps(featured.image.src)}
                 fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover transition-transform duration-700 ease-editorial group-hover/featured:scale-[1.03]"

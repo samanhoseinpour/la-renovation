@@ -14,6 +14,8 @@
  * (download, then images:migrate + images:optimize into public/images/).
  */
 
+import { blurMap } from "./blur-map.generated";
+
 export type SiteImage = {
   src: string;
   alt: string;
@@ -22,6 +24,21 @@ export type SiteImage = {
 /** Large source rendition; next/image derives the responsive sizes. */
 export function unsplash(id: string, width = 2400): string {
   return `https://images.unsplash.com/${id}?q=80&w=${width}&auto=format&fit=crop`;
+}
+
+/**
+ * Blur-up props for any manifest src, local path or Unsplash URL. Spread onto
+ * a next/image; sources missing from the generated map degrade to no
+ * placeholder. Regenerate the map with `npm run images:placeholders`.
+ */
+export function blurProps(
+  src: string,
+): { placeholder: "blur"; blurDataURL: string } | Record<string, never> {
+  const key = src.startsWith("/")
+    ? src
+    : /images\.unsplash\.com\/(photo-[A-Za-z0-9_-]+)/.exec(src)?.[1];
+  const blurDataURL = key ? blurMap[key] : undefined;
+  return blurDataURL ? { placeholder: "blur", blurDataURL } : {};
 }
 
 export const siteImages = {

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
+import { blurProps } from "@/content/images";
 import type { Service } from "@/content/services";
 import { cn } from "@/lib/utils";
 
@@ -58,6 +59,7 @@ export function ServicePanorama({ services }: { services: Service[] }) {
               <Image
                 src={service.image.src}
                 alt={service.image.alt}
+                {...blurProps(service.image.src)}
                 fill
                 sizes="100vw"
                 className="object-cover"
@@ -77,6 +79,7 @@ export function ServicePanorama({ services }: { services: Service[] }) {
                 key={service.slug}
                 src={service.image.src}
                 alt=""
+                {...blurProps(service.image.src)}
                 fill
                 sizes="(min-width: 768px) 40vw, 100vw"
                 className={cn(

@@ -9,6 +9,7 @@ import Marquee from "react-fast-marquee";
 import { ArrowLink } from "@/components/layout/arrow-link";
 import { Reveal } from "@/components/motion/reveal";
 import type { SectionIntro } from "@/content/home";
+import { blurProps } from "@/content/images";
 import type { TeamMember } from "@/content/team";
 
 /**
@@ -88,6 +89,7 @@ export function TeamMarquee({
                     <Image
                       src={member.photo.src}
                       alt=""
+                      {...blurProps(member.photo.src)}
                       fill
                       sizes="(min-width: 640px) 12rem, 10rem"
                       className="object-cover"

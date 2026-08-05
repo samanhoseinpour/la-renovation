@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { Reveal } from "@/components/motion/reveal";
+import { blurProps } from "@/content/images";
 import type { Service } from "@/content/services";
 import { cn } from "@/lib/utils";
 
@@ -33,6 +34,7 @@ export function ServiceNarrative({ service }: { service: Service }) {
                   <Image
                     src={image.src}
                     alt={image.alt}
+                    {...blurProps(image.src)}
                     fill
                     sizes="(min-width: 1024px) 50vw, 100vw"
                     className="object-cover"

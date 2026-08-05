@@ -3,7 +3,7 @@ import Image from "next/image";
 import { ArrowLink } from "@/components/layout/arrow-link";
 import { Reveal } from "@/components/motion/reveal";
 import type { CompanyIntroCopy } from "@/content/home";
-import type { SiteImage } from "@/content/images";
+import { blurProps, type SiteImage } from "@/content/images";
 
 /**
  * Adapted from @shadcnblocks/about19: kept the tall-imagery-beside-narrow-copy
@@ -44,6 +44,7 @@ export function CompanyIntro({
             <Image
               src={images[0].src}
               alt={images[0].alt}
+              {...blurProps(images[0].src)}
               fill
               sizes="(min-width: 1024px) 30vw, 50vw"
               className="object-cover"
@@ -56,6 +57,7 @@ export function CompanyIntro({
             <Image
               src={images[1].src}
               alt={images[1].alt}
+              {...blurProps(images[1].src)}
               fill
               sizes="(min-width: 1024px) 30vw, 50vw"
               className="object-cover"

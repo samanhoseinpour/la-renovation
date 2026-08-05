@@ -9,6 +9,7 @@ import { Section } from "@/components/layout/section";
 import { CompareGallery } from "@/components/sections/compare-gallery";
 import { ContactCta } from "@/components/sections/contact-cta";
 import { ProjectGallery } from "@/components/sections/project-gallery";
+import { blurProps } from "@/content/images";
 import { getAllProjects, getProject } from "@/content/projects";
 import { getService } from "@/content/services";
 import { getTestimonialFor, projectCta } from "@/content/studio";
@@ -73,6 +74,7 @@ export default async function ProjectPage({ params }: Props) {
             <Image
               src={project.image.src}
               alt={project.image.alt}
+              {...blurProps(project.image.src)}
               fill
               loading="eager"
               fetchPriority="high"
@@ -176,6 +178,7 @@ export default async function ProjectPage({ params }: Props) {
                   <Image
                     src={next.image.src}
                     alt=""
+                    {...blurProps(next.image.src)}
                     fill
                     sizes="160px"
                     className="object-cover"

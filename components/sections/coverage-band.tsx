@@ -4,7 +4,7 @@ import { ArrowLink } from "@/components/layout/arrow-link";
 import { Container } from "@/components/layout/container";
 import { Reveal } from "@/components/motion/reveal";
 import type { SectionIntro } from "@/content/home";
-import type { SiteImage } from "@/content/images";
+import { blurProps, type SiteImage } from "@/content/images";
 
 /**
  * Adapted from @shadcnblocks/cta43: kept the edge-to-edge background
@@ -27,6 +27,7 @@ export function CoverageBand({
       <Image
         src={image.src}
         alt={image.alt}
+        {...blurProps(image.src)}
         fill
         sizes="100vw"
         className="object-cover"

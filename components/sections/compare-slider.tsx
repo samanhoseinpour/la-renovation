@@ -4,7 +4,7 @@ import { ChevronsLeftRight } from "lucide-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
 
-import type { SiteImage } from "@/content/images";
+import { blurProps, type SiteImage } from "@/content/images";
 import { cn } from "@/lib/utils";
 
 type CompareSliderProps = {
@@ -94,6 +94,7 @@ export function CompareSlider({
       <Image
         src={after.src}
         alt={after.alt}
+        {...blurProps(after.src)}
         fill
         sizes={sizes}
         draggable={false}
@@ -106,6 +107,7 @@ export function CompareSlider({
         <Image
           src={before.src}
           alt={before.alt}
+          {...blurProps(before.src)}
           fill
           sizes={sizes}
           draggable={false}

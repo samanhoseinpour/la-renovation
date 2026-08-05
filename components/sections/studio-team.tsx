@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
+import { blurProps } from "@/content/images";
 import type { TeamMember } from "@/content/team";
 
 type StudioTeamProps = {
@@ -38,6 +39,7 @@ export function StudioTeam({ id, members }: StudioTeamProps) {
                     <Image
                       src={member.photo.src}
                       alt={member.photo.alt}
+                      {...blurProps(member.photo.src)}
                       fill
                       sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                       className="object-cover"
