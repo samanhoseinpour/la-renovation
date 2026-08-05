@@ -17,7 +17,7 @@ import { ctaVariants, processPhases } from "@/content/studio";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Seven construction divisions across Southern California: multifamily, commercial, civil, energy, concrete, single-family, and preconstruction.",
+    "Seven construction divisions across Southern California: energy, commercial, civil, multifamily, concrete, preconstruction, and single-family.",
   alternates: { canonical: "/services" },
 };
 

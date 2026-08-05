@@ -12,48 +12,50 @@ export type Service = {
   body: string[];
   /** Bulleted scope items. */
   includes: string[];
-  /** Portrait card photograph. Temporary Unsplash stand-in. */
+  /** Portrait card photograph. Mostly temporary Unsplash stand-ins. */
   image: SiteImage;
   /** One image per body paragraph on the detail page (three each). */
   rowImages: SiteImage[];
 };
 
+// Array order is display order everywhere (nav panel, footer, home grid,
+// /services, both sitemaps) and was set by the client: energy leads.
 export const services: Service[] = [
   {
-    slug: "multifamily-mixed-use",
+    slug: "energy-infrastructure",
     index: "01",
-    title: "Multifamily & Mixed-Use Construction",
-    summary: "Apartment, condominium, and mixed-use projects.",
-    scope: "Apartment, condominium, mixed-use",
+    title: "Energy Infrastructure",
+    summary: "EV charging, geothermal, solar and storage, clean fuel.",
+    scope: "EV charging, geothermal, solar, storage",
     body: [
-      "Apartment, condominium, and mixed-use projects from small infill through mid-size developments.",
-      "Multifamily is a coordination problem before it is a construction problem. Structure, envelope, utilities, parking, and building systems all compete for the same critical path, and the losses happen in the gaps between them. We reduce the gaps by holding more of the scope ourselves: sitework, foundations, structure, and the energy systems that now govern how these buildings are approved.",
-      "We work with developers from feasibility forward, pricing while the design is still moving so the budget and the drawings arrive together. For owners carrying multiple sites, we can run several projects under one reporting structure.",
+      "EV charging, geothermal development, solar and battery storage, and clean fuel infrastructure. Energy has moved from an amenity to a code requirement, and new multifamily and commercial buildings now carry obligations that most builders subcontract without fully pricing.",
+      "This division is led by engineering leadership drawn from utility-scale energy work: geothermal field development, charging network design and commissioning, and clean fuel infrastructure delivered in coordination with utilities and engineering contractors.",
+      "That gives us two things. Compliance handled in house on every project we build, and standalone energy work for owners who need systems rather than buildings. Specialized drilling is performed by our licensed partners.",
     ],
     includes: [
-      "Apartment buildings",
-      "Condominium projects",
-      "Mixed-use and podium construction",
-      "Wrap and infill projects",
-      "Developer feasibility support",
-      "Multi-site program reporting",
+      "EV charging design and commissioning",
+      "Geothermal assessment and development",
+      "Solar and battery storage",
+      "Clean fuel infrastructure",
+      "Energy code compliance",
+      "Standalone energy engagements",
     ],
     image: {
-      src: unsplash("photo-1777104247068-ad8c489cd9e9"),
-      alt: "Apartment building wrapped in scaffolding during construction",
+      src: unsplash("photo-1707341597123-c53bbb7e7f93"),
+      alt: "Electric vehicle plugged into a fast-charging station indoors",
     },
     rowImages: [
       {
-        src: unsplash("photo-1777919393730-463e2c0b7f4c"),
-        alt: "Multi-story concrete building under construction with exposed rebar and plywood formwork",
+        src: unsplash("photo-1745187946672-2c1d8cf26a2b"),
+        alt: "Aerial view of solar panels installed on a corrugated metal rooftop",
       },
       {
-        src: unsplash("photo-1751703019097-02f294f45343"),
-        alt: "Two construction workers standing on tubular scaffolding against a clear sky",
+        src: unsplash("photo-1702058897414-c772071c498c"),
+        alt: "Geothermal steam plumes rising from the ground under a dramatic sky",
       },
       {
-        src: unsplash("photo-1503387762-592deb58ef4e"),
-        alt: "Hand drawing on an architectural blueprint with a ruler and pencil",
+        src: unsplash("photo-1703860271509-b50f5679f2a0"),
+        alt: "Close-up of an electric vehicle plugged into a charging connector",
       },
     ],
   },
@@ -134,40 +136,40 @@ export const services: Service[] = [
     ],
   },
   {
-    slug: "energy-infrastructure",
+    slug: "multifamily-mixed-use",
     index: "04",
-    title: "Energy Infrastructure",
-    summary: "EV charging, geothermal, solar and storage, clean fuel.",
-    scope: "EV charging, geothermal, solar, storage",
+    title: "Multifamily & Mixed-Use Construction",
+    summary: "Apartment, condominium, and mixed-use projects.",
+    scope: "Apartment, condominium, mixed-use",
     body: [
-      "EV charging, geothermal development, solar and battery storage, and clean fuel infrastructure. Energy has moved from an amenity to a code requirement, and new multifamily and commercial buildings now carry obligations that most builders subcontract without fully pricing.",
-      "This division is led by engineering leadership drawn from utility-scale energy work: geothermal field development, charging network design and commissioning, and clean fuel infrastructure delivered in coordination with utilities and engineering contractors.",
-      "That gives us two things. Compliance handled in house on every project we build, and standalone energy work for owners who need systems rather than buildings. Specialized drilling is performed by our licensed partners.",
+      "Apartment, condominium, and mixed-use projects from small infill through mid-size developments.",
+      "Multifamily is a coordination problem before it is a construction problem. Structure, envelope, utilities, parking, and building systems all compete for the same critical path, and the losses happen in the gaps between them. We reduce the gaps by holding more of the scope ourselves: sitework, foundations, structure, and the energy systems that now govern how these buildings are approved.",
+      "We work with developers from feasibility forward, pricing while the design is still moving so the budget and the drawings arrive together. For owners carrying multiple sites, we can run several projects under one reporting structure.",
     ],
     includes: [
-      "EV charging design and commissioning",
-      "Geothermal assessment and development",
-      "Solar and battery storage",
-      "Clean fuel infrastructure",
-      "Energy code compliance",
-      "Standalone energy engagements",
+      "Apartment buildings",
+      "Condominium projects",
+      "Mixed-use and podium construction",
+      "Wrap and infill projects",
+      "Developer feasibility support",
+      "Multi-site program reporting",
     ],
     image: {
-      src: unsplash("photo-1707341597123-c53bbb7e7f93"),
-      alt: "Electric vehicle plugged into a fast-charging station indoors",
+      src: unsplash("photo-1777104247068-ad8c489cd9e9"),
+      alt: "Apartment building wrapped in scaffolding during construction",
     },
     rowImages: [
       {
-        src: unsplash("photo-1745187946672-2c1d8cf26a2b"),
-        alt: "Aerial view of solar panels installed on a corrugated metal rooftop",
+        src: unsplash("photo-1777919393730-463e2c0b7f4c"),
+        alt: "Multi-story concrete building under construction with exposed rebar and plywood formwork",
       },
       {
-        src: unsplash("photo-1702058897414-c772071c498c"),
-        alt: "Geothermal steam plumes rising from the ground under a dramatic sky",
+        src: unsplash("photo-1751703019097-02f294f45343"),
+        alt: "Two construction workers standing on tubular scaffolding against a clear sky",
       },
       {
-        src: unsplash("photo-1703860271509-b50f5679f2a0"),
-        alt: "Close-up of an electric vehicle plugged into a charging connector",
+        src: unsplash("photo-1503387762-592deb58ef4e"),
+        alt: "Hand drawing on an architectural blueprint with a ruler and pencil",
       },
     ],
   },
@@ -210,46 +212,8 @@ export const services: Service[] = [
     ],
   },
   {
-    slug: "single-family",
-    index: "06",
-    title: "Single-Family Construction",
-    summary: "Custom homes, accessory dwelling units, additions.",
-    scope: "Custom homes, ADUs, additions",
-    body: [
-      "Custom homes, spec homes, accessory dwelling units, and additions.",
-      "A house goes wrong in one of two places: the budget is set before anyone understands the site, or the drawings are finished before anyone prices them. Both produce the same result, a number that moves after you have committed.",
-      "We start with the lot. What it will hold, what the soil will support, what the agency will approve, and what it will cost to build there. Then design and pricing move together. Accessory dwelling units and additions run the same way, at a scale where the site matters even more.",
-    ],
-    includes: [
-      "Custom homes",
-      "Spec homes",
-      "Accessory dwelling units",
-      "Additions",
-      "Lot and soil feasibility",
-      "Pricing alongside design",
-    ],
-    image: {
-      src: unsplash("photo-1778164912282-c89de4d198ea"),
-      alt: "Nearly finished single-family house with a dirt pile in the front yard",
-    },
-    rowImages: [
-      {
-        src: unsplash("photo-1639953803381-e9c3f3a38253"),
-        alt: "Timber roof trusses and wall framing on a house under construction",
-      },
-      {
-        src: unsplash("photo-1649807533255-bbc9c9fb7d77"),
-        alt: "Yellow excavator parked on a cleared dirt hilltop under a clear sky",
-      },
-      {
-        src: unsplash("photo-1682663810771-89d21838530f"),
-        alt: "Survey equipment on a tripod with a tower crane in the background",
-      },
-    ],
-  },
-  {
     slug: "preconstruction-program-management",
-    index: "07",
+    index: "06",
     title: "Preconstruction & Program Management",
     summary: "Feasibility, budgeting, permitting, and owner's representation.",
     scope: "Feasibility, budgeting, permitting",
@@ -282,6 +246,44 @@ export const services: Service[] = [
       {
         src: unsplash("photo-1742112125635-6f8201c6ee3f"),
         alt: "Two site workers in hard hats shaking hands in front of stacked precast concrete panels",
+      },
+    ],
+  },
+  {
+    slug: "single-family",
+    index: "07",
+    title: "Single-Family Construction",
+    summary: "Custom homes, accessory dwelling units, additions.",
+    scope: "Custom homes, ADUs, additions",
+    body: [
+      "Custom homes, spec homes, accessory dwelling units, and additions.",
+      "A house goes wrong in one of two places: the budget is set before anyone understands the site, or the drawings are finished before anyone prices them. Both produce the same result, a number that moves after you have committed.",
+      "We start with the lot. What it will hold, what the soil will support, what the agency will approve, and what it will cost to build there. Then design and pricing move together. Accessory dwelling units and additions run the same way, at a scale where the site matters even more.",
+    ],
+    includes: [
+      "Custom homes",
+      "Spec homes",
+      "Accessory dwelling units",
+      "Additions",
+      "Lot and soil feasibility",
+      "Pricing alongside design",
+    ],
+    image: {
+      src: unsplash("photo-1778164912282-c89de4d198ea"),
+      alt: "Nearly finished single-family house with a dirt pile in the front yard",
+    },
+    rowImages: [
+      {
+        src: unsplash("photo-1639953803381-e9c3f3a38253"),
+        alt: "Timber roof trusses and wall framing on a house under construction",
+      },
+      {
+        src: unsplash("photo-1649807533255-bbc9c9fb7d77"),
+        alt: "Yellow excavator parked on a cleared dirt hilltop under a clear sky",
+      },
+      {
+        src: unsplash("photo-1682663810771-89d21838530f"),
+        alt: "Survey equipment on a tripod with a tower crane in the background",
       },
     ],
   },
