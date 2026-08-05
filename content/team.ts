@@ -1,17 +1,24 @@
 import type { SiteImage } from "@/content/images";
 
-export type TeamMember = { name: string; role: string; photo: SiteImage };
+export type TeamMember = {
+  name: string;
+  role: string;
+  /** Members without a shot yet render the person-glyph fallback frame. */
+  photo?: SiteImage;
+};
 
-// Array order is display order for the home marquee and /about#team:
-// leadership, then delivery, then advisory and growth, then marketing.
+// Array order is display order for the home marquee and /about#team,
+// set by the client.
 export const teamMembers: TeamMember[] = [
-  { name: "Mahyar Taghizadeh", role: "CEO", photo: { src: "/images/team/mahyar-taghizadeh.avif", alt: "Mahyar Taghizadeh" } },
-  { name: "Ferris Zahedi", role: "Infrastructure Development Manager", photo: { src: "/images/team/ferris-zahedi.avif", alt: "Ferris Zahedi" } },
-  { name: "Mazen Khoudeir", role: "Architectural Project Manager", photo: { src: "/images/team/mazen-khoudeir.avif", alt: "Mazen Khoudeir" } },
-  { name: "Reza Ghasemi", role: "Senior Project Engineer", photo: { src: "/images/team/reza-ghasemi.avif", alt: "Reza Ghasemi" } },
-  { name: "Mounir Khoudeir", role: "Sustainable Energy Integration Advisor", photo: { src: "/images/team/mounir-khoudeir.avif", alt: "Mounir Khoudeir" } },
-  { name: "Daniel Zhang", role: "Global Partnerships Manager", photo: { src: "/images/team/daniel-zhang.avif", alt: "Daniel Zhang" } },
-  { name: "Payam Shirazi", role: "Business Development", photo: { src: "/images/team/payam-shirazi.avif", alt: "Payam Shirazi" } },
-  { name: "Arshia Esmaeili", role: "Sales and Marketing Specialist", photo: { src: "/images/team/arshia-esmaeili.avif", alt: "Arshia Esmaeili" } },
-  { name: "Michelle Taylor", role: "Marketing Coordinator", photo: { src: "/images/team/michelle-taylor.avif", alt: "Michelle Taylor" } },
+  { name: "Dylan", role: "President & Chief Executive Officer" },
+  { name: "Shahrouz", role: "Chief Operating Officer & Qualifying Individual" },
+  { name: "Ferris Zahedi", role: "VP of Construction Operations", photo: { src: "/images/team/ferris-zahedi.avif", alt: "Ferris Zahedi" } },
+  { name: "Arshia Esmaeili", role: "Chief Financial Officer & Corporate Secretary", photo: { src: "/images/team/arshia-esmaeili.avif", alt: "Arshia Esmaeili" } },
+  { name: "G. Reza Ghasemi", role: "Senior Project Engineer, Energy Infrastructure", photo: { src: "/images/team/reza-ghasemi.avif", alt: "G. Reza Ghasemi" } },
+  { name: "Mazen Khoudeir", role: "Design Manager & Preconstruction Lead", photo: { src: "/images/team/mazen-khoudeir.avif", alt: "Mazen Khoudeir" } },
+  { name: "Payam Shirazi", role: "Director of Business Development", photo: { src: "/images/team/payam-shirazi.avif", alt: "Payam Shirazi" } },
+  { name: "Elika Grami", role: "Business Development Manager" },
+  { name: "Daniel Zhang", role: "Strategic Partnerships Manager", photo: { src: "/images/team/daniel-zhang.avif", alt: "Daniel Zhang" } },
+  { name: "Michelle Taylor", role: "Marketing Manager", photo: { src: "/images/team/michelle-taylor.avif", alt: "Michelle Taylor" } },
+  { name: "Mounir Khoudeir", role: "Senior Technical Advisor", photo: { src: "/images/team/mounir-khoudeir.avif", alt: "Mounir Khoudeir" } },
 ];

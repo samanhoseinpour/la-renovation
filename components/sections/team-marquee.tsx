@@ -1,5 +1,6 @@
 "use client";
 
+import { UserRound } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { useReducedMotion } from "motion/react";
@@ -82,14 +83,22 @@ export function TeamMarquee({
           >
             {members.map((member) => (
               <div key={member.name} className="mx-2.5 w-40 sm:w-48">
-                <div className="relative aspect-3/4 overflow-hidden rounded-2xl bg-secondary">
-                  <Image
-                    src={member.photo.src}
-                    alt=""
-                    fill
-                    sizes="(min-width: 640px) 12rem, 10rem"
-                    className="object-cover"
-                  />
+                <div className="relative flex aspect-3/4 items-center justify-center overflow-hidden rounded-2xl bg-secondary">
+                  {member.photo ? (
+                    <Image
+                      src={member.photo.src}
+                      alt=""
+                      fill
+                      sizes="(min-width: 640px) 12rem, 10rem"
+                      className="object-cover"
+                    />
+                  ) : (
+                    <UserRound
+                      aria-hidden
+                      strokeWidth={1.25}
+                      className="size-12 text-muted-foreground/50"
+                    />
+                  )}
                 </div>
                 <p className="mt-3 text-sm font-medium">{member.name}</p>
                 <p className="mt-0.5 text-xs text-muted-foreground">{member.role}</p>

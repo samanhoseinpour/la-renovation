@@ -1,3 +1,4 @@
+import { UserRound } from "lucide-react";
 import Image from "next/image";
 
 import { Container } from "@/components/layout/container";
@@ -32,14 +33,24 @@ export function StudioTeam({ id, members }: StudioTeamProps) {
           {members.map((member, index) => (
             <Reveal key={member.name} delay={Math.min(index * 0.05, 0.2)}>
               <div>
-                <div className="relative aspect-3/4 overflow-hidden rounded-2xl bg-secondary">
-                  <Image
-                    src={member.photo.src}
-                    alt={member.photo.alt}
-                    fill
-                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                    className="object-cover"
-                  />
+                <div className="relative flex aspect-3/4 items-center justify-center overflow-hidden rounded-2xl bg-secondary">
+                  {member.photo ? (
+                    <Image
+                      src={member.photo.src}
+                      alt={member.photo.alt}
+                      fill
+                      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover"
+                    />
+                  ) : (
+                    // Decorative stand-in until a portrait lands; the name
+                    // below is the card's accessible label.
+                    <UserRound
+                      aria-hidden
+                      strokeWidth={1.25}
+                      className="size-20 text-muted-foreground/50"
+                    />
+                  )}
                 </div>
                 <h3 className="mt-4 text-h3">{member.name}</h3>
                 <p className="mt-1 text-sm text-muted-foreground">
