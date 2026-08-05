@@ -22,7 +22,7 @@ Open [http://localhost:3000](http://localhost:3000).
 - `/careers` — values grid and a general-application panel; no openings to list, so there's no listings table
 - `/licenses` — how to verify a contractor's license, plus a bond/insurance summary; exists on disk but isn't linked from the footer or sitemap until the real CSLB number lands
 - `/privacy`, `/terms`, `/accessibility` — legal pages sharing one structured long-form renderer
-- `/sitemap` — a compact columned directory of every page, grouped into pages, projects, services and legal; browsers that open `/sitemap.xml` land here through an Accept-header redirect while crawlers still receive the XML
+- `/sitemap` — a compact columned directory of every page, grouped into pages, projects, services and legal; `/sitemap.xml` serves its raw XML to everyone, crawlers and curious visitors alike, with no redirect between the two
 - `/styleguide` — internal design reference (tokens, type scale, components)
 - Every unmatched URL — a chrome-less 404 with the wordmark holding its header slot: a brand plumb line drops onto a survey marker above a per-section verdict (projects, services, about and the rest each carry their own message, picked from the dead URL on the client), the attempted address prints struck through in the mono face, and two exits lead back to the studio and the sitemap
 
