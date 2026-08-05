@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import { Reveal } from "@/components/motion/reveal";
-import { blurProps } from "@/content/images";
+import { blurProps } from "@/content/blur";
 import type { Service } from "@/content/services";
 import { cn } from "@/lib/utils";
 

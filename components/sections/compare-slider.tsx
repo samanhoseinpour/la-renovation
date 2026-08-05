@@ -4,12 +4,15 @@ import { ChevronsLeftRight } from "lucide-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
 
-import { blurProps, type SiteImage } from "@/content/images";
+import type { BlurProps, SiteImage } from "@/content/images";
 import { cn } from "@/lib/utils";
 
 type CompareSliderProps = {
   before: SiteImage;
   after: SiteImage;
+  /** Resolved blur-ups from the server shell (compare-gallery). */
+  beforeBlur: BlurProps;
+  afterBlur: BlurProps;
   sizes: string;
   label?: string;
   initial?: number;
@@ -28,6 +31,8 @@ type CompareSliderProps = {
 export function CompareSlider({
   before,
   after,
+  beforeBlur,
+  afterBlur,
   sizes,
   label,
   initial = 50,
@@ -94,7 +99,7 @@ export function CompareSlider({
       <Image
         src={after.src}
         alt={after.alt}
-        {...blurProps(after.src)}
+        {...afterBlur}
         fill
         sizes={sizes}
         draggable={false}
@@ -107,7 +112,7 @@ export function CompareSlider({
         <Image
           src={before.src}
           alt={before.alt}
-          {...blurProps(before.src)}
+          {...beforeBlur}
           fill
           sizes={sizes}
           draggable={false}

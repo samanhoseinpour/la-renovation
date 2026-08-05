@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Reveal } from "@/components/motion/reveal";
-import { blurProps } from "@/content/images";
+import { blurProps } from "@/content/blur";
 import type { Project } from "@/content/projects";
 
 /**

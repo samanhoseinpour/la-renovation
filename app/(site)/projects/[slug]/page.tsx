@@ -9,7 +9,7 @@ import { Section } from "@/components/layout/section";
 import { CompareGallery } from "@/components/sections/compare-gallery";
 import { ContactCta } from "@/components/sections/contact-cta";
 import { ProjectGallery } from "@/components/sections/project-gallery";
-import { blurProps } from "@/content/images";
+import { blurProps } from "@/content/blur";
 import { getAllProjects, getProject } from "@/content/projects";
 import { getService } from "@/content/services";
 import { getTestimonialFor, projectCta } from "@/content/studio";

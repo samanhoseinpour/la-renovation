@@ -1,7 +1,8 @@
 import type { NavPanelKey } from "@/lib/site";
 
+import { blurProps } from "./blur";
 import { siteImages } from "./images";
-import type { SiteImage } from "./images";
+import type { BlurProps, SiteImage } from "./images";
 import { getAllProjects } from "./projects";
 import { getAllServices } from "./services";
 
@@ -12,6 +13,9 @@ export type NavPanelItem = {
   /** Pre-composed meta line — the separator and phrasing are copy decisions. */
   meta: string;
   image: SiteImage;
+  /** Resolved blur-up for `image`, computed here so the client menu never
+      imports the server-only blur map. */
+  imageBlur: BlurProps;
 };
 
 export type NavPanel = {
@@ -21,6 +25,12 @@ export type NavPanel = {
 };
 
 export type NavPanels = Record<NavPanelKey, NavPanel>;
+
+/** Pairs a manifest image with its resolved blur-up for the client menu. */
+const panelImage = (image: SiteImage) => ({
+  image,
+  imageBlur: blurProps(image.src),
+});
 
 /**
  * Lean projection of projects/services for the navigation surfaces (mega
@@ -37,7 +47,7 @@ export function getNavPanels(): NavPanels {
         index: project.index,
         title: project.title,
         meta: `${project.neighborhood} · ${project.scope}`,
-        image: project.image,
+        ...panelImage(project.image),
       })),
     },
     services: {
@@ -48,18 +58,18 @@ export function getNavPanels(): NavPanels {
         index: service.index,
         title: service.title,
         meta: service.scope,
-        image: service.image,
+        ...panelImage(service.image),
       })),
     },
     about: {
       allLabel: "About the company",
       allHref: "/about",
       items: [
-        { href: "/about#story", index: "01", title: "Our story", meta: "Built to close the seams", image: siteImages.about[0] },
-        { href: "/about#mission", index: "02", title: "Mission & vision", meta: "One roof, one schedule", image: siteImages.about[1] },
-        { href: "/about#team", index: "03", title: "Team", meta: "The people running the divisions", image: siteImages.about[2] },
-        { href: "/about#approach", index: "04", title: "Approach", meta: "How projects are priced and run", image: siteImages.about[3] },
-        { href: "/about#commitments", index: "05", title: "Commitments", meta: "Safety, quality, communication", image: siteImages.about[4] },
+        { href: "/about#story", index: "01", title: "Our story", meta: "Built to close the seams", ...panelImage(siteImages.about[0]) },
+        { href: "/about#mission", index: "02", title: "Mission & vision", meta: "One roof, one schedule", ...panelImage(siteImages.about[1]) },
+        { href: "/about#team", index: "03", title: "Team", meta: "The people running the divisions", ...panelImage(siteImages.about[2]) },
+        { href: "/about#approach", index: "04", title: "Approach", meta: "How projects are priced and run", ...panelImage(siteImages.about[3]) },
+        { href: "/about#commitments", index: "05", title: "Commitments", meta: "Safety, quality, communication", ...panelImage(siteImages.about[4]) },
       ],
     },
   };

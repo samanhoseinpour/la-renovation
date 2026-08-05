@@ -2,8 +2,9 @@ import Image from "next/image";
 
 import { ArrowLink } from "@/components/layout/arrow-link";
 import { Reveal } from "@/components/motion/reveal";
+import { blurProps } from "@/content/blur";
 import type { CompanyIntroCopy } from "@/content/home";
-import { blurProps, type SiteImage } from "@/content/images";
+import type { SiteImage } from "@/content/images";
 
 /**
  * Adapted from @shadcnblocks/about19: kept the tall-imagery-beside-narrow-copy

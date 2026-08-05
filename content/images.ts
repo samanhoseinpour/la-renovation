@@ -13,8 +13,6 @@
  * images:optimize into public/images/).
  */
 
-import { blurMap } from "./blur-map.generated";
-
 export type SiteImage = {
   src: string;
   alt: string;
@@ -26,19 +24,14 @@ export function unsplash(id: string, width = 2400): string {
 }
 
 /**
- * Blur-up props for any manifest src, local path or Unsplash URL. Spread onto
- * a next/image; sources missing from the generated map degrade to no
- * placeholder. Regenerate the map with `npm run images:placeholders`.
+ * Resolved placeholder="blur" props for one image, ready to spread onto a
+ * next/image; empty when the source has no generated entry. Computed by
+ * blurProps() in content/blur.ts — server-only, so the generated map never
+ * ships in a client bundle; client components receive these through props.
  */
-export function blurProps(
-  src: string,
-): { placeholder: "blur"; blurDataURL: string } | Record<string, never> {
-  const key = src.startsWith("/")
-    ? src
-    : /images\.unsplash\.com\/(photo-[A-Za-z0-9_-]+)/.exec(src)?.[1];
-  const blurDataURL = key ? blurMap[key] : undefined;
-  return blurDataURL ? { placeholder: "blur", blurDataURL } : {};
-}
+export type BlurProps =
+  | { placeholder: "blur"; blurDataURL: string }
+  | Record<string, never>;
 
 export const siteImages = {
   homeHero: {

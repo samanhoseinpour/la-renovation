@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
-import { blurProps } from "@/content/images";
+import { blurProps } from "@/content/blur";
 
 type StudioStoryProps = {
   id?: string;

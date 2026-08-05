@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/motion/reveal";
 import { CompareSlider } from "@/components/sections/compare-slider";
+import { blurProps } from "@/content/blur";
 import type { ComparePair } from "@/content/projects";
 
 /**
@@ -25,6 +26,8 @@ export function CompareGallery({ pairs }: { pairs: ComparePair[] }) {
               <CompareSlider
                 before={pair.before}
                 after={pair.after}
+                beforeBlur={blurProps(pair.before.src)}
+                afterBlur={blurProps(pair.after.src)}
                 label={pair.caption}
                 sizes={fullWidth ? "100vw" : "(min-width: 1024px) 50vw, 100vw"}
               />

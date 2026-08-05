@@ -6,8 +6,9 @@ import { ArrowLink } from "@/components/layout/arrow-link";
 import { Container } from "@/components/layout/container";
 import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
+import { blurProps } from "@/content/blur";
 import { homeHero } from "@/content/home";
-import { blurProps, siteImages } from "@/content/images";
+import { siteImages } from "@/content/images";
 import { published } from "@/lib/site";
 
 /**

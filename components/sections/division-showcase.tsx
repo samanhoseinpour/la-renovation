@@ -4,8 +4,9 @@ import { ArrowUpRight } from "lucide-react";
 
 import { ArrowLink, ArrowMark } from "@/components/layout/arrow-link";
 import { Reveal } from "@/components/motion/reveal";
+import { blurProps } from "@/content/blur";
 import type { SectionIntro } from "@/content/home";
-import { blurProps, type SiteImage } from "@/content/images";
+import type { SiteImage } from "@/content/images";
 import type { Service } from "@/content/services";
 
 /**

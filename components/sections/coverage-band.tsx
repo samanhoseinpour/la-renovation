@@ -3,8 +3,9 @@ import Image from "next/image";
 import { ArrowLink } from "@/components/layout/arrow-link";
 import { Container } from "@/components/layout/container";
 import { Reveal } from "@/components/motion/reveal";
+import { blurProps } from "@/content/blur";
 import type { SectionIntro } from "@/content/home";
-import { blurProps, type SiteImage } from "@/content/images";
+import type { SiteImage } from "@/content/images";
 
 /**
  * Adapted from @shadcnblocks/cta43: kept the edge-to-edge background

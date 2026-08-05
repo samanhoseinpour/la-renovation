@@ -6,7 +6,6 @@ import { useState } from "react";
 import { ArrowLink } from "@/components/layout/arrow-link";
 import { Container } from "@/components/layout/container";
 import { NavigationMenuLink } from "@/components/ui/navigation-menu";
-import { blurProps } from "@/content/images";
 import type { NavPanelItem } from "@/content/nav";
 import { cn } from "@/lib/utils";
 
@@ -95,7 +94,7 @@ export function MegaPanel({ items, allHref, allLabel }: MegaPanelProps) {
             key={item.href}
             src={item.image.src}
             alt=""
-            {...blurProps(item.image.src)}
+            {...item.imageBlur}
             fill
             sizes="(min-width: 88rem) 34rem, 38vw"
             // All lazy. keepMounted puts these in the DOM on every route, so an

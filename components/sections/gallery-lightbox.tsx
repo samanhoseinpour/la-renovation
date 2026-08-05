@@ -7,11 +7,13 @@ import { useRef, useState } from "react";
 
 import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
-import { blurProps, type SiteImage } from "@/content/images";
+import type { BlurProps, SiteImage } from "@/content/images";
 import { cn } from "@/lib/utils";
 
 type GalleryLightboxProps = {
-  images: SiteImage[];
+  /** Grid images with blur-ups resolved by the project-gallery shell; the
+      full-screen viewer stays placeholder-free on purpose. */
+  images: (SiteImage & { blur: BlurProps })[];
 };
 
 /**
@@ -64,7 +66,7 @@ export function GalleryLightbox({ images }: GalleryLightboxProps) {
                 <Image
                   src={image.src}
                   alt={image.alt}
-                  {...blurProps(image.src)}
+                  {...image.blur}
                   fill
                   sizes={
                     fullWidth ? "100vw" : "(min-width: 1024px) 50vw, 100vw"
