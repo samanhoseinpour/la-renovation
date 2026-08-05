@@ -44,7 +44,7 @@ export default async function Image() {
             maxWidth: 920,
           }}
         >
-          Ground to grid.
+          {site.tagline}
         </div>
 
         <div
@@ -54,8 +54,15 @@ export default async function Image() {
             justifyContent: "space-between",
           }}
         >
-          <div style={{ display: "flex", fontSize: 26, color: "#5A6167" }}>
-            {site.tagline}
+          <div
+            style={{
+              display: "flex",
+              fontSize: 24,
+              color: "#5A6167",
+              maxWidth: 880,
+            }}
+          >
+            {site.description}
           </div>
           <div
             style={{
