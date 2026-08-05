@@ -37,7 +37,7 @@ Open [http://localhost:3000](http://localhost:3000).
 - `content/` — `home.ts` owns all home copy, including the hero's; `services.ts` also carries the `/services` page copy, the delivery-model band and each division's optional in-depth band, statement and closing CTA; `about.ts` also carries the commitments and careers-band copy; `studio.ts` the process phases, CTA variants, brand statements and contact-page copy; alongside projects, team and studio copy, the image manifest and the nav-panel projection; `partners.ts` the partner strip's intro and roster; `faq.ts`, `careers.ts`, `legal.ts` and `licenses.ts` back the six support routes; `sitemap.ts` projects the site tree for `/sitemap`; `not-found.ts` holds the per-section 404 verdicts and both exit labels
 - `lib/site.ts` — single source of truth for name, nav, contact details and license
 - `lib/delivery.ts` — email delivery boundary used by the contact action
-- `scripts/` — the image pipeline (AVIF migration and size auditing)
+- `scripts/` — the image pipeline (AVIF migration, size auditing and blur-up generation)
 
 Site copy and data live in `content/` and `lib/site.ts`, not in components. Copy stays in a no-figures register: no prices, durations, square footage or invented history anywhere on the site. The one exception is the home hero lead, which is the client's own positioning paragraph kept verbatim.
 
@@ -61,7 +61,7 @@ The root layout mounts Vercel Web Analytics — cookieless, aggregate page count
 
 ## Images
 
-Team portraits are self-hosted AVIFs in `public/images/team/`, cropped 3:4 and kept under 100KB each; roster members without a portrait yet render a neutral person-glyph frame. The home hero and the intro's EV-charging photo (`public/images/home/`), the About lead photo (`public/images/about/`) and the concrete division's card (`public/images/services/`) are the client's own images, also AVIF and inside the default 150KB budget. Three more About images (the story pair and the approach nav thumbnail) are Unsplash placeholders self-hosted in `public/images/about/`, inside the same budget: next/image fetches remote sources server-side, and the dev machine can't reach Unsplash, so hotlinked entries break in `next dev`. The four partner logos in `public/images/partners/` are ink-normalized marks: black plus alpha, trimmed, painted with the current theme's foreground token via CSS mask, so one small AVIF serves light and dark. The pipeline lives in `scripts/`:
+Every image the live site renders is a self-hosted AVIF under `public/images/`, inside the default 150KB budget. The home hero, the intro's EV-charging photo, the About lead and the concrete division's card are the client's own photography. Team portraits sit in `public/images/team/`, cropped 3:4 and kept under 100KB each; roster members without a portrait yet render a neutral person-glyph frame. Everything else — the division cards, the detail-row photos, the coverage band, the closing CTA panel and the About story set — is Unsplash placeholder photography landed locally through the same pipeline (downloaded via the images.weserv.nl proxy, since next/image fetches remote sources server-side and the dev machine can't reach Unsplash directly). The four partner logos in `public/images/partners/` are ink-normalized marks: black plus alpha, trimmed, painted with the current theme's foreground token via CSS mask, so one small AVIF serves light and dark. The pipeline lives in `scripts/`:
 
 ```bash
 npm run images:migrate       # convert source photos to AVIF (supports --aspect W:H cover crops)
@@ -70,9 +70,9 @@ npm run images:optimize      # re-encode anything over budget
 npm run images:placeholders  # regenerate the blur-up map after imagery changes
 ```
 
-Every content-driven image blur-loads Pinterest-style: `images:placeholders` renders each photo down to a ~300-byte 16px preview, committed to `content/blur-map.generated.ts`, and `blurProps` in `content/images.ts` hands the matching data URI to `next/image` as its `placeholder="blur"`. The blurred frame paints with the page and the full photo fades in over it, instead of an empty box.
+Every content-driven image blur-loads Pinterest-style: `images:placeholders` renders each photo down to a ~300-byte 16px preview, committed to `content/blur-map.generated.ts` (content behind an off publish gate is skipped), and `blurProps` in `content/blur.ts` hands the matching data URI to `next/image` as its `placeholder="blur"`. The helper is server-only by design, so the generated map never ships in a client bundle: client components — the CTA panel, the team marquee, the services panorama, the compare slider, the lightbox grid and the mega menu — receive their resolved blur props from server shells. The blurred frame paints with the page and the full photo fades in over it, instead of an empty box.
 
-Everything else is temporary Unsplash placeholder imagery, including the project case studies and their before/after pairs; swapping an image means editing one line in `content/`. When real project photography lands, update the allowed host in `next.config.ts`.
+The gated demo project case studies and their before/after pairs still reference Unsplash directly; they render nowhere while the publish gate is off. Swapping any image means editing one line in `content/`. When real project photography lands, the `images.unsplash.com` allowance in `next.config.ts` can go with it.
 
 ## Publish gates
 
@@ -84,7 +84,7 @@ Everything else is temporary Unsplash placeholder imagery, including the project
 - The CSLB license number (footer renders it only once set)
 - `app/icon.svg` is a typed "A" monogram until the real mark arrives
 - The demo project case studies and client notes, gated behind `published` until real ones exist
-- The remaining Unsplash photography (most service imagery, project galleries, four of the five About images, the second home-intro photo and the home coverage-band photo)
+- Real project photography to replace the self-hosted Unsplash placeholders (service imagery, four of the five About images, the second home-intro photo, the coverage band and the CTA panel) and the gated demo project galleries
 
 ## Design system
 
