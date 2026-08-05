@@ -4,17 +4,17 @@ import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { CareersBand } from "@/components/sections/careers-band";
 import { ContactCta } from "@/components/sections/contact-cta";
+import { OfficeCommitments } from "@/components/sections/office-commitments";
+import { OfficeMission } from "@/components/sections/office-mission";
+import { OfficeStory } from "@/components/sections/office-story";
+import { OfficeTeam } from "@/components/sections/office-team";
 import { PageHeader } from "@/components/sections/page-header";
 import { PartnerStrip } from "@/components/sections/partner-strip";
 import { StatementBand } from "@/components/sections/statement-band";
-import { StudioCommitments } from "@/components/sections/studio-commitments";
-import { StudioMission } from "@/components/sections/studio-mission";
-import { StudioStory } from "@/components/sections/studio-story";
-import { StudioTeam } from "@/components/sections/studio-team";
 import { aboutCareers, aboutIntro, aboutStory, approach, commitments, mission, vision } from "@/content/about";
 import { siteImages } from "@/content/images";
+import { ctaVariants, statements } from "@/content/office";
 import { partners, partnersIntro } from "@/content/partners";
-import { ctaVariants, statements } from "@/content/studio";
 import { teamMembers } from "@/content/team";
 import { breadcrumbNode, JsonLd, webPageNode } from "@/lib/seo";
 
@@ -47,16 +47,16 @@ export default function AboutPage() {
         lead={aboutIntro}
       />
 
-      <StudioStory
+      <OfficeStory
         id="story"
         className="scroll-mt-16"
         paragraphs={aboutStory}
         images={siteImages.about}
       />
 
-      <StudioMission id="mission" mission={mission} vision={vision} />
+      <OfficeMission id="mission" mission={mission} vision={vision} />
 
-      <StudioTeam id="team" members={teamMembers} />
+      <OfficeTeam id="team" members={teamMembers} />
 
       {/* scroll-mt-16 clears the h-16 sticky header on anchor navigation —
           same 64px as the Lenis `anchors: { offset: -64 }` and the header's
@@ -84,7 +84,7 @@ export default function AboutPage() {
         </Container>
       </Section>
 
-      <StudioCommitments id="commitments" items={commitments} />
+      <OfficeCommitments id="commitments" items={commitments} />
 
       <CareersBand copy={aboutCareers} />
 

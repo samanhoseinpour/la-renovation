@@ -3,7 +3,7 @@ import { Section } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
 import type { Commitment } from "@/content/about";
 
-type StudioCommitmentsProps = {
+type OfficeCommitmentsProps = {
   id?: string;
   items: Commitment[];
 };
@@ -11,12 +11,12 @@ type StudioCommitmentsProps = {
 /**
  * Adapted from @shadcnblocks/feature42: kept the typographic value rows with
  * no icons; traded its three-column grid for full-width label-beside-body
- * rows on StudioMission's seven-column geometry (commitments read as the
+ * rows on OfficeMission's seven-column geometry (commitments read as the
  * mission's tonal siblings, one register down at h3 scale), trimmed four
  * items to three, and replaced its shell with Section/Container and
  * semantic tokens.
  */
-export function StudioCommitments({ id, items }: StudioCommitmentsProps) {
+export function OfficeCommitments({ id, items }: OfficeCommitmentsProps) {
   return (
     // scroll-mt-16 clears the h-16 sticky header on anchor navigation — same
     // 64px as the Lenis `anchors: { offset: -64 }` and the header's

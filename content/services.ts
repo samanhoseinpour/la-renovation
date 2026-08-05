@@ -1,5 +1,5 @@
 import type { SiteImage } from "./images";
-import type { CtaCopy } from "./studio";
+import type { CtaCopy } from "./office";
 
 export type DeepDiveSection = {
   /** h3 of the subsection. */

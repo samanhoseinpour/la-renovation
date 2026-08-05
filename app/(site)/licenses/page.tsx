@@ -6,7 +6,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { ContactCta } from "@/components/sections/contact-cta";
 import { PageHeader } from "@/components/sections/page-header";
 import { licensesIntro, licensesStance } from "@/content/licenses";
-import { ctaVariants } from "@/content/studio";
+import { ctaVariants } from "@/content/office";
 import { breadcrumbNode, JsonLd, webPageNode } from "@/lib/seo";
 import { site } from "@/lib/site";
 

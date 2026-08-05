@@ -166,7 +166,7 @@ export function MobileNav({ panels, onOpenChange }: MobileNavProps) {
         </nav>
 
         <div className="mt-auto px-gutter pb-10">
-          <p className="text-eyebrow text-muted-foreground">Studio</p>
+          <p className="text-eyebrow text-muted-foreground">Office</p>
           <a
             href={`mailto:${site.contact.email}`}
             className="mt-3 block text-sm hover:underline"

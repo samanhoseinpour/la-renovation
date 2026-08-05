@@ -7,7 +7,7 @@ export type NotFoundCopy = {
 
 /** The two exits on the 404 page. Everything else on it is copy below. */
 export const notFoundActions = {
-  home: { label: "Back to the studio", href: "/" },
+  home: { label: "Back to the office", href: "/" },
   sitemap: { label: "Explore the sitemap", href: "/sitemap" },
 };
 

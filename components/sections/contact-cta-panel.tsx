@@ -10,7 +10,7 @@ import { Section } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import type { BlurProps, SiteImage } from "@/content/images";
-import type { CtaCopy } from "@/content/studio";
+import type { CtaCopy } from "@/content/office";
 
 /**
  * Adapted from @shadcnblocks/cta42 crossed with cta14: kept their contained
@@ -21,7 +21,7 @@ import type { CtaCopy } from "@/content/studio";
  * edge. Dark-scoped like coverage-band: the photo doesn't change with the
  * theme, so type on it shouldn't either, and the brand pill resolves to
  * lifted steel, which holds on the scrim. Copy varies per page via
- * content/studio.ts; the photograph and its blur-up arrive resolved from the
+ * content/office.ts; the photograph and its blur-up arrive resolved from the
  * server shell in contact-cta.tsx.
  */
 export function ContactCtaPanel({

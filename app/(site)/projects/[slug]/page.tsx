@@ -10,9 +10,9 @@ import { CompareGallery } from "@/components/sections/compare-gallery";
 import { ContactCta } from "@/components/sections/contact-cta";
 import { ProjectGallery } from "@/components/sections/project-gallery";
 import { blurProps } from "@/content/blur";
+import { getTestimonialFor, projectCta } from "@/content/office";
 import { getAllProjects, getProject } from "@/content/projects";
 import { getService } from "@/content/services";
-import { getTestimonialFor, projectCta } from "@/content/studio";
 import { absoluteUrl, breadcrumbNode, JsonLd, webPageNode } from "@/lib/seo";
 
 type Props = {

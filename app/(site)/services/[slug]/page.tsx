@@ -11,9 +11,9 @@ import { ProjectCard } from "@/components/sections/project-card";
 import { ServiceNarrative } from "@/components/sections/service-narrative";
 import { StatementBand } from "@/components/sections/statement-band";
 import { Badge } from "@/components/ui/badge";
+import { ctaVariants } from "@/content/office";
 import { getAllProjects } from "@/content/projects";
 import { getAllServices, getService } from "@/content/services";
-import { ctaVariants } from "@/content/studio";
 import { breadcrumbNode, JsonLd, serviceNode, webPageNode } from "@/lib/seo";
 
 type Props = {

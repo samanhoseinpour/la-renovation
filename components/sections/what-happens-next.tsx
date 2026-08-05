@@ -1,4 +1,4 @@
-import type { ProcessPhase } from "@/content/studio";
+import type { ProcessPhase } from "@/content/office";
 
 /**
  * Adapted from @shadcnblocks/feature207: kept the numbered workflow with

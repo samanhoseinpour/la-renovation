@@ -6,12 +6,12 @@ import { Section } from "@/components/layout/section";
 import { ContactCta } from "@/components/sections/contact-cta";
 import { PageHeader } from "@/components/sections/page-header";
 import { ProjectIndex } from "@/components/sections/project-index";
+import { ctaVariants } from "@/content/office";
 import {
   getAllProjects,
   projectsComingSoon,
   projectsHeader,
 } from "@/content/projects";
-import { ctaVariants } from "@/content/studio";
 import { breadcrumbNode, JsonLd, webPageNode } from "@/lib/seo";
 import { published } from "@/lib/site";
 

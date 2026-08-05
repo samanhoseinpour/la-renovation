@@ -6,7 +6,7 @@ import { m, useScroll, useTransform, type MotionValue } from "motion/react";
 import { ArrowLink } from "@/components/layout/arrow-link";
 import { Reveal } from "@/components/motion/reveal";
 import type { SectionIntro } from "@/content/home";
-import type { ProcessPhase } from "@/content/studio";
+import type { ProcessPhase } from "@/content/office";
 
 /**
  * Adapted from @shadcnblocks/feature181 crossed with timeline4: the five

@@ -13,12 +13,12 @@ export type Enquiry = {
   service?: string;
   stage?: string;
   message: string;
-  /** Studio inbox the enquiry is sent to. */
+  /** Office inbox the enquiry is sent to. */
   to: string;
 };
 
 /**
- * Sends a contact enquiry to the studio inbox.
+ * Sends a contact enquiry to the office inbox.
  *
  * The provider is provisioned through the Vercel Marketplace (Resend);
  * connecting it puts RESEND_API_KEY in the environment. Until that key
@@ -52,7 +52,7 @@ export async function deliverEnquiry(enquiry: Enquiry): Promise<void> {
     body: JSON.stringify({
       // onboarding@resend.dev needs no verified domain but will only deliver to
       // the Resend account owner's own address — anything else 403s. It is a
-      // smoke-test sender, not a fallback: going live means verifying the studio
+      // smoke-test sender, not a fallback: going live means verifying the office
       // domain and setting CONTACT_FROM_EMAIL, or enquiries land in the generic
       // "something went wrong" branch with a perfectly valid API key.
       from:

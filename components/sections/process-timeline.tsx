@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { m, useScroll } from "motion/react";
 
 import { Reveal } from "@/components/motion/reveal";
-import type { ProcessPhase } from "@/content/studio";
+import type { ProcessPhase } from "@/content/office";
 
 /**
  * Adapted from @shadcnblocks/timeline4 over the timeline19 rows it replaces:

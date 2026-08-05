@@ -3,15 +3,15 @@ import type { Metadata } from "next";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
-import { ContactStudio } from "@/components/sections/contact-studio";
+import { ContactOffice } from "@/components/sections/contact-office";
 import { WhatHappensNext } from "@/components/sections/what-happens-next";
-import { getAllServices } from "@/content/services";
 import {
   contactPage,
   contactSteps,
   projectStages,
   projectTypeFallback,
-} from "@/content/studio";
+} from "@/content/office";
+import { getAllServices } from "@/content/services";
 import { breadcrumbNode, JsonLd, webPageNode } from "@/lib/seo";
 
 const description =
@@ -47,7 +47,7 @@ export default function ContactPage() {
       />
       <Section size="default">
         <Container>
-          <ContactStudio
+          <ContactOffice
             title={contactPage.title}
             lead={contactPage.lead}
             commitment={contactPage.commitment}

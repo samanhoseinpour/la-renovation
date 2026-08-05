@@ -10,7 +10,7 @@ import type { SiteImage } from "@/content/images";
  * Adapted from @shadcnblocks/about19: kept the tall-imagery-beside-narrow-copy
  * split; dropped the avatar attribution row, split the single bordered image
  * into a staggered two-image diptych so the section doesn't clone
- * StudioStory's zigzag, and replaced its shell with the page's
+ * OfficeStory's zigzag, and replaced its shell with the page's
  * Section/Container and semantic tokens.
  */
 export function CompanyIntro({

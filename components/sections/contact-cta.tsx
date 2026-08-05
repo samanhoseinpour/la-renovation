@@ -1,13 +1,13 @@
 import { ContactCtaPanel } from "@/components/sections/contact-cta-panel";
 import { blurProps } from "@/content/blur";
 import { siteImages } from "@/content/images";
-import type { CtaCopy } from "@/content/studio";
+import type { CtaCopy } from "@/content/office";
 
 /**
  * Server shell for the closing CTA panel: resolves the shared photograph and
  * its blur-up here so the client panel never imports the server-only blur
  * map — the compare-gallery pattern. Per-page copy still arrives from
- * content/studio.ts via each route.
+ * content/office.ts via each route.
  */
 export function ContactCta({ copy }: { copy: CtaCopy }) {
   return (

@@ -1,7 +1,7 @@
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
-import type { Testimonial } from "@/content/studio";
+import type { Testimonial } from "@/content/office";
 
 /**
  * Adapted from @shadcnblocks/testimonial38: kept the divided-list rhythm of

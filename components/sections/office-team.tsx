@@ -7,7 +7,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { blurProps } from "@/content/blur";
 import type { TeamMember } from "@/content/team";
 
-type StudioTeamProps = {
+type OfficeTeamProps = {
   id?: string;
   members: TeamMember[];
 };
@@ -20,7 +20,7 @@ type StudioTeamProps = {
  * gradient surface and py-24/container shell with Section/Container and
  * semantic tokens.
  */
-export function StudioTeam({ id, members }: StudioTeamProps) {
+export function OfficeTeam({ id, members }: OfficeTeamProps) {
   return (
     // scroll-mt-16 clears the h-16 sticky header on anchor navigation — same
     // 64px as the Lenis `anchors: { offset: -64 }` and the header's

@@ -42,7 +42,7 @@ const FIELD_ORDER: ContactField[] = [
 const underlineField =
   "h-12 rounded-none border-0 border-b border-b-border bg-transparent px-0 text-base shadow-none md:text-base dark:bg-transparent placeholder:text-muted-foreground focus-visible:border-b-foreground focus-visible:ring-0";
 
-type ContactStudioProps = {
+type ContactOfficeProps = {
   title: string;
   lead: string;
   /** The response promise, rendered under the lead. */
@@ -57,14 +57,14 @@ type ContactStudioProps = {
 
 /**
  * Adapted from @shadcnblocks/contact20: kept the editorial title band with
- * the studio details opposite and the borderless underline fields. Replaced
+ * the office details opposite and the borderless underline fields. Replaced
  * its react-hook-form client state with the progressively enhanced server
  * action (useActionState), dropped its SCREAMING-CAPS treatment for the house
  * type scale, and extended the field set with phone, project type and stage.
  * Failed validation echoes values back so nothing typed is lost; on success
  * the whole form swaps for a confirmation panel.
  */
-export function ContactStudio({
+export function ContactOffice({
   title,
   lead,
   commitment,
@@ -72,7 +72,7 @@ export function ContactStudio({
   services,
   serviceFallback,
   stages,
-}: ContactStudioProps) {
+}: ContactOfficeProps) {
   const [state, formAction, isPending] = useActionState(
     submitContact,
     initialContactState,
@@ -116,7 +116,7 @@ export function ContactStudio({
 
         <div className="grid gap-10 sm:grid-cols-2 lg:shrink-0 lg:gap-16">
           <div>
-            <h2 className="text-eyebrow text-muted-foreground">Studio</h2>
+            <h2 className="text-eyebrow text-muted-foreground">Office</h2>
             <address className="mt-4 text-lg leading-snug font-medium not-italic">
               {site.contact.address.street ? (
                 <>
@@ -169,7 +169,7 @@ export function ContactStudio({
             >
               {site.contact.phone}
             </a>{" "}
-            during studio hours.
+            during office hours.
           </p>
         </div>
       ) : (

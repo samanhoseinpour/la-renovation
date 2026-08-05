@@ -52,7 +52,7 @@ const schema = z.object({
     .optional(),
   // The selects can't produce an over-long value, but a hand-rolled POST can,
   // and every field error has to be renderable somewhere — see the messages
-  // under both selects in contact-studio.tsx.
+  // under both selects in contact-office.tsx.
   service: z
     .string()
     .trim()

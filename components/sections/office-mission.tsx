@@ -4,7 +4,7 @@ import { Reveal } from "@/components/motion/reveal";
 
 type Statement = { title: string; body: string };
 
-type StudioMissionProps = {
+type OfficeMissionProps = {
   id?: string;
   mission: Statement;
   vision: Statement;
@@ -18,7 +18,7 @@ type StudioMissionProps = {
  * and hardcoded foreground/40 opacity text with Section/Container and
  * semantic tokens.
  */
-export function StudioMission({ id, mission, vision }: StudioMissionProps) {
+export function OfficeMission({ id, mission, vision }: OfficeMissionProps) {
   return (
     // scroll-mt-16 clears the h-16 sticky header on anchor navigation — same
     // 64px as the Lenis `anchors: { offset: -64 }` and the header's

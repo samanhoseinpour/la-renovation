@@ -7,7 +7,7 @@ import { ContactCta } from "@/components/sections/contact-cta";
 import { FaqTopics } from "@/components/sections/faq-topics";
 import { PageHeader } from "@/components/sections/page-header";
 import { faqTopics } from "@/content/faq";
-import { ctaVariants } from "@/content/studio";
+import { ctaVariants } from "@/content/office";
 import { breadcrumbNode, faqMainEntity, JsonLd, webPageNode } from "@/lib/seo";
 
 const description =

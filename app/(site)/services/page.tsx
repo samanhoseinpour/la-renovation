@@ -12,8 +12,8 @@ import { ProcessTimeline } from "@/components/sections/process-timeline";
 import { ServicePanorama } from "@/components/sections/service-panorama";
 import { StatementBand } from "@/components/sections/statement-band";
 import { getFeaturedFaqs } from "@/content/faq";
+import { ctaVariants, processPhases, statements } from "@/content/office";
 import { deliveryModel, getAllServices, servicesPage } from "@/content/services";
-import { ctaVariants, processPhases, statements } from "@/content/studio";
 import { breadcrumbNode, JsonLd, webPageNode } from "@/lib/seo";
 
 const description =

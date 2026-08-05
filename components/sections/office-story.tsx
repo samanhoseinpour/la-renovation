@@ -5,7 +5,7 @@ import { Section } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
 import { blurProps } from "@/content/blur";
 
-type StudioStoryProps = {
+type OfficeStoryProps = {
   id?: string;
   className?: string;
   paragraphs: string[];
@@ -18,12 +18,12 @@ type StudioStoryProps = {
  * demo copy and careers CTA, swapped <img> for next/image, and replaced the
  * container/mt-* wrapper with Section/Container.
  */
-export function StudioStory({
+export function OfficeStory({
   id,
   className,
   paragraphs,
   images,
-}: StudioStoryProps) {
+}: OfficeStoryProps) {
   return (
     // id/className let the page anchor this section (#story) with
     // scroll-mt-16 — same 64px as the Lenis `anchors: { offset: -64 }` and
