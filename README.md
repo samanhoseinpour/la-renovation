@@ -1,6 +1,6 @@
 # Araz Construction Group
 
-Marketing site for Araz Construction Group, a Southern California general contractor building multifamily, commercial, and civil projects across the region. Built with Next.js 16 (App Router), React 19, Tailwind CSS 4 and shadcn/ui.
+Marketing site for Araz Construction Group, a Southern California general contractor building sustainable energy infrastructure (EV charging, geothermal) alongside commercial, civil, and multifamily projects across the region. Built with Next.js 16 (App Router), React 19, Tailwind CSS 4 and shadcn/ui.
 
 ## Getting started
 
@@ -15,7 +15,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 - `/` — home: full-bleed viewport hero, a who-we-are intro, the seven divisions as a photo-card grid beside an intro rail that pins on desktop, a process strip, a Southern California coverage band, an auto-scrolling team marquee, an FAQ teaser and a closing CTA panel over jobsite photography; the featured-projects and client-notes sections are gated off until real material lands (see Publish gates)
 - `/projects` and `/projects/[slug]` — currently a noindexed coming-soon page: the demo portfolio sits behind `published.projects`, the detail slugs 404, and the route stays out of the nav, footer and both sitemaps. The portfolio components (featured index, before/after compare gallery, lightbox, matched client notes) stay in the repo and return when the flag flips
-- `/services` and `/services/[slug]` — index of the seven divisions (multifamily, commercial, civil, energy, concrete, single-family, preconstruction) with a sticky image pane, process timeline, a delivery-model band on who does the work (in-house crews versus named licensed partners) and a three-question featured FAQ; division pages carry the narrative and included scopes. The four legacy renovation slugs redirect permanently to `/services`
+- `/services` and `/services/[slug]` — index of the seven divisions in the client's canonical order (energy, commercial, civil, multifamily, concrete, preconstruction, single-family) with a sticky image pane, process timeline, a delivery-model band on who does the work (in-house crews versus named licensed partners) and a three-question featured FAQ; division pages carry the narrative and included scopes. The four legacy renovation slugs redirect permanently to `/services`
 - `/about` — company story, mission and vision, team, approach and commitments, each an anchored section (`#story`, `#mission`, `#team`, `#approach`, `#commitments`), closing with a careers band into `/careers`
 - `/contact` — enquiry form (project type and project stage) backed by a server action with email delivery
 - `/faq` — every question grouped by topic behind an xl-and-up topic rail, each group rendered through the shared `FaqList`
@@ -39,7 +39,7 @@ Open [http://localhost:3000](http://localhost:3000).
 - `lib/delivery.ts` — email delivery boundary used by the contact action
 - `scripts/` — the image pipeline (AVIF migration and size auditing)
 
-Site copy and data live in `content/` and `lib/site.ts`, not in components. Copy stays in a no-figures register: no prices, durations, square footage or invented history anywhere on the site.
+Site copy and data live in `content/` and `lib/site.ts`, not in components. Copy stays in a no-figures register: no prices, durations, square footage or invented history anywhere on the site. The one exception is the home hero lead, which is the client's own positioning paragraph kept verbatim.
 
 ## Navigation
 
@@ -57,7 +57,7 @@ is verified.
 
 ## Images
 
-Team portraits are self-hosted AVIFs in `public/images/team/`, cropped 3:4 and kept under 100KB each. The home hero (`public/images/home/`) and the About lead photo (`public/images/about/`) are the client's own banners, also AVIF and both inside the default 150KB budget. The pipeline lives in `scripts/`:
+Team portraits are self-hosted AVIFs in `public/images/team/`, cropped 3:4 and kept under 100KB each; roster members without a portrait yet render a neutral person-glyph frame. The home hero and the intro's EV-charging photo (`public/images/home/`), the About lead photo (`public/images/about/`) and the concrete division's card (`public/images/services/`) are the client's own images, also AVIF and inside the default 150KB budget. The pipeline lives in `scripts/`:
 
 ```bash
 npm run images:migrate   # convert source photos to AVIF (supports --aspect W:H cover crops)
@@ -73,11 +73,11 @@ Everything else is temporary Unsplash placeholder imagery, including the project
 
 ## Placeholders awaiting client data
 
-- Contact email, phone and street address in `lib/site.ts`
+- Contact email in `lib/site.ts` (phone and street address are the client's real ones)
 - The CSLB license number (footer renders it only once set)
 - `app/icon.svg` is a typed "A" monogram until the real mark arrives
 - The demo project case studies and client notes, gated behind `published` until real ones exist
-- The remaining Unsplash photography (services, project galleries, four of the five About images, the home intro diptych and the home coverage-band photo)
+- The remaining Unsplash photography (most service imagery, project galleries, four of the five About images, the second home-intro photo and the home coverage-band photo)
 
 ## Design system
 
