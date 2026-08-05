@@ -18,6 +18,9 @@ const nextConfig: NextConfig = {
   images: {
     // Required from Next.js 16: an unrestricted quality list would let anyone
     // ask the optimizer for arbitrary renditions.
+    // Frozen once live: qualities and size lists are encoded into every
+    // /_next/image URL, so changing them re-mints each image URL sitewide and
+    // Google re-indexes images slowly enough to cost real traffic.
     qualities: [75, 90],
     formats: ["image/avif", "image/webp"],
     // Temporary Unsplash placeholder photography; swap for the real
