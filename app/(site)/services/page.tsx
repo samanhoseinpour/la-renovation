@@ -10,9 +10,10 @@ import { FaqList } from "@/components/sections/faq-list";
 import { PageHeader } from "@/components/sections/page-header";
 import { ProcessTimeline } from "@/components/sections/process-timeline";
 import { ServicePanorama } from "@/components/sections/service-panorama";
+import { StatementBand } from "@/components/sections/statement-band";
 import { getFeaturedFaqs } from "@/content/faq";
 import { deliveryModel, getAllServices, servicesPage } from "@/content/services";
-import { ctaVariants, processPhases } from "@/content/studio";
+import { ctaVariants, processPhases, statements } from "@/content/studio";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -76,6 +77,12 @@ export default function ServicesPage() {
           <div className="mt-10">
             <ArrowLink href="/faq">{servicesPage.faq.allLabel}</ArrowLink>
           </div>
+        </Container>
+      </Section>
+
+      <Section size="sm">
+        <Container>
+          <StatementBand {...statements.services} />
         </Container>
       </Section>
 

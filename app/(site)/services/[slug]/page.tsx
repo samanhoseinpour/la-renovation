@@ -6,8 +6,10 @@ import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Reveal } from "@/components/motion/reveal";
 import { ContactCta } from "@/components/sections/contact-cta";
+import { DivisionDeepDive } from "@/components/sections/division-deep-dive";
 import { ProjectCard } from "@/components/sections/project-card";
 import { ServiceNarrative } from "@/components/sections/service-narrative";
+import { StatementBand } from "@/components/sections/statement-band";
 import { Badge } from "@/components/ui/badge";
 import { getAllProjects } from "@/content/projects";
 import { getAllServices, getService } from "@/content/services";
@@ -96,8 +98,18 @@ export default async function ServicePage({ params }: Props) {
         </Container>
       </Section>
 
+      {service.deepDive && <DivisionDeepDive deepDive={service.deepDive} />}
+
+      {service.statement && (
+        <Section size="sm">
+          <Container>
+            <StatementBand statement={service.statement} />
+          </Container>
+        </Section>
+      )}
+
       {related.length > 0 && (
-        <Section surface="muted">
+        <Section surface={service.deepDive ? "default" : "muted"}>
           <Container>
             <div className="flex items-baseline justify-between gap-8">
               <h2 className="text-eyebrow text-muted-foreground">
@@ -114,7 +126,7 @@ export default async function ServicePage({ params }: Props) {
         </Section>
       )}
 
-      <ContactCta copy={ctaVariants.services} />
+      <ContactCta copy={service.cta ?? ctaVariants.services} />
     </>
   );
 }
