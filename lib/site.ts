@@ -58,11 +58,6 @@ export const site = {
     hours: "Mon–Fri, 8am–5pm PT",
   },
 
-  social: [
-    { label: "Instagram", href: "https://instagram.com" },
-    { label: "LinkedIn", href: "https://linkedin.com" },
-  ],
-
   nav: navItems.filter(
     (item) => item.panel !== "projects" || published.projects,
   ),

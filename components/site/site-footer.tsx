@@ -114,17 +114,6 @@ export function SiteFooter() {
             >
               {site.contact.phone}
             </a>
-            {site.social.map((social) => (
-              <a
-                key={social.href}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {social.label}
-              </a>
-            ))}
           </div>
 
           <div className="flex flex-wrap items-center gap-x-8 gap-y-3">

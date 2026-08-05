@@ -342,8 +342,8 @@ export default function StyleguidePage() {
       <Block title="Arrow link">
         <div className="flex flex-col items-start gap-6">
           <ArrowLink href="/projects">View selected work</ArrowLink>
-          <ArrowLink href="https://instagram.com" external>
-            Follow on Instagram
+          <ArrowLink href="https://www.cslb.ca.gov" external>
+            Verify a license at CSLB
           </ArrowLink>
         </div>
       </Block>
