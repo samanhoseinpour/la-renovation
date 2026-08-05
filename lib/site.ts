@@ -43,7 +43,7 @@ export const site = {
   locale: "en_US",
 
   contact: {
-    email: "office@arazconstruction.example", // placeholder — client to supply
+    email: "info@arazconstructiongroup.com",
     phone: "+1 (424) 500-4930",
     phoneHref: "tel:+14245004930",
     // Consumers render-guard every address field, so a blank stays invisible

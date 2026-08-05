@@ -65,7 +65,7 @@ The root layout mounts Vercel Web Analytics — cookieless, aggregate page count
 
 Every route ships complete metadata: a unique title on the shared `Page · Araz Construction Group` template with the page heading mirroring the title's core, a hand-written description, a canonical URL, and an Open Graph card generated per page from the design tokens — dark canvas, Archivo, the page title over the brand rule — by `lib/og/template.tsx`. The cards are PNG on purpose (AVIF share images still fail on most platforms) and small enough for WhatsApp's preview ceiling. `app/apple-icon.tsx` renders the monogram tile iOS and iMessage fall back to, and `app/manifest.ts` completes the icon set.
 
-Structured data is a schema.org graph in JSON-LD, server-rendered because AI crawlers execute no JavaScript: a `GeneralContractor` organization node carrying the verified contact details, a `WebSite` node that anchors the site-name line in Google results, and per-page `WebPage`, breadcrumb, `Service` and FAQ nodes stitched together by stable `@id` anchors. Nothing unverified is asserted — the placeholder email, the CSLB number and the social profiles each join the graph automatically once real values land in `lib/site.ts` — and gated content stays out of it until its flag flips, like every other surface.
+Structured data is a schema.org graph in JSON-LD, server-rendered because AI crawlers execute no JavaScript: a `GeneralContractor` organization node carrying the verified contact details, a `WebSite` node that anchors the site-name line in Google results, and per-page `WebPage`, breadcrumb, `Service` and FAQ nodes stitched together by stable `@id` anchors. Nothing unverified is asserted — the CSLB number and the social profiles each join the graph automatically once real values land in `lib/site.ts` — and gated content stays out of it until its flag flips, like every other surface.
 
 `app/robots.ts` deliberately allows all crawlers, AI included: visibility in AI answers is the point of a marketing site, and `/llms.txt` gives assistants a markdown map of the pages. The XML sitemap lists each page's self-hosted imagery for Google Images and carries no fabricated modification dates.
 
@@ -90,7 +90,6 @@ The gated demo project case studies and their before/after pairs still reference
 
 ## Placeholders awaiting client data
 
-- Contact email in `lib/site.ts` (phone and street address are the client's real ones)
 - The CSLB license number (footer renders it only once set; the schema graph picks it up as an identifier the same way)
 - External profiles for `site.profiles` in `lib/site.ts` — the schema graph gains `sameAs` links once real ones (LinkedIn, Google Business Profile) exist
 - `app/icon.svg` is a typed "A" monogram until the real mark arrives

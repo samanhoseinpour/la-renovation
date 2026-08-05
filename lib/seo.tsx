@@ -49,9 +49,7 @@ export function organizationNode(): GraphNode {
     url: `${site.url}/`,
     logo: absoluteUrl("/apple-icon"),
     telephone: contact.phoneHref.replace("tel:", ""),
-    // The placeholder domain carries ".example" until the client supplies a
-    // real inbox (see lib/site.ts); schema must never assert it.
-    ...(contact.email.includes(".example") ? {} : { email: contact.email }),
+    email: contact.email,
     ...(contact.address.street
       ? {
           address: {
