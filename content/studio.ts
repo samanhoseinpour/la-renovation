@@ -103,6 +103,25 @@ export const contactSteps: ProcessPhase[] = [
   },
 ];
 
+export type ContactPageCopy = {
+  title: string;
+  lead: string;
+  /** Sits above the form fields: what to send for a specific first answer. */
+  formIntro: string;
+  /** The response promise under the lead. Client-authored; flagged in the spec. */
+  commitment: string;
+};
+
+/** /contact page copy. Title and lead moved out of the route unchanged. */
+export const contactPage: ContactPageCopy = {
+  title: "Tell us about the project.",
+  lead: "Every project starts with a site visit. Send a few details and we'll arrange one.",
+  formIntro:
+    "The more you can tell us about the site and the program, the more useful our first response will be. If you have drawings, a survey, or a soils report, send them. We'd rather answer specifically than generally.",
+  commitment:
+    "We respond to every enquiry. If the project isn't a fit for us, we'll say so and point you toward someone better suited rather than taking the meeting anyway.",
+};
+
 /** Project-stage options on the contact form. */
 export const projectStages = [
   "Exploring feasibility",
@@ -173,6 +192,23 @@ export const ctaVariants = {
     href: "/contact",
   },
 } satisfies Record<string, CtaCopy>;
+
+export type StatementCopy = {
+  eyebrow?: string;
+  statement: string;
+};
+
+/**
+ * Single-voice brand statements for the StatementBand. These are the house
+ * speaking, not clients — client-notes stays the testimonial surface.
+ * Division pages carry theirs on `Service.statement`.
+ */
+export const statements: { services: StatementCopy; about: StatementCopy } = {
+  services: { statement: "Most construction problems are handoff problems." },
+  about: {
+    statement: "Low carbon is an engineering outcome, not a marketing position.",
+  },
+};
 
 /** Project pages personalise the panel with the project's neighborhood. */
 export function projectCta(neighborhood: string): CtaCopy {

@@ -18,10 +18,12 @@ export const vision = {
 };
 
 export const approach = [
-  { title: "Price it before it's drawn", body: "Most projects are priced twice: once optimistically at the start, once accurately after the drawings are done. We price alongside design, so the cost of a decision is known when the decision is made." },
   { title: "Understand the ground first", body: "Soil, drainage, access, and utilities decide more about a budget than finishes do. We resolve them before design commits." },
-  { title: "Own the critical path", body: "Earthwork, concrete, and structure set the schedule. We self-perform them so the risk sits with us instead of moving between parties while the clock runs." },
-  { title: "Build the systems in", body: "Energy infrastructure is no longer an add-on. We engineer it as part of the building rather than fitting it around one." },
+  { title: "Price from conditions", body: "A budget built on an allowance is a number waiting to move. Once the site is resolved we price what's actually there, so the number holds because it was never a guess." },
+  { title: "Own the critical path", body: "The scopes that decide a schedule stay in house: earthwork, foundations, structure. Controlling them is the difference between managing a project and merely reporting on it." },
+  { title: "Build the systems in", body: "Energy infrastructure engineered alongside the structure performs better and costs less than the same system fitted into a building that didn't anticipate it. We build toward where the standards are heading, not where they've been." },
+  { title: "Measure the work", body: "Curing, settlement, drainage, energy performance. Instrumented work produces data, and data replaces the assumption that something went the way it was supposed to." },
+  { title: "Say the difficult thing early", body: "A site that won't support the program, a budget that doesn't match the drawings, a schedule that assumes an approval nobody has. These are cheap problems early and expensive ones late. We raise them while they're still cheap." },
 ];
 
 export type Commitment = { title: string; body: string };

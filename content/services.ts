@@ -1,4 +1,18 @@
 import { unsplash, type SiteImage } from "./images";
+import type { CtaCopy } from "./studio";
+
+export type DeepDiveSection = {
+  /** h3 of the subsection. */
+  title: string;
+  paragraphs: string[];
+};
+
+export type ServiceDeepDive = {
+  /** Eyebrow h2 for the band, shared across divisions. */
+  eyebrow: string;
+  /** Two subsections at most; the band reads as an essay, not a list. */
+  sections: DeepDiveSection[];
+};
 
 export type Service = {
   slug: string;
@@ -16,6 +30,12 @@ export type Service = {
   image: SiteImage;
   /** One image per body paragraph on the detail page (three each). */
   rowImages: SiteImage[];
+  /** Optional narrative band between the includes list and the closing CTA. */
+  deepDive?: ServiceDeepDive;
+  /** Per-division closing CTA; pages without one fall back to ctaVariants.services. */
+  cta?: CtaCopy;
+  /** Optional brand statement rendered after the deep dive. */
+  statement?: string;
 };
 
 // Array order is display order everywhere (nav panel, footer, home grid,
@@ -58,6 +78,32 @@ export const services: Service[] = [
         alt: "Close-up of an electric vehicle plugged into a charging connector",
       },
     ],
+    deepDive: {
+      eyebrow: "In depth",
+      sections: [
+        {
+          title: "The real constraint",
+          paragraphs: [
+            "Charging infrastructure rarely fails on engineering. It fails on schedule. Utility coordination runs on its own timeline, switchgear and distribution equipment carry lead times that do not compress, and trenching has to happen before paving, which has to happen before occupancy. The constraints interact, and they are only manageable when one party owns all of them. Most projects discover this after the electrical service has been sized, the site has been paved, and the utility application has not been filed. We sequence it from the beginning.",
+            "Existing facilities are a different problem. The service was sized for a building that never anticipated the load, the parking was paved without conduit, and operations cannot stop while the work happens. We plan retrofits around how the building actually runs, phasing trenching and outages so the facility keeps operating, and using load management to avoid service upgrades wherever the existing capacity can be made to work harder.",
+          ],
+        },
+        {
+          title: "Ground-source systems",
+          paragraphs: [
+            "A ground-source system exchanges heat with the stable temperatures below the surface instead of fighting the outdoor air. A sealed loop carries heat out of the building in summer and draws it in during winter, and a heat pump moves that energy where it is needed, domestic hot water included. There is no combustion anywhere in the system and no on-site emissions.",
+            "It is a ground question before it is a mechanical one. Soil composition, water table, and available area decide whether a loop field is straightforward or expensive, so we test before we design, and we say so early when a site does not suit ground-source. Drilling is performed by our licensed partners, working to our design and under our schedule.",
+          ],
+        },
+      ],
+    },
+    cta: {
+      eyebrow: "Start a project",
+      heading: "Planning a charging installation?",
+      lead: "Send us the site and the vehicle count. We'll model the load and the utility path before you commit to anything.",
+      label: "Book a call",
+      href: "/contact",
+    },
   },
   {
     slug: "commercial-institutional",
@@ -96,6 +142,25 @@ export const services: Service[] = [
         alt: "Two construction workers standing on tubular scaffolding against a clear sky",
       },
     ],
+    deepDive: {
+      eyebrow: "In depth",
+      sections: [
+        {
+          title: "The two decisions that matter most",
+          paragraphs: [
+            "A building's operating performance is mostly determined before anyone selects a fixture, and the first decision is the envelope. Airtight, thermally continuous construction is what allows mechanical systems to be sized down rather than compensating for losses forever. It is unglamorous work, sequencing, detailing, and inspection at every transition, and it is the difference between a building that performs as modeled and one that does not.",
+            "The second decision is the controls. A building management system that actually responds to occupancy, daylight, and outdoor conditions will outperform a better-specified building running on fixed schedules. We treat both as construction problems rather than design intentions, because that is where they succeed or fail.",
+          ],
+        },
+      ],
+    },
+    cta: {
+      eyebrow: "Start a project",
+      heading: "Tell us about the building.",
+      lead: "A site, a shell, or an existing facility: send us what you have and we'll tell you what it will take.",
+      label: "Book a call",
+      href: "/contact",
+    },
   },
   {
     slug: "civil-site-development",
@@ -134,6 +199,32 @@ export const services: Service[] = [
         alt: "Night paving crew operating an asphalt paving machine on a road",
       },
     ],
+    deepDive: {
+      eyebrow: "In depth",
+      sections: [
+        {
+          title: "Precision earthwork",
+          paragraphs: [
+            "Grading runs GPS-guided for cut-and-fill precision, which reduces over-excavation and the haul-off that follows it. Where a project warrants it, subgrade and stormwater systems are instrumented for moisture, settlement, and runoff, so drainage performance is measured data rather than a question answered by the first heavy rain.",
+          ],
+        },
+        {
+          title: "Water on site",
+          paragraphs: [
+            "Stormwater is engineered as infrastructure rather than an afterthought: detention, treatment, and bioswales that manage major storm events without runoff contamination, and permeable paving that keeps water on the site rather than exporting the problem downstream. Low-impact earthwork, recycled aggregates where specification allows, and soil conservation protocols run on every site, enforced by our own crews rather than requested of someone else's.",
+          ],
+        },
+      ],
+    },
+    cta: {
+      eyebrow: "Start a project",
+      heading: "Send us the site.",
+      lead: "We'll tell you what's underneath it, what it will take to prepare, and where the schedule risk actually sits.",
+      label: "Book a site walk",
+      href: "/contact",
+    },
+    statement:
+      "We self-perform the ground: the scopes that set the schedule and carry the most carbon.",
   },
   {
     slug: "multifamily-mixed-use",
@@ -172,6 +263,30 @@ export const services: Service[] = [
         alt: "Hand drawing on an architectural blueprint with a ruler and pencil",
       },
     ],
+    deepDive: {
+      eyebrow: "In depth",
+      sections: [
+        {
+          title: "Charging at scale",
+          paragraphs: [
+            "Charging infrastructure is no longer optional in new multifamily, and it is the scope most builders subcontract without fully pricing. The cost surfaces late, usually as a service upgrade nobody budgeted. Smart charging balances draw across vehicles against real-time building demand, which is what makes charging at scale viable: the building does not need capacity for every vehicle charging at once, because they never do. We engineer it in house, on the same contract as the building, so the electrical service is sized for it from the start instead of revisited after it is installed.",
+          ],
+        },
+        {
+          title: "What residents get",
+          paragraphs: [
+            "Residents do not experience infrastructure. Units are delivered with smart thermostats, automated sub-metering, and keyless access, systems that reduce operating cost and give residents visibility into their own consumption rather than a bill that arrives without explanation. High-performance envelopes and passive solar orientation, where the site allows, reduce peak demand and utility costs together. A well-built envelope is the amenity residents never see and feel every month.",
+          ],
+        },
+      ],
+    },
+    cta: {
+      eyebrow: "Start a project",
+      heading: "Working on a site?",
+      lead: "Send us the parcel and the program. We'll tell you what it supports and where the budget risk sits.",
+      label: "Book a call",
+      href: "/contact",
+    },
   },
   {
     slug: "concrete-foundation-structural",
@@ -210,6 +325,26 @@ export const services: Service[] = [
         alt: "Multi-story concrete building under construction with exposed rebar and plywood formwork",
       },
     ],
+    deepDive: {
+      eyebrow: "In depth",
+      sections: [
+        {
+          title: "Instrumented concrete",
+          paragraphs: [
+            "Foundations are placed in low-carbon reinforced concrete with sensors embedded in the pour, monitoring curing strength, temperature, and moisture in real time. That data determines when it is actually safe to strip forms and load the structure, replacing a fixed waiting period with a measured one. On a cold pour it prevents loading concrete that is not ready. On a warm one it recovers schedule a conservative wait would have given away.",
+            "It also produces a record. If a question comes up later about how a pour cured, the answer is data rather than recollection.",
+          ],
+        },
+      ],
+    },
+    cta: {
+      eyebrow: "Start a project",
+      heading: "Starting from the ground?",
+      lead: "Send us the site and the structural drawings. We'll price the ground work against real conditions.",
+      label: "Book a call",
+      href: "/contact",
+    },
+    statement: "Instrumented, not assumed.",
   },
   {
     slug: "preconstruction-program-management",
@@ -248,6 +383,13 @@ export const services: Service[] = [
         alt: "Two site workers in hard hats shaking hands in front of stacked precast concrete panels",
       },
     ],
+    cta: {
+      eyebrow: "Start a project",
+      heading: "Know before you commit.",
+      lead: "Bring us the site or the drawings before the numbers harden. Feasibility, budgeting, and permitting are cheapest to get right now.",
+      label: "Book a call",
+      href: "/contact",
+    },
   },
   {
     slug: "single-family",
@@ -286,6 +428,13 @@ export const services: Service[] = [
         alt: "Survey equipment on a tripod with a tower crane in the background",
       },
     ],
+    cta: {
+      eyebrow: "Start a project",
+      heading: "Start with the lot, not the floor plan.",
+      lead: "Tell us where you want to build. We'll tell you what the ground will hold, what the agency will approve, and what it takes to build there.",
+      label: "Book a call",
+      href: "/contact",
+    },
   },
 ];
 
