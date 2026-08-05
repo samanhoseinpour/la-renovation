@@ -1,9 +1,11 @@
 /**
  * Site-wide imagery, all self-hosted AVIF under public/images/: the client's
  * own photos (home hero, About lead, EV charging depot, concrete division
- * card, the CEO's team portrait) plus Unsplash placeholder photography landed
- * locally until real project photos are shot. Swapping an image means editing one line here or
+ * card) plus Unsplash placeholder photography landed locally until real
+ * project photos are shot. Swapping an image means editing one line here or
  * in content/projects.ts / content/services.ts — nothing lives in JSX.
+ * Team portraits are the client's own too, but they hang off the roster in
+ * content/team.ts rather than this manifest.
  *
  * Only the gated demo projects in content/projects.ts still hotlink Unsplash
  * (next.config.ts allows images.unsplash.com): next/image fetches remote
