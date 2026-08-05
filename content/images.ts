@@ -6,6 +6,12 @@
  * images.unsplash.com) until real project photos are shot. Swapping an image
  * means editing one line here or in content/projects.ts /
  * content/services.ts — nothing lives in JSX.
+ *
+ * The three About story/nav placeholders are Unsplash shots stored locally
+ * like the client images: next/image fetches remote sources server-side, and
+ * this dev machine can't reach images.unsplash.com, so hotlinked entries
+ * render broken in next dev. New placeholders should land the same way
+ * (download, then images:migrate + images:optimize into public/images/).
  */
 
 export type SiteImage = {
@@ -59,16 +65,16 @@ export const siteImages = {
       alt: "Aerial view of the Laguna Beach coastline, homes on the bluffs above a curving Pacific shoreline",
     },
     {
-      src: unsplash("photo-1552664730-d307ca884978"),
-      alt: "Team collaborating in a bright office environment with large windows",
+      src: "/images/about/about-highrise-tower-cranes.avif",
+      alt: "Tower cranes over a high-rise under construction, the upper floors wrapped in scaffolding and netting",
     },
     {
-      src: unsplash("photo-1454165804606-c3d57bc86b40"),
-      alt: "People designing and reviewing architectural blueprints together",
+      src: "/images/about/about-crew-post-tension-deck.avif",
+      alt: "Site crew in hard hats and high-visibility vests surveying a post-tensioned concrete deck before the pour",
     },
     {
-      src: unsplash("photo-1493857671505-72967e2e2760"),
-      alt: "Construction project planning with architectural models and blueprints",
+      src: "/images/about/about-site-walk-deck.avif",
+      alt: "Two engineers in hard hats and high-visibility vests on a rebar deck, one pointing across the site",
     },
     {
       src: unsplash("photo-1635249578213-68b0aa67fdf7"),

@@ -57,7 +57,7 @@ is verified.
 
 ## Images
 
-Team portraits are self-hosted AVIFs in `public/images/team/`, cropped 3:4 and kept under 100KB each; roster members without a portrait yet render a neutral person-glyph frame. The home hero and the intro's EV-charging photo (`public/images/home/`), the About lead photo (`public/images/about/`) and the concrete division's card (`public/images/services/`) are the client's own images, also AVIF and inside the default 150KB budget. The four partner logos in `public/images/partners/` are ink-normalized marks: black plus alpha, trimmed, painted with the current theme's foreground token via CSS mask, so one small AVIF serves light and dark. The pipeline lives in `scripts/`:
+Team portraits are self-hosted AVIFs in `public/images/team/`, cropped 3:4 and kept under 100KB each; roster members without a portrait yet render a neutral person-glyph frame. The home hero and the intro's EV-charging photo (`public/images/home/`), the About lead photo (`public/images/about/`) and the concrete division's card (`public/images/services/`) are the client's own images, also AVIF and inside the default 150KB budget. Three more About images (the story pair and the approach nav thumbnail) are Unsplash placeholders self-hosted in `public/images/about/`, inside the same budget: next/image fetches remote sources server-side, and the dev machine can't reach Unsplash, so hotlinked entries break in `next dev`. The four partner logos in `public/images/partners/` are ink-normalized marks: black plus alpha, trimmed, painted with the current theme's foreground token via CSS mask, so one small AVIF serves light and dark. The pipeline lives in `scripts/`:
 
 ```bash
 npm run images:migrate   # convert source photos to AVIF (supports --aspect W:H cover crops)
