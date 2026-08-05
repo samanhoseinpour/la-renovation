@@ -25,20 +25,31 @@ export const metadata: Metadata = {
   },
   description: site.description,
   alternates: { canonical: "/" },
+  // No title/description/url pinned here on purpose: metadata merges
+  // shallowly, so layout-level values would ship the homepage's share text
+  // (and misattribute og:url) on every interior route. Left unset, both
+  // og and twitter fall back to each page's resolved title and description.
   openGraph: {
     type: "website",
     siteName: site.name,
     locale: site.locale,
-    url: site.url,
-    title: `${site.name} · ${site.tagline}`,
-    description: site.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} · ${site.tagline}`,
-    description: site.description,
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    // Full-size image previews and uncapped snippets: snippets are what AI
+    // answer surfaces quote, so nothing here may constrain them.
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 // themeColor belongs on the viewport export; it has been deprecated inside

@@ -13,6 +13,7 @@ import { blurProps } from "@/content/blur";
 import { getAllProjects, getProject } from "@/content/projects";
 import { getService } from "@/content/services";
 import { getTestimonialFor, projectCta } from "@/content/studio";
+import { absoluteUrl, breadcrumbNode, JsonLd, webPageNode } from "@/lib/seo";
 
 type Props = {
   // params is a Promise in Next.js 16 — synchronous access was removed.
@@ -29,15 +30,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!project) return {};
 
+  // No openGraph block — same reasoning as services/[slug]: the layout's
+  // siteName/locale survive only on the fallback path.
   return {
     title: project.title,
     description: project.summary,
     alternates: { canonical: `/projects/${project.slug}` },
-    openGraph: {
-      title: project.title,
-      description: project.summary,
-      type: "article",
-    },
   };
 }
 
@@ -54,6 +52,29 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <>
+      {/* Reachable only while published.projects is true — getProject returns
+          undefined for gated slugs, so demo markup never ships. */}
+      <JsonLd
+        graph={[
+          webPageNode({
+            path: `/projects/${project.slug}`,
+            title: project.title,
+            description: project.summary,
+            extra: {
+              primaryImageOfPage: {
+                "@type": "ImageObject",
+                contentUrl: absoluteUrl(project.image.src),
+                description: project.image.alt,
+              },
+            },
+          }),
+          breadcrumbNode(`/projects/${project.slug}`, [
+            { name: "Home", path: "/" },
+            { name: "Projects", path: "/projects" },
+            { name: project.title },
+          ]),
+        ]}
+      />
       <Section size="sm" className="border-b border-border">
         <Container>
           <p className="text-eyebrow text-muted-foreground">

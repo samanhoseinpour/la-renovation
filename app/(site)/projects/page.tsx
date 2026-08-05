@@ -12,6 +12,7 @@ import {
   projectsHeader,
 } from "@/content/projects";
 import { ctaVariants } from "@/content/studio";
+import { breadcrumbNode, JsonLd, webPageNode } from "@/lib/seo";
 import { published } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -49,6 +50,22 @@ export default function ProjectsPage() {
 
   return (
     <>
+      {/* Only the published portfolio carries markup; the gated coming-soon
+          branch above is noindexed and emits none. */}
+      <JsonLd
+        graph={[
+          webPageNode({
+            path: "/projects",
+            title: "Projects",
+            description: projectsHeader.metaDescription,
+            type: "CollectionPage",
+          }),
+          breadcrumbNode("/projects", [
+            { name: "Home", path: "/" },
+            { name: "Projects" },
+          ]),
+        ]}
+      />
       <PageHeader
         eyebrow={`Selected work · ${projects.length} projects`}
         title={projectsHeader.title}

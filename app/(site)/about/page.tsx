@@ -16,6 +16,7 @@ import { siteImages } from "@/content/images";
 import { partners, partnersIntro } from "@/content/partners";
 import { ctaVariants, statements } from "@/content/studio";
 import { teamMembers } from "@/content/team";
+import { breadcrumbNode, JsonLd, webPageNode } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "About",
@@ -26,6 +27,20 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
+      <JsonLd
+        graph={[
+          webPageNode({
+            path: "/about",
+            title: "About",
+            description: aboutIntro,
+            type: "AboutPage",
+          }),
+          breadcrumbNode("/about", [
+            { name: "Home", path: "/" },
+            { name: "About" },
+          ]),
+        ]}
+      />
       <PageHeader
         eyebrow="About the company"
         title="The company is new. The experience isn't."

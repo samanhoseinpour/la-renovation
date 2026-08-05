@@ -20,7 +20,8 @@ import { getAllProjects } from "@/content/projects";
 import { getAllServices } from "@/content/services";
 import { ctaVariants, processPhases, testimonials } from "@/content/studio";
 import { teamMembers } from "@/content/team";
-import { published } from "@/lib/site";
+import { JsonLd, webPageNode } from "@/lib/seo";
+import { published, site } from "@/lib/site";
 
 export default function HomePage() {
   const projects = getAllProjects().slice(0, 4);
@@ -28,6 +29,15 @@ export default function HomePage() {
 
   return (
     <>
+      <JsonLd
+        graph={[
+          webPageNode({
+            path: "/",
+            title: `${site.name} · ${site.tagline}`,
+            description: site.description,
+          }),
+        ]}
+      />
       <HomeHero />
 
       {projects.length > 0 && (

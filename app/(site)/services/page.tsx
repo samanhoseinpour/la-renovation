@@ -14,17 +14,29 @@ import { StatementBand } from "@/components/sections/statement-band";
 import { getFeaturedFaqs } from "@/content/faq";
 import { deliveryModel, getAllServices, servicesPage } from "@/content/services";
 import { ctaVariants, processPhases, statements } from "@/content/studio";
+import { breadcrumbNode, JsonLd, webPageNode } from "@/lib/seo";
+
+const description =
+  "Seven construction divisions across Southern California: energy, commercial, civil, multifamily, concrete, preconstruction, and single-family.";
 
 export const metadata: Metadata = {
   title: "Services",
-  description:
-    "Seven construction divisions across Southern California: energy, commercial, civil, multifamily, concrete, preconstruction, and single-family.",
+  description,
   alternates: { canonical: "/services" },
 };
 
 export default function ServicesPage() {
   return (
     <>
+      <JsonLd
+        graph={[
+          webPageNode({ path: "/services", title: "Services", description }),
+          breadcrumbNode("/services", [
+            { name: "Home", path: "/" },
+            { name: "Services" },
+          ]),
+        ]}
+      />
       <PageHeader
         eyebrow={servicesPage.header.eyebrow}
         title={servicesPage.header.title}

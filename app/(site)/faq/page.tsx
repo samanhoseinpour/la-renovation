@@ -8,17 +8,37 @@ import { FaqTopics } from "@/components/sections/faq-topics";
 import { PageHeader } from "@/components/sections/page-header";
 import { faqTopics } from "@/content/faq";
 import { ctaVariants } from "@/content/studio";
+import { breadcrumbNode, faqMainEntity, JsonLd, webPageNode } from "@/lib/seo";
+
+const description =
+  "Answers to the questions owners ask before a project starts: how the work runs, how it gets priced, and how to check a contractor's license.";
 
 export const metadata: Metadata = {
   title: "FAQ",
-  description:
-    "Answers to the questions owners ask before a project starts: how the work runs, how it gets priced, and how to check a contractor's license.",
+  description,
   alternates: { canonical: "/faq" },
 };
 
 export default function FaqPage() {
   return (
     <>
+      {/* FAQPage markup carries no SERP feature anymore (rich results retired
+          May 2026); it stays as machine-readable Q&A for non-Google consumers. */}
+      <JsonLd
+        graph={[
+          webPageNode({
+            path: "/faq",
+            title: "FAQ",
+            description,
+            type: "FAQPage",
+            extra: faqMainEntity(faqTopics.flatMap((topic) => topic.faqs)),
+          }),
+          breadcrumbNode("/faq", [
+            { name: "Home", path: "/" },
+            { name: "FAQ" },
+          ]),
+        ]}
+      />
       <PageHeader
         eyebrow="Questions"
         title="The questions worth asking any contractor."

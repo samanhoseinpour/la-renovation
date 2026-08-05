@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { getAllProjects } from "@/content/projects";
 import { getAllServices, getService } from "@/content/services";
 import { ctaVariants } from "@/content/studio";
+import { breadcrumbNode, JsonLd, serviceNode, webPageNode } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -29,15 +30,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!service) return {};
 
+  // No openGraph block: a page-level one replaces the layout's wholesale,
+  // dropping og:site_name and og:locale; the fallback path keeps them and
+  // still emits this page's title and description.
   return {
     title: service.title,
-    description: service.summary,
+    description: service.metaDescription ?? service.summary,
     alternates: { canonical: `/services/${service.slug}` },
-    openGraph: {
-      title: service.title,
-      description: service.summary,
-      type: "article",
-    },
   };
 }
 
@@ -53,6 +52,21 @@ export default async function ServicePage({ params }: Props) {
 
   return (
     <>
+      <JsonLd
+        graph={[
+          webPageNode({
+            path: `/services/${service.slug}`,
+            title: service.title,
+            description: service.metaDescription ?? service.summary,
+          }),
+          breadcrumbNode(`/services/${service.slug}`, [
+            { name: "Home", path: "/" },
+            { name: "Services", path: "/services" },
+            { name: service.title },
+          ]),
+          serviceNode(service),
+        ]}
+      />
       <Section size="sm" className="border-b border-border">
         <Container>
           <p className="text-eyebrow text-muted-foreground">

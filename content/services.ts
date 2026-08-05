@@ -18,8 +18,14 @@ export type Service = {
   slug: string;
   index: string;
   title: string;
-  /** One line for cards and meta descriptions. */
+  /** One line for cards; also the meta-description fallback. */
   summary: string;
+  /**
+   * SERP/AI description for the division page: subject-first, entity plus
+   * geography, phrased in words the page body already uses. Falls back to
+   * `summary` when unset.
+   */
+  metaDescription?: string;
   /** Short meta line — no-figures register, used in tight rows like the nav panel. */
   scope: string;
   /** Paragraphs for the detail page. */
@@ -46,6 +52,8 @@ export const services: Service[] = [
     index: "01",
     title: "Energy Infrastructure",
     summary: "EV charging, geothermal, solar and storage, clean fuel.",
+    metaDescription:
+      "Araz Construction Group builds EV charging, geothermal, solar and battery storage, and clean fuel infrastructure across Southern California.",
     scope: "EV charging, geothermal, solar, storage",
     body: [
       "EV charging, geothermal development, solar and battery storage, and clean fuel infrastructure. Energy has moved from an amenity to a code requirement, and new multifamily and commercial buildings now carry obligations that most builders subcontract without fully pricing.",
@@ -110,6 +118,8 @@ export const services: Service[] = [
     index: "02",
     title: "Commercial & Institutional Construction",
     summary: "Retail, office, light industrial, and civic work.",
+    metaDescription:
+      "Araz Construction Group delivers retail, office, light industrial, and civic construction across Southern California.",
     scope: "Retail, office, tenant improvement, civic",
     body: [
       "Retail, office, light industrial, tenant improvement, and civic work.",
@@ -167,6 +177,8 @@ export const services: Service[] = [
     index: "03",
     title: "Civil & Site Development",
     summary: "Grading, utilities, drainage, and site preparation.",
+    metaDescription:
+      "Araz Construction Group delivers grading, utilities, drainage, and site preparation across Southern California.",
     scope: "Grading, utilities, drainage, paving",
     body: [
       "Grading, excavation, underground utilities, storm drainage, retaining walls, and paving.",
@@ -231,6 +243,8 @@ export const services: Service[] = [
     index: "04",
     title: "Multifamily & Mixed-Use Construction",
     summary: "Apartment, condominium, and mixed-use projects.",
+    metaDescription:
+      "Araz Construction Group builds apartment, condominium, and mixed-use projects across Southern California.",
     scope: "Apartment, condominium, mixed-use",
     body: [
       "Apartment, condominium, and mixed-use projects from small infill through mid-size developments.",
@@ -293,6 +307,8 @@ export const services: Service[] = [
     index: "05",
     title: "Concrete, Foundation & Structural",
     summary: "Foundations, structural concrete, retrofit, and repair.",
+    metaDescription:
+      "Araz Construction Group delivers foundations, structural concrete, retrofit, and repair across Southern California.",
     scope: "Foundations, retrofit, structural repair",
     body: [
       "Foundations, structural concrete, seismic and structural retrofit, underpinning, and structural repair.",
@@ -351,6 +367,8 @@ export const services: Service[] = [
     index: "06",
     title: "Preconstruction & Program Management",
     summary: "Feasibility, budgeting, permitting, and owner's representation.",
+    metaDescription:
+      "Araz Construction Group runs feasibility, budgeting, permitting, and owner's representation for Southern California projects.",
     scope: "Feasibility, budgeting, permitting",
     body: [
       "Feasibility, budget development, constructability review, value engineering, permitting, and owner's representation.",
@@ -396,6 +414,8 @@ export const services: Service[] = [
     index: "07",
     title: "Single-Family Construction",
     summary: "Custom homes, accessory dwelling units, additions.",
+    metaDescription:
+      "Araz Construction Group builds custom homes, accessory dwelling units, and additions across Southern California.",
     scope: "Custom homes, ADUs, additions",
     body: [
       "Custom homes, spec homes, accessory dwelling units, and additions.",

@@ -12,11 +12,14 @@ import {
   projectStages,
   projectTypeFallback,
 } from "@/content/studio";
+import { breadcrumbNode, JsonLd, webPageNode } from "@/lib/seo";
+
+const description =
+  "Start a project with a Southern California general contractor. Tell us about it and we'll come take a look.";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description:
-    "Start a project with a Southern California general contractor. Tell us about it and we'll come take a look.",
+  description,
   alternates: { canonical: "/contact" },
 };
 
@@ -28,6 +31,20 @@ export default function ContactPage() {
 
   return (
     <>
+      <JsonLd
+        graph={[
+          webPageNode({
+            path: "/contact",
+            title: "Contact",
+            description,
+            type: "ContactPage",
+          }),
+          breadcrumbNode("/contact", [
+            { name: "Home", path: "/" },
+            { name: "Contact" },
+          ]),
+        ]}
+      />
       <Section size="default">
         <Container>
           <ContactStudio

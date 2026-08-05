@@ -7,12 +7,15 @@ import { ContactCta } from "@/components/sections/contact-cta";
 import { PageHeader } from "@/components/sections/page-header";
 import { licensesIntro, licensesStance } from "@/content/licenses";
 import { ctaVariants } from "@/content/studio";
+import { breadcrumbNode, JsonLd, webPageNode } from "@/lib/seo";
 import { site } from "@/lib/site";
+
+const description =
+  "How to verify a California contractor's license, and the paperwork we hand over before anyone signs.";
 
 export const metadata: Metadata = {
   title: "Licensing & insurance",
-  description:
-    "How to verify a California contractor's license, and the paperwork we hand over before anyone signs.",
+  description,
   alternates: { canonical: "/licenses" },
   // Unindex until the CSLB number lands and this route is wired into the nav/sitemap.
   robots: { index: false },
@@ -33,6 +36,19 @@ export default function LicensesPage() {
 
   return (
     <>
+      <JsonLd
+        graph={[
+          webPageNode({
+            path: "/licenses",
+            title: "Licensing & insurance",
+            description,
+          }),
+          breadcrumbNode("/licenses", [
+            { name: "Home", path: "/" },
+            { name: "Licensing & insurance" },
+          ]),
+        ]}
+      />
       <PageHeader
         eyebrow="Licensing & insurance"
         title="Verify before you hire."
