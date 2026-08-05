@@ -1,6 +1,7 @@
 /**
- * Site-wide imagery. The home hero and the About lead photo are the client's
- * own banners, stored as AVIF under public/images/. The rest is temporary
+ * Site-wide imagery. The home hero, the About lead photo, the home intro's
+ * EV charging photo and the concrete division's card are the client's own
+ * images, stored as AVIF under public/images/. The rest is temporary
  * placeholder photography hotlinked from Unsplash (next.config.ts allows
  * images.unsplash.com) until real project photos are shot. Swapping an image
  * means editing one line here or in content/projects.ts /
@@ -25,8 +26,8 @@ export const siteImages = {
   /** Two-image diptych beside the "Who we are" copy on home. */
   homeIntro: [
     {
-      src: unsplash("photo-1743130940742-c0d1fff97f1c"),
-      alt: "Two workers pouring concrete into a rebar-lined foundation form in a residential backyard",
+      src: "/images/home/home-ev-truck-charging-depot.avif",
+      alt: "Electric trucks charging at a row of DC fast chargers in a logistics yard",
     },
     {
       src: unsplash("photo-1682663810771-89d21838530f"),

@@ -193,8 +193,8 @@ export const services: Service[] = [
       "Subcontract scopes for other builders",
     ],
     image: {
-      src: unsplash("photo-1763771420303-0f11ccf613d1"),
-      alt: "Close-up of bundled, rust-coated steel rebar",
+      src: "/images/services/service-concrete-foundation-structural.avif",
+      alt: "Concrete foundation with rebar column starters rising into the structural frame of a mid-rise building, over a foundation plan drawing",
     },
     rowImages: [
       {
