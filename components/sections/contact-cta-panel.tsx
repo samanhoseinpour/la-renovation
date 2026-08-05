@@ -54,7 +54,9 @@ export function ContactCtaPanel({
                 alt={image.alt}
                 {...blur}
                 fill
-                sizes="100vw"
+                // Contained panel, not full-bleed: past the 88rem shell the
+                // photo never renders wider than the container's 80rem inner.
+                sizes="(min-width: 88rem) 80rem, 100vw"
                 className="object-cover"
               />
             </m.div>

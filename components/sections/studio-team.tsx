@@ -41,7 +41,9 @@ export function StudioTeam({ id, members }: StudioTeamProps) {
                       alt={member.photo.alt}
                       {...blurProps(member.photo.src)}
                       fill
-                      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                      // Six-across on lg, four on sm, two below — the shell
+                      // caps at 88rem, so cards never pass ~13rem.
+                      sizes="(min-width: 88rem) 13rem, (min-width: 1024px) 16vw, (min-width: 640px) 24vw, 48vw"
                       className="object-cover"
                     />
                   ) : (

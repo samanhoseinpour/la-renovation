@@ -52,7 +52,7 @@ export function DivisionShowcase({
                 alt={service.image.alt}
                 {...blurProps(service.image.src)}
                 fill
-                sizes="(min-width: 640px) 50vw, 100vw"
+                sizes="(min-width: 88rem) 26rem, (min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw"
                 className="object-cover transition-transform duration-700 ease-editorial group-hover/division:scale-105"
               />
               <div className="absolute inset-0 bg-linear-to-b from-black/60 via-black/10 to-transparent" />
@@ -87,7 +87,7 @@ export function DivisionShowcase({
             alt=""
             {...blurProps(linkImage.src)}
             fill
-            sizes="(min-width: 640px) 50vw, 100vw"
+            sizes="(min-width: 88rem) 26rem, (min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw"
             className="scale-105 object-cover blur-md"
           />
           <div className="absolute inset-0 bg-black/60" />
