@@ -13,6 +13,7 @@ import { SiteFooter } from "@/components/site/site-footer";
 import { SiteHeader } from "@/components/site/site-header";
 import { SkipLink } from "@/components/site/skip-link";
 import { getNavPanels } from "@/content/nav";
+import { JsonLd, organizationNode, websiteNode } from "@/lib/seo";
 
 // Nothing here reads a dynamic API, so every route under this layout prerenders
 // at build time — including the footer's `new Date().getFullYear()`, which would
@@ -27,6 +28,9 @@ export default function SiteLayout({
 }) {
   return (
     <>
+      {/* Site-wide entity nodes, once for every public route; pages add
+          their own WebPage/BreadcrumbList nodes and stitch to these by @id. */}
+      <JsonLd graph={[organizationNode(), websiteNode()]} />
       <SkipLink />
       {/* Marketing pages only — /styleguide keeps native scroll on purpose. */}
       <SmoothScroll />

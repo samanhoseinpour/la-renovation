@@ -55,11 +55,27 @@ export const site = {
       zip: "90071",
     },
     hours: "Mon–Fri, 8am–5pm PT",
+    /**
+     * Structured mirror of `hours` for the schema graph's
+     * openingHoursSpecification — change the two together.
+     */
+    officeHours: {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "08:00",
+      closes: "17:00",
+    },
   },
 
   nav: navItems.filter(
     (item) => item.panel !== "projects" || published.projects,
   ),
+
+  /**
+   * Verified external profiles (LinkedIn, Google Business Profile, trade
+   * associations). Feeds the schema graph's sameAs for entity reconciliation;
+   * list only profiles that actually exist — a dead link is worse than none.
+   */
+  profiles: [] as readonly string[],
 
   /**
    * Shown in the footer. CA contractors are required to display this, but a
