@@ -10,7 +10,7 @@ export type TeamMember = {
 // Array order is display order for the home marquee and /about#team,
 // set by the client.
 export const teamMembers: TeamMember[] = [
-  { name: "Dylan", role: "President & Chief Executive Officer" },
+  { name: "Dylan Hughes", role: "President & Chief Executive Officer", photo: { src: "/images/team/dylan-hughes.avif", alt: "Dylan Hughes" } },
   { name: "Shahrouz", role: "Chief Operating Officer & Qualifying Individual" },
   { name: "Ferris Zahedi", role: "VP of Construction Operations", photo: { src: "/images/team/ferris-zahedi.avif", alt: "Ferris Zahedi" } },
   { name: "Arshia Esmaeili", role: "Chief Financial Officer & Corporate Secretary", photo: { src: "/images/team/arshia-esmaeili.avif", alt: "Arshia Esmaeili" } },

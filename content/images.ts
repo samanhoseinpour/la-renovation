@@ -1,8 +1,8 @@
 /**
  * Site-wide imagery, all self-hosted AVIF under public/images/: the client's
  * own photos (home hero, About lead, EV charging depot, concrete division
- * card) plus Unsplash placeholder photography landed locally until real
- * project photos are shot. Swapping an image means editing one line here or
+ * card, the CEO's team portrait) plus Unsplash placeholder photography landed
+ * locally until real project photos are shot. Swapping an image means editing one line here or
  * in content/projects.ts / content/services.ts — nothing lives in JSX.
  *
  * Only the gated demo projects in content/projects.ts still hotlink Unsplash
