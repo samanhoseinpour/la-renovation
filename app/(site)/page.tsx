@@ -8,12 +8,14 @@ import { CoverageBand } from "@/components/sections/coverage-band";
 import { DivisionShowcase } from "@/components/sections/division-showcase";
 import { FaqTeaser } from "@/components/sections/faq-teaser";
 import { HomeHero } from "@/components/sections/home-hero";
+import { PartnerStrip } from "@/components/sections/partner-strip";
 import { ProcessStrip } from "@/components/sections/process-strip";
 import { ProjectShowcase } from "@/components/sections/project-showcase";
 import { TeamMarquee } from "@/components/sections/team-marquee";
 import { getHomeFaqs } from "@/content/faq";
 import { companyIntro, coverage, divisionsIntro, faqIntro, processIntro, selectedWorkIntro, teamIntro } from "@/content/home";
 import { siteImages } from "@/content/images";
+import { partners, partnersIntro } from "@/content/partners";
 import { getAllProjects } from "@/content/projects";
 import { getAllServices } from "@/content/services";
 import { ctaVariants, processPhases, testimonials } from "@/content/studio";
@@ -80,6 +82,12 @@ export default function HomePage() {
       <Section size="default" surface="muted">
         <Container>
           <FaqTeaser intro={faqIntro} faqs={getHomeFaqs()} />
+        </Container>
+      </Section>
+
+      <Section size="default">
+        <Container>
+          <PartnerStrip intro={partnersIntro} partners={partners} />
         </Container>
       </Section>
 
