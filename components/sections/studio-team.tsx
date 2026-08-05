@@ -30,7 +30,7 @@ export function StudioTeam({ id, members }: StudioTeamProps) {
       <Container>
         <h2 className="text-eyebrow text-muted-foreground">Team</h2>
 
-        <div className="mt-14 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-14 grid gap-x-6 gap-y-12 grid-cols-2 sm:grid-cols-4 lg:grid-cols-6">
           {members.map((member, index) => (
             <Reveal key={member.name} delay={Math.min(index * 0.05, 0.2)}>
               <div>
@@ -54,7 +54,7 @@ export function StudioTeam({ id, members }: StudioTeamProps) {
                     />
                   )}
                 </div>
-                <h3 className="mt-4 text-h3">{member.name}</h3>
+                <h3 className="mt-4 text-h4">{member.name}</h3>
                 <p className="mt-1 text-sm text-muted-foreground">
                   {member.role}
                 </p>
