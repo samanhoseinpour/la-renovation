@@ -54,4 +54,13 @@ export const partners: Partner[] = [
     logo: { src: "/images/partners/lions-gate-construction.avif", width: 800, height: 662 },
     scale: 1.18,
   },
+  {
+    name: "Relux Construction",
+    domain: "reluxconstruction.com",
+    href: "https://reluxconstruction.com/",
+    logo: { src: "/images/partners/relux-construction.avif", width: 381, height: 600 },
+    // The only portrait badge in the set: at the shared cap it would carry
+    // roughly half the ink of the wordmarks beside it, so it runs well over.
+    scale: 1.6,
+  },
 ];

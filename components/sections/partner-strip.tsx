@@ -14,6 +14,10 @@ import type { Partner } from "@/content/partners";
  * (public/images/partners), so one token paints it on any surface in either
  * theme. Each plate is one outbound link, the bare domain as its title-block
  * caption; the sheet reveals as a single object, no per-cell stagger.
+ *
+ * The sheet has to stay a rectangle: a short final row leaves border-colored
+ * holes, not card surface. Desktop runs one column per partner, and the
+ * two-column layout closes an odd roster by letting the last plate span it.
  */
 export function PartnerStrip({
   intro,
@@ -33,7 +37,7 @@ export function PartnerStrip({
       </Reveal>
 
       <Reveal className="mt-14">
-        <div className="relative grid grid-cols-2 gap-px border border-border bg-border lg:grid-cols-4">
+        <div className="relative grid grid-cols-2 gap-px border border-border bg-border lg:grid-cols-5">
           {[
             "-top-[5px] -left-[5px]",
             "-top-[5px] -right-[5px]",
@@ -54,7 +58,7 @@ export function PartnerStrip({
             const mask = `url("${partner.logo.src}")`;
             const ink: CSSProperties = {
               // Cap height per breakpoint via --partner-cap, tuned per mark so
-              // the four lockups read at one visual weight.
+              // the lockups read at one visual weight.
               height: `calc(var(--partner-cap) * ${partner.scale ?? 1})`,
               aspectRatio: `${partner.logo.width} / ${partner.logo.height}`,
               maskImage: mask,
@@ -73,7 +77,7 @@ export function PartnerStrip({
                 href={partner.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group/partner relative flex min-h-40 flex-col bg-card p-6 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset sm:min-h-48 sm:p-8 [--partner-cap:2.75rem] lg:[--partner-cap:3.25rem]"
+                className="group/partner relative flex min-h-40 flex-col bg-card p-6 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset max-lg:last:col-span-2 sm:min-h-48 sm:p-8 [--partner-cap:2.75rem] xl:[--partner-cap:3.25rem]"
               >
                 <span className="flex w-full flex-1 items-center justify-center">
                   <span
