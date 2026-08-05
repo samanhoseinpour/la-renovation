@@ -9,6 +9,7 @@ export type Enquiry = {
   name: string;
   email: string;
   phone?: string;
+  company?: string;
   service?: string;
   stage?: string;
   message: string;
@@ -35,6 +36,7 @@ export async function deliverEnquiry(enquiry: Enquiry): Promise<void> {
     `Name: ${enquiry.name}`,
     `Email: ${enquiry.email}`,
     enquiry.phone ? `Phone: ${enquiry.phone}` : null,
+    enquiry.company ? `Company: ${enquiry.company}` : null,
     enquiry.service ? `Project type: ${enquiry.service}` : null,
     enquiry.stage ? `Stage: ${enquiry.stage}` : null,
     "",

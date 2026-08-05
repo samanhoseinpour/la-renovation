@@ -10,6 +10,7 @@ const FIELDS = [
   "name",
   "email",
   "phone",
+  "company",
   "service",
   "stage",
   "message",
@@ -44,6 +45,11 @@ const schema = z.object({
     .max(254, "That email looks too long.")
     .email("That email looks wrong."),
   phone: z.string().trim().max(40, "That number looks too long.").optional(),
+  company: z
+    .string()
+    .trim()
+    .max(200, "That company name looks too long.")
+    .optional(),
   // The selects can't produce an over-long value, but a hand-rolled POST can,
   // and every field error has to be renderable somewhere — see the messages
   // under both selects in contact-studio.tsx.

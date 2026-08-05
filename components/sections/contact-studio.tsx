@@ -28,6 +28,7 @@ const FIELD_ORDER: ContactField[] = [
   "name",
   "email",
   "phone",
+  "company",
   "service",
   "stage",
   "message",
@@ -44,6 +45,10 @@ const underlineField =
 type ContactStudioProps = {
   title: string;
   lead: string;
+  /** The response promise, rendered under the lead. */
+  commitment: string;
+  /** What to send for a specific first answer, rendered above the fields. */
+  formIntro: string;
   services: { slug: string; title: string }[];
   /** Project-type option for enquiries that don't fit a named service. */
   serviceFallback: string;
@@ -62,6 +67,8 @@ type ContactStudioProps = {
 export function ContactStudio({
   title,
   lead,
+  commitment,
+  formIntro,
   services,
   serviceFallback,
   stages,
@@ -104,6 +111,7 @@ export function ContactStudio({
           <p className="text-eyebrow text-muted-foreground">Contact</p>
           <h1 className="mt-6 text-display-2 text-balance">{title}</h1>
           <p className="mt-6 text-lead text-muted-foreground">{lead}</p>
+          <p className="mt-4 text-sm text-muted-foreground">{commitment}</p>
         </div>
 
         <div className="grid gap-10 sm:grid-cols-2 lg:shrink-0 lg:gap-16">
@@ -166,6 +174,8 @@ export function ContactStudio({
         </div>
       ) : (
         <form action={formAction} className="mt-16 lg:mt-24">
+          <p className="max-w-2xl text-muted-foreground">{formIntro}</p>
+
           {/* Honeypot. display:none (not sr-only): browser autofill fills
               rendered-but-clipped fields, and a real name like "company" is
               an autofill token — an autofilled visitor would get a fake
@@ -182,7 +192,7 @@ export function ContactStudio({
             />
           </div>
 
-          <div className="grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
             <div>
               <Label htmlFor="contact-name" className="sr-only">
                 Name
@@ -261,6 +271,32 @@ export function ContactStudio({
                   className="mt-2 text-sm text-destructive"
                 >
                   {fieldErrors.phone}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="contact-company" className="sr-only">
+                Company
+              </Label>
+              <Input
+                id="contact-company"
+                name="company"
+                autoComplete="organization"
+                placeholder="Company (optional)"
+                defaultValue={values.company}
+                className={underlineField}
+                aria-invalid={Boolean(fieldErrors.company)}
+                aria-describedby={
+                  fieldErrors.company ? "contact-company-error" : undefined
+                }
+              />
+              {fieldErrors.company && (
+                <p
+                  id="contact-company-error"
+                  className="mt-2 text-sm text-destructive"
+                >
+                  {fieldErrors.company}
                 </p>
               )}
             </div>
