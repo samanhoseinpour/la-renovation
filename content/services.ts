@@ -1,4 +1,4 @@
-import { unsplash, type SiteImage } from "./images";
+import type { SiteImage } from "./images";
 import type { CtaCopy } from "./studio";
 
 export type DeepDiveSection = {
@@ -26,7 +26,7 @@ export type Service = {
   body: string[];
   /** Bulleted scope items. */
   includes: string[];
-  /** Portrait card photograph. Mostly temporary Unsplash stand-ins. */
+  /** Portrait card photograph. Self-hosted placeholder photography until real project photos land. */
   image: SiteImage;
   /** One image per body paragraph on the detail page (three each). */
   rowImages: SiteImage[];
@@ -61,20 +61,20 @@ export const services: Service[] = [
       "Standalone energy engagements",
     ],
     image: {
-      src: unsplash("photo-1707341597123-c53bbb7e7f93"),
+      src: "/images/services/service-energy-ev-fast-charging.avif",
       alt: "Electric vehicle plugged into a fast-charging station indoors",
     },
     rowImages: [
       {
-        src: unsplash("photo-1745187946672-2c1d8cf26a2b"),
+        src: "/images/services/service-energy-rooftop-solar.avif",
         alt: "Aerial view of solar panels installed on a corrugated metal rooftop",
       },
       {
-        src: unsplash("photo-1702058897414-c772071c498c"),
+        src: "/images/services/service-energy-geothermal-steam.avif",
         alt: "Geothermal steam plumes rising from the ground under a dramatic sky",
       },
       {
-        src: unsplash("photo-1703860271509-b50f5679f2a0"),
+        src: "/images/services/service-energy-ev-connector.avif",
         alt: "Close-up of an electric vehicle plugged into a charging connector",
       },
     ],
@@ -125,20 +125,20 @@ export const services: Service[] = [
       "Long-lead equipment coordination",
     ],
     image: {
-      src: unsplash("photo-1757954694963-ea693d2cb1dc"),
+      src: "/images/services/service-commercial-curved-glass-office.avif",
       alt: "Curved glass-clad office building exterior against the sky",
     },
     rowImages: [
       {
-        src: unsplash("photo-1778961419928-2968ddd57c05"),
+        src: "/images/services/service-commercial-brick-glass-facade.avif",
         alt: "Street-level view of a modern office building with brick and glass facade",
       },
       {
-        src: unsplash("photo-1745015446589-7ee6f702d8c1"),
+        src: "/images/services/service-commercial-glass-tower.avif",
         alt: "Close-up of a glass office tower facade reflecting light",
       },
       {
-        src: unsplash("photo-1751703019097-02f294f45343"),
+        src: "/images/services/service-workers-scaffolding.avif",
         alt: "Two construction workers standing on tubular scaffolding against a clear sky",
       },
     ],
@@ -182,20 +182,20 @@ export const services: Service[] = [
       "Standalone civil packages",
     ],
     image: {
-      src: unsplash("photo-1766791789983-57f22d98fcc8"),
+      src: "/images/services/service-civil-site-dusk.avif",
       alt: "Large civil construction site at dusk with tower cranes, precast concrete barriers, and shipping containers",
     },
     rowImages: [
       {
-        src: unsplash("photo-1751054770504-c69daeec4721"),
+        src: "/images/services/service-civil-excavator.avif",
         alt: "Yellow excavator scooping a mound of dirt at a construction site",
       },
       {
-        src: unsplash("photo-1768751947846-708a2836f4b7"),
+        src: "/images/services/service-civil-retaining-wall.avif",
         alt: "Tall concrete retaining wall along a road with a wood guardrail above",
       },
       {
-        src: unsplash("photo-1757030689760-3ec8be7326ae"),
+        src: "/images/services/service-civil-night-paving.avif",
         alt: "Night paving crew operating an asphalt paving machine on a road",
       },
     ],
@@ -246,20 +246,20 @@ export const services: Service[] = [
       "Multi-site program reporting",
     ],
     image: {
-      src: unsplash("photo-1777104247068-ad8c489cd9e9"),
+      src: "/images/services/service-multifamily-scaffold-wrap.avif",
       alt: "Apartment building wrapped in scaffolding during construction",
     },
     rowImages: [
       {
-        src: unsplash("photo-1777919393730-463e2c0b7f4c"),
+        src: "/images/services/service-concrete-rebar-formwork.avif",
         alt: "Multi-story concrete building under construction with exposed rebar and plywood formwork",
       },
       {
-        src: unsplash("photo-1751703019097-02f294f45343"),
+        src: "/images/services/service-workers-scaffolding.avif",
         alt: "Two construction workers standing on tubular scaffolding against a clear sky",
       },
       {
-        src: unsplash("photo-1503387762-592deb58ef4e"),
+        src: "/images/services/service-preconstruction-blueprint.avif",
         alt: "Hand drawing on an architectural blueprint with a ruler and pencil",
       },
     ],
@@ -313,15 +313,15 @@ export const services: Service[] = [
     },
     rowImages: [
       {
-        src: unsplash("photo-1743130940742-c0d1fff97f1c"),
+        src: "/images/services/service-concrete-foundation-pour.avif",
         alt: "Two workers pouring concrete into a rebar-lined foundation form in a residential backyard",
       },
       {
-        src: unsplash("photo-1635249578213-68b0aa67fdf7"),
+        src: "/images/services/service-concrete-rebar-cages.avif",
         alt: "Construction worker in a hard hat crouched among structural rebar cages",
       },
       {
-        src: unsplash("photo-1777919393730-463e2c0b7f4c"),
+        src: "/images/services/service-concrete-rebar-formwork.avif",
         alt: "Multi-story concrete building under construction with exposed rebar and plywood formwork",
       },
     ],
@@ -366,20 +366,20 @@ export const services: Service[] = [
       "Owner's representation",
     ],
     image: {
-      src: unsplash("photo-1762146828422-50a8bd416d3c"),
+      src: "/images/services/service-preconstruction-floor-plans.avif",
       alt: "Architectural floor plan drawings spread across a table",
     },
     rowImages: [
       {
-        src: unsplash("photo-1503387762-592deb58ef4e"),
+        src: "/images/services/service-preconstruction-blueprint.avif",
         alt: "Hand drawing on an architectural blueprint with a ruler and pencil",
       },
       {
-        src: unsplash("photo-1682663810771-89d21838530f"),
+        src: "/images/services/service-preconstruction-survey-tripod.avif",
         alt: "Survey equipment on a tripod with a tower crane in the background",
       },
       {
-        src: unsplash("photo-1742112125635-6f8201c6ee3f"),
+        src: "/images/services/service-delivery-handshake.avif",
         alt: "Two site workers in hard hats shaking hands in front of stacked precast concrete panels",
       },
     ],
@@ -411,20 +411,20 @@ export const services: Service[] = [
       "Pricing alongside design",
     ],
     image: {
-      src: unsplash("photo-1778164912282-c89de4d198ea"),
+      src: "/images/services/service-single-family-house.avif",
       alt: "Nearly finished single-family house with a dirt pile in the front yard",
     },
     rowImages: [
       {
-        src: unsplash("photo-1639953803381-e9c3f3a38253"),
+        src: "/images/services/service-single-family-roof-trusses.avif",
         alt: "Timber roof trusses and wall framing on a house under construction",
       },
       {
-        src: unsplash("photo-1649807533255-bbc9c9fb7d77"),
+        src: "/images/services/service-single-family-cleared-lot.avif",
         alt: "Yellow excavator parked on a cleared dirt hilltop under a clear sky",
       },
       {
-        src: unsplash("photo-1682663810771-89d21838530f"),
+        src: "/images/services/service-preconstruction-survey-tripod.avif",
         alt: "Survey equipment on a tripod with a tower crane in the background",
       },
     ],
@@ -498,7 +498,7 @@ export const deliveryModel: DeliveryModelCopy = {
     },
   ],
   image: {
-    src: unsplash("photo-1742112125635-6f8201c6ee3f"),
+    src: "/images/services/service-delivery-handshake.avif",
     alt: "Two site workers in hard hats shaking hands in front of stacked precast concrete panels",
   },
 };

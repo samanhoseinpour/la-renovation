@@ -1,17 +1,16 @@
 /**
- * Site-wide imagery. The home hero, the About lead photo, the home intro's
- * EV charging photo and the concrete division's card are the client's own
- * images, stored as AVIF under public/images/. The rest is temporary
- * placeholder photography hotlinked from Unsplash (next.config.ts allows
- * images.unsplash.com) until real project photos are shot. Swapping an image
- * means editing one line here or in content/projects.ts /
- * content/services.ts — nothing lives in JSX.
+ * Site-wide imagery, all self-hosted AVIF under public/images/: the client's
+ * own photos (home hero, About lead, EV charging depot, concrete division
+ * card) plus Unsplash placeholder photography landed locally until real
+ * project photos are shot. Swapping an image means editing one line here or
+ * in content/projects.ts / content/services.ts — nothing lives in JSX.
  *
- * The three About story/nav placeholders are Unsplash shots stored locally
- * like the client images: next/image fetches remote sources server-side, and
- * this dev machine can't reach images.unsplash.com, so hotlinked entries
- * render broken in next dev. New placeholders should land the same way
- * (download, then images:migrate + images:optimize into public/images/).
+ * Only the gated demo projects in content/projects.ts still hotlink Unsplash
+ * (next.config.ts allows images.unsplash.com): next/image fetches remote
+ * sources server-side, and this dev machine can't reach images.unsplash.com,
+ * so hotlinked entries render broken in next dev. New placeholders land like
+ * the rest (download via the images.weserv.nl proxy, then images:migrate +
+ * images:optimize into public/images/).
  */
 
 import { blurMap } from "./blur-map.generated";
@@ -53,27 +52,27 @@ export const siteImages = {
       alt: "Electric trucks charging at a row of DC fast chargers in a logistics yard",
     },
     {
-      src: unsplash("photo-1682663810771-89d21838530f"),
+      src: "/images/services/service-preconstruction-survey-tripod.avif",
       alt: "Survey equipment on a tripod with a tower crane in the background",
     },
   ],
   /** Full-bleed coverage band on home. Placeholder until a client photo lands. */
   homeCoverage: {
-    src: unsplash("photo-1757030689760-3ec8be7326ae"),
+    src: "/images/services/service-civil-night-paving.avif",
     alt: "Night paving crew operating an asphalt paving machine on a road",
   },
   /** Behind the All-divisions tile in the home grid. Rendered blurred to
       texture, so it only needs to read as "the whole company": the handshake
       echoes "One contract." */
   homeAllDivisions: {
-    src: unsplash("photo-1742112125635-6f8201c6ee3f"),
+    src: "/images/services/service-delivery-handshake.avif",
     alt: "Two site workers in hard hats shaking hands in front of stacked precast concrete panels",
   },
   /** Closing CTA panel on nearly every route. Shares the All-divisions source
       (that tile renders it blurred, so they never read as the same frame)
       until real jobsite photography lands. */
   contactCta: {
-    src: unsplash("photo-1742112125635-6f8201c6ee3f"),
+    src: "/images/services/service-delivery-handshake.avif",
     alt: "Two site workers in hard hats shaking hands in front of stacked precast concrete panels",
   },
   about: [
@@ -94,7 +93,7 @@ export const siteImages = {
       alt: "Two engineers in hard hats and high-visibility vests on a rebar deck, one pointing across the site",
     },
     {
-      src: unsplash("photo-1635249578213-68b0aa67fdf7"),
+      src: "/images/services/service-concrete-rebar-cages.avif",
       alt: "Construction worker in a hard hat crouched among structural rebar cages",
     },
   ],
