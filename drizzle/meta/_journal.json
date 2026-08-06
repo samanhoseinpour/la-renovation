@@ -8,6 +8,13 @@
       "when": 1786015849950,
       "tag": "0000_breezy_kulan_gath",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1786018266097,
+      "tag": "0001_youthful_tarot",
+      "breakpoints": true
     }
   ]
 }

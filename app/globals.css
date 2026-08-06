@@ -287,8 +287,19 @@
     scrollbar-width: none;
   }
 
-  html::-webkit-scrollbar {
+  /* The admin exclusion lives in the hide rule itself: on pre-18.2 Safari,
+     any styled ::-webkit-scrollbar opts into fully custom painting, so a
+     display:initial "restore" would leave a functioning but invisible bar.
+     Admin html must match no webkit scrollbar rule at all. */
+  html:not(:has([data-admin]))::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Admin routes get the native bar back: no Lenis, no overlay thumb, and no
+     full-bleed photo bands for a gutter to glare over there. Scoped via the
+     data-admin wrapper so the (site) hidden-scrollbar contract is untouched. */
+  html:has([data-admin]) {
+    scrollbar-width: auto;
   }
 
   body {
