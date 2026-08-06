@@ -1,13 +1,14 @@
 import { randomUUID } from "node:crypto";
 
 import { betterAuth } from "better-auth";
-import { APIError } from "better-auth/api";
+import { APIError, createAuthMiddleware } from "better-auth/api";
 import { nextCookies } from "better-auth/next-js";
 import { admin as adminPlugin } from "better-auth/plugins";
 import { drizzleAdapter } from "@better-auth/drizzle-adapter";
 import { passkey } from "@better-auth/passkey";
 import { and, eq, lt, or, sql } from "drizzle-orm";
 
+import { MIN_PASSWORD_LENGTH } from "./auth-shared";
 import { getDb } from "./db";
 import * as authSchema from "./db/auth-schema";
 import { hashClientIp } from "./db/submissions";
@@ -129,7 +130,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     disableSignUp: true,
-    minPasswordLength: 12,
+    minPasswordLength: MIN_PASSWORD_LENGTH,
     revokeSessionsOnPasswordReset: true,
     resetPasswordTokenExpiresIn: 60 * 60,
     sendResetPassword: async ({ user, url }) => {
@@ -210,6 +211,7 @@ export const auth = betterAuth({
       "/sign-in/email": { window: 60, max: 5 },
       "/request-password-reset": { window: 3600, max: 3 },
       "/reset-password": { window: 3600, max: 5 },
+      "/change-password": { window: 3600, max: 5 },
     },
   },
   advanced: {
@@ -223,6 +225,75 @@ export const auth = betterAuth({
     onError: (error) => {
       console.error("[auth]", error);
     },
+  },
+  hooks: {
+    // better-auth never rejects a "new" password equal to the current one
+    // (verified against 1.6.26: change-password verifies the current and
+    // writes, reset-password just writes), so both paths are guarded here.
+    before: createAuthMiddleware(async (ctx) => {
+      if (ctx.path === "/change-password") {
+        const { currentPassword, newPassword } = (ctx.body ?? {}) as Record<
+          string,
+          unknown
+        >;
+        if (
+          typeof currentPassword === "string" &&
+          typeof newPassword === "string" &&
+          currentPassword === newPassword
+        ) {
+          throw new APIError("BAD_REQUEST", {
+            message:
+              "New password must be different from the current password.",
+            code: "PASSWORD_UNCHANGED",
+          });
+        }
+        return;
+      }
+      // POST /reset-password only; the email's GET callback is
+      // /reset-password/:token and never carries a newPassword.
+      if (ctx.path === "/reset-password") {
+        const body = (ctx.body ?? {}) as Record<string, unknown>;
+        const queryToken = (ctx.query as Record<string, unknown> | undefined)
+          ?.token;
+        const token =
+          typeof body.token === "string"
+            ? body.token
+            : typeof queryToken === "string"
+              ? queryToken
+              : undefined;
+        const newPassword = body.newPassword;
+        if (typeof token !== "string" || typeof newPassword !== "string") {
+          return;
+        }
+        // findVerificationValue peeks without consuming, so a rejection here
+        // leaves the reset link usable for another attempt.
+        const verification =
+          await ctx.context.internalAdapter.findVerificationValue(
+            `reset-password:${token}`,
+          );
+        // Invalid or expired: stand down and let the endpoint answer with its
+        // own INVALID_TOKEN so there is a single error surface for that case.
+        if (!verification || verification.expiresAt < new Date()) return;
+        const credential = (
+          await ctx.context.internalAdapter.findAccounts(verification.value)
+        ).find(
+          (account) => account.providerId === "credential" && account.password,
+        );
+        // First-time set: nothing to differ from.
+        if (!credential?.password) return;
+        const unchanged = await ctx.context.password.verify({
+          hash: credential.password,
+          password: newPassword,
+        });
+        if (unchanged) {
+          throw new APIError("BAD_REQUEST", {
+            message:
+              "New password must be different from the current password.",
+            code: "PASSWORD_UNCHANGED",
+          });
+        }
+      }
+    }),
   },
   databaseHooks: {
     user: {
