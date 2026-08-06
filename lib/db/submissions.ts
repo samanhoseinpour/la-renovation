@@ -1,6 +1,18 @@
 import { createHmac } from "node:crypto";
 
-import { count, desc, eq, sql } from "drizzle-orm";
+import {
+  and,
+  count,
+  desc,
+  eq,
+  getTableColumns,
+  gte,
+  ilike,
+  inArray,
+  or,
+  sql,
+  type SQL,
+} from "drizzle-orm";
 
 import { getDb } from "./index";
 import { submissions, type Submission } from "./schema";
@@ -87,17 +99,140 @@ export async function markDeliveryFailed(
     .where(eq(submissions.id, id));
 }
 
-export async function listSubmissions(
-  filter: InboxFilter,
+export const INBOX_PAGE_SIZE = 50;
+
+/** Keyset cursor: created_at as Postgres text (full microseconds) plus id. */
+export type InboxCursor = { ts: string; id: string };
+
+export type InboxRow = Submission & { cursor: string };
+
+export type InboxPage = { items: InboxRow[]; hasMore: boolean };
+
+// \ % _ are LIKE metacharacters; backslash is Postgres's default escape.
+function escapeLike(term: string): string {
+  return term.replace(/[\\%_]/g, (char) => `\\${char}`);
+}
+
+function inboxConditions(filter: InboxFilter, q?: string): SQL[] {
+  const conds: SQL[] = [];
+  if (filter !== "all") conds.push(eq(submissions.status, filter));
+  if (q) {
+    const pattern = `%${escapeLike(q)}%`;
+    const search = or(
+      ilike(submissions.name, pattern),
+      ilike(submissions.email, pattern),
+      ilike(submissions.company, pattern),
+      ilike(submissions.message, pattern),
+    );
+    if (search) conds.push(search);
+  }
+  return conds;
+}
+
+/**
+ * One inbox page, newest first. Ordering is (created_at DESC, id DESC) and
+ * the continuation predicate is the matching row-value comparison, so pages
+ * neither skip nor repeat rows even when timestamps collide. The cursor is
+ * created_at::text because a JS Date round-trip truncates Postgres's
+ * microseconds and could skip sub-millisecond siblings at a page boundary.
+ */
+export async function listSubmissionsPage(args: {
+  filter: InboxFilter;
+  q?: string;
+  before?: InboxCursor;
+  limit?: number;
+}): Promise<InboxPage> {
+  const { filter, q, before, limit = INBOX_PAGE_SIZE } = args;
+  const conds = inboxConditions(filter, q);
+  if (before) {
+    conds.push(
+      sql`(${submissions.createdAt}, ${submissions.id}) < (${before.ts}::timestamptz, ${before.id}::uuid)`,
+    );
+  }
+  const rows = await getDb()
+    .select({
+      ...getTableColumns(submissions),
+      cursor: sql<string>`${submissions.createdAt}::text`,
+    })
+    .from(submissions)
+    .where(conds.length ? and(...conds) : undefined)
+    .orderBy(desc(submissions.createdAt), desc(submissions.id))
+    // One extra row answers hasMore without a second count query.
+    .limit(limit + 1);
+  return { items: rows.slice(0, limit), hasMore: rows.length > limit };
+}
+
+export async function listSubmissionsForExport(args: {
+  filter: InboxFilter;
+  q?: string;
+  start?: Date | null;
+}): Promise<Submission[]> {
+  const conds = inboxConditions(args.filter, args.q);
+  if (args.start) conds.push(gte(submissions.createdAt, args.start));
+  return getDb()
+    .select()
+    .from(submissions)
+    .where(conds.length ? and(...conds) : undefined)
+    .orderBy(desc(submissions.createdAt), desc(submissions.id))
+    // Guardrail, not pagination: far above any real enquiry volume.
+    .limit(10_000);
+}
+
+export async function getSubmissionsByIds(
+  ids: string[],
 ): Promise<Submission[]> {
-  const db = getDb();
-  const query =
-    filter === "all"
-      ? db.select().from(submissions)
-      : db.select().from(submissions).where(eq(submissions.status, filter));
-  // Newest 200; real enquiry volume is low. The upgrade path is a
-  // ?before=<createdAt> cursor on submissions_status_created_idx.
-  return query.orderBy(desc(submissions.createdAt)).limit(200);
+  if (ids.length === 0) return [];
+  return getDb()
+    .select()
+    .from(submissions)
+    .where(inArray(submissions.id, ids))
+    .orderBy(desc(submissions.createdAt), desc(submissions.id));
+}
+
+// Bulk mutations are single statements on purpose: neon-http has no
+// transactions, and inArray over ids that a parallel admin already deleted
+// is a harmless no-op.
+
+export async function bulkSetSubmissionStatus(
+  ids: string[],
+  status: SubmissionStatus,
+): Promise<void> {
+  if (ids.length === 0) return;
+  await getDb()
+    .update(submissions)
+    .set({ status })
+    .where(inArray(submissions.id, ids));
+}
+
+export async function bulkDeleteSubmissions(ids: string[]): Promise<void> {
+  if (ids.length === 0) return;
+  await getDb().delete(submissions).where(inArray(submissions.id, ids));
+}
+
+export async function countSubmissionsSince(start: Date): Promise<number> {
+  const [row] = await getDb()
+    .select({ total: count() })
+    .from(submissions)
+    .where(gte(submissions.createdAt, start));
+  return row.total;
+}
+
+export async function countFailedDeliveries(): Promise<number> {
+  const [row] = await getDb()
+    .select({ total: count() })
+    .from(submissions)
+    .where(eq(submissions.delivery, "failed"));
+  return row.total;
+}
+
+export async function listRecentSubmissions(
+  limit: number,
+): Promise<Submission[]> {
+  return getDb()
+    .select()
+    .from(submissions)
+    .orderBy(desc(submissions.createdAt), desc(submissions.id))
+    .limit(limit);
 }
 
 export async function countSubmissionsByStatus(): Promise<

@@ -71,7 +71,45 @@ export const adminInbox = {
     sent: "Emailed",
     failed: "Email failed",
   },
-  capNote: "Showing the newest 200 submissions. Older ones are still stored.",
+  search: {
+    placeholder: "Search name, email, company, or message",
+    submit: "Search",
+    clear: "Clear search",
+  },
+  pagination: {
+    older: "Load older",
+    newest: "Back to newest",
+  },
+  selection: {
+    selectAll: "Select all shown",
+    selectRow: "Select",
+    selectedSuffix: "selected",
+    clear: "Clear",
+    markRead: "Mark read",
+    markUnread: "Mark unread",
+    archive: "Archive",
+    unarchive: "Move to inbox",
+    del: "Delete",
+    exportSelected: "Export selected",
+    error: "That didn't work. Try again.",
+  },
+  bulkDeleteConfirm: {
+    title: "Delete the selected submissions?",
+    body: "This removes them outright. There is no undo.",
+    confirm: "Delete",
+    cancel: "Cancel",
+  },
+  exportCsv: {
+    button: "Export CSV",
+    rangeLabel: "Date range",
+    ranges: {
+      today: "Today",
+      "7d": "Last 7 days",
+      "30d": "Last 30 days",
+      month: "This month",
+      all: "All time",
+    },
+  },
 } as const;
 
 export const adminSubmission = {
@@ -93,6 +131,8 @@ export const adminSubmission = {
     archive: "Archive",
     unarchive: "Move to inbox",
     del: "Delete",
+    resend: "Send the email again",
+    resending: "Sending…",
     back: "Back to submissions",
     menu: "Actions",
     error: "That didn't work. Try again.",
@@ -198,3 +238,23 @@ export const adminAvatars: Record<string, AdminAvatarEntry> = {
     alt: "Perseus Studio",
   },
 };
+
+export const adminExport = {
+  // CSV column headers, mirroring adminSubmission.fields where one exists.
+  columns: {
+    id: "ID",
+    received: "Received",
+    name: "Name",
+    email: "Email",
+    phone: "Phone",
+    company: "Company",
+    service: "Project type",
+    stage: "Project stage",
+    message: "Message",
+    status: "Status",
+    delivery: "Notification email",
+    deliveryError: "Delivery error",
+    deliveredAt: "Delivered",
+    updated: "Updated",
+  },
+} as const;

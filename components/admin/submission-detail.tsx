@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
 import { formatFull } from "@/components/admin/dates";
+import { RetryDelivery } from "@/components/admin/retry-delivery";
 import { SubmissionActions } from "@/components/admin/submission-actions";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
@@ -54,6 +55,7 @@ export function SubmissionDetail({ submission }: { submission: Submission }) {
         <SubmissionActions
           id={submission.id}
           status={submission.status}
+          delivery={submission.delivery}
           afterDelete="back"
         />
       </div>
@@ -73,10 +75,15 @@ export function SubmissionDetail({ submission }: { submission: Submission }) {
         {submission.message}
       </p>
 
-      {submission.delivery === "failed" && submission.deliveryError && (
-        <p className="mt-8 text-sm text-destructive">
-          {adminSubmission.fields.delivery}: {submission.deliveryError}
-        </p>
+      {submission.delivery === "failed" && (
+        <div className="mt-8 grid justify-items-start gap-3">
+          {submission.deliveryError && (
+            <p className="text-sm text-destructive">
+              {adminSubmission.fields.delivery}: {submission.deliveryError}
+            </p>
+          )}
+          <RetryDelivery id={submission.id} />
+        </div>
       )}
 
       <div className="mt-10">

@@ -25,16 +25,20 @@ import { adminSubmission } from "@/content/admin";
 import type { SubmissionStatus } from "@/lib/db/submissions";
 import {
   deleteSubmission,
+  retryDelivery,
   setSubmissionStatus,
 } from "@/app/admin/(dashboard)/submissions/actions";
 
 export function SubmissionActions({
   id,
   status,
+  delivery,
   afterDelete,
 }: {
   id: string;
   status: SubmissionStatus;
+  /** Shows the resend item when the notification email failed. */
+  delivery?: "pending" | "sent" | "failed";
   /** The detail page returns to the inbox after a delete. */
   afterDelete?: "back";
 }) {
@@ -51,6 +55,20 @@ export function SubmissionActions({
         router.refresh();
       } catch {
         setFailed(true);
+      }
+    });
+  }
+
+  function retry() {
+    setFailed(false);
+    startTransition(async () => {
+      try {
+        await retryDelivery(id);
+        router.refresh();
+      } catch {
+        setFailed(true);
+        // The recorded failure reason changed even so; refresh shows it.
+        router.refresh();
       }
     });
   }
@@ -96,6 +114,13 @@ export function SubmissionActions({
           ) : (
             <DropdownMenuItem onClick={() => update("archived")}>
               {adminSubmission.actions.archive}
+            </DropdownMenuItem>
+          )}
+          {delivery === "failed" && (
+            <DropdownMenuItem disabled={pending} onClick={retry}>
+              {pending
+                ? adminSubmission.actions.resending
+                : adminSubmission.actions.resend}
             </DropdownMenuItem>
           )}
           <DropdownMenuSeparator />
