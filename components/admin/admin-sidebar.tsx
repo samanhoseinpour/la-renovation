@@ -1,0 +1,109 @@
+"use client";
+
+import { Inbox, LogOut, Settings } from "lucide-react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+
+import { ThemeToggle } from "@/components/site/theme-toggle";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
+import { adminNav } from "@/content/admin";
+import { authClient } from "@/lib/auth-client";
+
+const NAV_ICONS: Record<string, typeof Inbox> = {
+  "/admin/submissions": Inbox,
+  "/admin/settings": Settings,
+};
+
+export function AdminSidebar({
+  email,
+  newCount,
+}: {
+  email: string;
+  newCount: number;
+}) {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  async function handleSignOut() {
+    await authClient.signOut();
+    router.push("/admin/login");
+    router.refresh();
+  }
+
+  return (
+    <Sidebar>
+      <SidebarHeader>
+        <Link href="/admin/submissions" className="px-2 py-1.5">
+          <span className="text-eyebrow">ARAZ</span>{" "}
+          <span className="text-sm text-muted-foreground">
+            {adminNav.badge}
+          </span>
+        </Link>
+      </SidebarHeader>
+      <SidebarContent>
+        {adminNav.groups.map((group) => (
+          <SidebarGroup key={group.label}>
+            <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {group.items.map((item) => {
+                  const Icon = NAV_ICONS[item.href];
+                  return (
+                    <SidebarMenuItem key={item.href}>
+                      <SidebarMenuButton
+                        render={<Link href={item.href} />}
+                        isActive={pathname.startsWith(item.href)}
+                      >
+                        {Icon && <Icon />}
+                        <span>{item.label}</span>
+                      </SidebarMenuButton>
+                      {item.href === "/admin/submissions" && newCount > 0 && (
+                        <SidebarMenuBadge className="tabular">
+                          {newCount}
+                        </SidebarMenuBadge>
+                      )}
+                    </SidebarMenuItem>
+                  );
+                })}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
+      </SidebarContent>
+      <SidebarFooter>
+        <div className="flex items-center justify-between gap-2 px-2 pb-1">
+          <DropdownMenu>
+            <DropdownMenuTrigger className="min-w-0 truncate text-left text-sm text-muted-foreground hover:text-foreground">
+              {email}
+            </DropdownMenuTrigger>
+            <DropdownMenuContent side="top" align="start">
+              <DropdownMenuItem onClick={handleSignOut}>
+                <LogOut />
+                {adminNav.signOut}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <ThemeToggle />
+        </div>
+      </SidebarFooter>
+    </Sidebar>
+  );
+}

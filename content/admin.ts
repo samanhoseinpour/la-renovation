@@ -39,7 +39,8 @@ export const adminReset = {
   submitting: "Saving…",
   saved: "Password saved. You can sign in now.",
   savedCta: "Go to sign in",
-  invalid: "That link has expired or was already used. Request a fresh one below.",
+  invalid: "That link has expired or was already used.",
+  invalidCta: "Request a fresh link",
   requestTitle: "Reset your password",
   requestLead: "Enter your email and we'll send a link if the account exists.",
   emailLabel: "Email",
@@ -66,6 +67,7 @@ export const adminInbox = {
     sent: "Emailed",
     failed: "Email failed",
   },
+  capNote: "Showing the newest 200 submissions. Older ones are still stored.",
 } as const;
 
 export const adminSubmission = {
@@ -89,6 +91,7 @@ export const adminSubmission = {
     del: "Delete",
     back: "Back to submissions",
     menu: "Actions",
+    error: "That didn't work. Try again.",
   },
   deleteConfirm: {
     title: "Delete this submission?",
@@ -120,8 +123,14 @@ export const adminSettings = {
     namePrompt: "Something like Reza's MacBook or Dylan's iPhone.",
     rename: "Rename",
     remove: "Remove",
+    unnamed: "Passkey",
     error: "That didn't work. Try again.",
+    loadError: "Couldn't load passkeys. Reload the page to retry.",
   },
+} as const;
+
+export const adminDates = {
+  justNow: "just now",
 } as const;
 
 export const adminError = {

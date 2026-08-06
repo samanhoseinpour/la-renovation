@@ -77,6 +77,15 @@ function SetPassword({ token }: { token: string }) {
             <p aria-live="polite" className="text-sm text-destructive">
               {state === "invalid" ? adminReset.invalid : null}
             </p>
+            {state === "invalid" && (
+              // Same route without the token renders the request form.
+              <Link
+                href="/admin/reset-password"
+                className="text-sm text-muted-foreground underline-offset-4 hover:underline"
+              >
+                {adminReset.invalidCta}
+              </Link>
+            )}
           </form>
         )}
       </CardContent>

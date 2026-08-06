@@ -11,13 +11,16 @@ import { site } from "@/lib/site";
  * Blocking any of them costs discovery this site exists to win. Bytespider
  * ignores robots.txt anyway, so listing it would be theater. `/_next/image`
  * must stay crawlable or Google Images loses every optimized rendition.
+ * `/admin` follows the `/styleguide` precedent: the path is universally
+ * probed anyway, so the line advertises nothing, and noindex metadata
+ * backstops non-compliant fetchers.
  */
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/styleguide"],
+      disallow: ["/styleguide", "/admin"],
     },
     sitemap: `${site.url}/sitemap.xml`,
   };
