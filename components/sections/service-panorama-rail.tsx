@@ -76,8 +76,9 @@ export function ServicePanoramaRail({ items }: { items: PanoramaItem[] }) {
         ))}
       </div>
 
-      {/* Decorative: the rows carry the accessible content, and below md each
-          row shows its own image instead. */}
+      {/* Decorative for AT: the rows carry the accessible content, and below
+          md each row shows its own image instead. The stacked imgs keep their
+          manifest alt for image crawlers. */}
       <div aria-hidden className="hidden md:col-span-2 md:block">
         <div className="sticky top-24">
           <div className="relative aspect-4/5 overflow-hidden rounded-3xl bg-secondary">
@@ -85,7 +86,7 @@ export function ServicePanoramaRail({ items }: { items: PanoramaItem[] }) {
               <Image
                 key={service.slug}
                 src={service.image.src}
-                alt=""
+                alt={service.image.alt}
                 {...blur}
                 fill
                 sizes="(min-width: 768px) 40vw, 100vw"

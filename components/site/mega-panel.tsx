@@ -83,8 +83,10 @@ export function MegaPanel({ items, allHref, allLabel }: MegaPanelProps) {
         </div>
       </div>
 
-      {/* Decorative: the rows carry the information. All images stay stacked
-          so switching is a crossfade, not a network round trip. */}
+      {/* Decorative for AT (the rows carry the information), but each img
+          keeps its manifest alt so image crawlers still read the frames.
+          All images stay stacked so switching is a crossfade, not a network
+          round trip. */}
       <div
         aria-hidden="true"
         className="relative aspect-4/3 overflow-hidden rounded-2xl bg-secondary"
@@ -93,7 +95,7 @@ export function MegaPanel({ items, allHref, allLabel }: MegaPanelProps) {
           <Image
             key={item.href}
             src={item.image.src}
-            alt=""
+            alt={item.image.alt}
             {...item.imageBlur}
             fill
             sizes="(min-width: 88rem) 34rem, 38vw"

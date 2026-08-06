@@ -198,7 +198,7 @@ export default async function ProjectPage({ params }: Props) {
                 <div className="relative aspect-4/3 overflow-hidden rounded-2xl bg-secondary">
                   <Image
                     src={next.image.src}
-                    alt=""
+                    alt={next.image.alt}
                     {...blurProps(next.image.src)}
                     fill
                     sizes="160px"

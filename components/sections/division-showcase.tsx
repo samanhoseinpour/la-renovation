@@ -76,7 +76,9 @@ export function DivisionShowcase({
             a portfolio image — and the block is scoped `dark` like
             coverage-band so the mark's tokens hold over the photograph in
             both themes. The whole tile is the link; group/arrow lets the
-            ArrowMark answer hover from anywhere on it. */}
+            ArrowMark answer hover from anywhere on it. The img is aria-hidden
+            with real alt: crawlers still read the alt, while the link's
+            accessible name stays just "All divisions". */}
         <Link
           href="/services"
           className="dark group/arrow relative flex aspect-3/4 items-center justify-center overflow-hidden rounded-2xl bg-secondary outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:aspect-4/5"
@@ -84,7 +86,8 @@ export function DivisionShowcase({
           {/* scale-105 keeps the blur's soft edge outside the crop. */}
           <Image
             src={linkImage.src}
-            alt=""
+            alt={linkImage.alt}
+            aria-hidden
             {...blurProps(linkImage.src)}
             fill
             sizes="(min-width: 88rem) 26rem, (min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw"

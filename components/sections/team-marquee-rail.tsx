@@ -23,7 +23,8 @@ export type MarqueeMember = TeamMember & {
  * recast from a logo row into the roster filmstrip. Edge fades come from a
  * mask instead of the block's gradient prop so both themes keep their own
  * surface. autoFill clones cards, so the moving rail is aria-hidden and a
- * visually hidden list carries the roster; reduced motion parks the strip
+ * visually hidden list carries the roster — the portraits keep their roster
+ * alt regardless, for image crawlers; reduced motion parks the strip
  * (the global CSS clamp backstops the same).
  *
  * Hover pause is pointer-only, so a skip-link-style toggle covers keyboard
@@ -94,7 +95,7 @@ export function TeamMarqueeRail({
                   {member.photo ? (
                     <Image
                       src={member.photo.src}
-                      alt=""
+                      alt={member.photo.alt}
                       {...member.photoBlur}
                       fill
                       sizes="(min-width: 640px) 12rem, 10rem"
