@@ -248,10 +248,6 @@ export const adminNotFound = {
   cta: "Back to submissions",
 } as const;
 
-export const adminLoading = {
-  label: "Loading",
-} as const;
-
 export const adminOverview = {
   title: "Overview",
   tiles: {
