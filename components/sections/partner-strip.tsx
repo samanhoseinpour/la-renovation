@@ -24,6 +24,11 @@ import type { Partner } from "@/content/partners";
  * width a two-up cell leaves at this gutter; an unbreakable string also sets
  * the grid track's auto minimum, so the sheet stretches rather than clips.
  * min-w-0 plus truncate contains that if a longer domain ever lands.
+ *
+ * Five stacked plates get tall, so the phone padding steps down to p-4 and
+ * min-h-34 sits right on the tallest ink (the 1.6-scaled portrait badge) plus
+ * its chrome. A larger scale needs a matching min-h, or that row alone grows
+ * and the sheet's rows go ragged.
  */
 export function PartnerStrip({
   intro,
@@ -83,7 +88,7 @@ export function PartnerStrip({
                 href={partner.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group/partner relative flex min-h-40 min-w-0 flex-col bg-card p-6 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset sm:min-h-48 sm:p-8 sm:max-lg:last:col-span-2 [--partner-cap:2.75rem] xl:[--partner-cap:3.25rem]"
+                className="group/partner relative flex min-h-34 min-w-0 flex-col bg-card p-4 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset sm:min-h-48 sm:p-8 sm:max-lg:last:col-span-2 [--partner-cap:2.75rem] xl:[--partner-cap:3.25rem]"
               >
                 <span className="flex w-full flex-1 items-center justify-start sm:justify-center">
                   <span
@@ -93,7 +98,7 @@ export function PartnerStrip({
                   />
                 </span>
                 <span className="sr-only">{partner.name}</span>
-                <span className="mt-6 flex items-center justify-between gap-4">
+                <span className="mt-4 flex items-center justify-between gap-4 sm:mt-6">
                   <span className="min-w-0 truncate font-mono text-xs tracking-tight text-muted-foreground transition-colors duration-200 ease-editorial group-hover/partner:text-foreground">
                     {partner.domain}
                   </span>
