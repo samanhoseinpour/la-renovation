@@ -9,6 +9,7 @@ import { ThemeToggle } from "@/components/site/theme-toggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -112,12 +113,15 @@ export function AdminSidebar({
               </span>
             </DropdownMenuTrigger>
             <DropdownMenuContent side="top" align="start">
-              <DropdownMenuLabel className="grid">
-                <span className="truncate text-sm font-medium">{name}</span>
-                <span className="truncate text-xs font-normal text-muted-foreground">
-                  {email}
-                </span>
-              </DropdownMenuLabel>
+              {/* Base UI group labels must sit inside a Menu.Group. */}
+              <DropdownMenuGroup>
+                <DropdownMenuLabel className="grid">
+                  <span className="truncate text-sm font-medium">{name}</span>
+                  <span className="truncate text-xs font-normal text-muted-foreground">
+                    {email}
+                  </span>
+                </DropdownMenuLabel>
+              </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleSignOut}>
                 <LogOut />
