@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
+import { AuthWordmark } from "@/components/admin/auth-wordmark";
 import { LoginForm } from "@/components/admin/login-form";
 import { auth } from "@/lib/auth";
 
@@ -19,7 +20,10 @@ export default async function AdminLoginPage() {
 
   return (
     <main className="flex flex-1 items-center justify-center px-6 py-16">
-      <LoginForm />
+      <div className="w-full max-w-sm">
+        <AuthWordmark />
+        <LoginForm />
+      </div>
     </main>
   );
 }

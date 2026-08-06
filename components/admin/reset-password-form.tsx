@@ -13,8 +13,11 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PasswordInput } from "@/components/admin/password-input";
+import { PasswordStrength } from "@/components/admin/password-strength";
 import { adminReset } from "@/content/admin";
 import { authClient } from "@/lib/auth-client";
+import { MIN_PASSWORD_LENGTH } from "@/lib/auth-shared";
 import { cn } from "@/lib/utils";
 
 /** With a token: the invite/reset landing. Without: request a link. */
@@ -23,9 +26,10 @@ export function ResetPasswordForm({ token }: { token?: string }) {
 }
 
 function SetPassword({ token }: { token: string }) {
-  const [state, setState] = useState<"idle" | "pending" | "saved" | "invalid">(
-    "idle",
-  );
+  const [state, setState] = useState<
+    "idle" | "pending" | "saved" | "invalid" | "same"
+  >("idle");
+  const [password, setPassword] = useState("");
 
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -35,12 +39,21 @@ function SetPassword({ token }: { token: string }) {
       newPassword: String(form.get("password") ?? ""),
       token,
     });
-    setState(error ? "invalid" : "saved");
+    if (error) {
+      // The same-password guard rejects without consuming the token, so the
+      // form stays usable; anything else means the link itself is dead.
+      setState(error.code === "PASSWORD_UNCHANGED" ? "same" : "invalid");
+      return;
+    }
+    setState("saved");
   }
 
   return (
-    <Card className="w-full max-w-sm">
+    <Card className="w-full">
       <CardHeader>
+        <p className="text-eyebrow text-muted-foreground">
+          {adminReset.eyebrow}
+        </p>
         <CardTitle className="text-h3">{adminReset.setTitle}</CardTitle>
         <CardDescription aria-live="polite">
           {state === "saved" ? adminReset.saved : adminReset.setLead}
@@ -58,15 +71,17 @@ function SetPassword({ token }: { token: string }) {
           <form onSubmit={handleSubmit} className="grid gap-4">
             <div className="grid gap-2">
               <Label htmlFor="reset-password">{adminReset.passwordLabel}</Label>
-              <Input
+              <PasswordInput
                 id="reset-password"
                 name="password"
-                type="password"
                 required
-                minLength={12}
+                autoFocus
+                minLength={MIN_PASSWORD_LENGTH}
                 autoComplete="new-password"
+                onChange={(event) => setPassword(event.target.value)}
               />
             </div>
+            <PasswordStrength password={password} />
             <Button
               type="submit"
               variant="brand"
@@ -75,7 +90,11 @@ function SetPassword({ token }: { token: string }) {
               {state === "pending" ? adminReset.submitting : adminReset.submit}
             </Button>
             <p aria-live="polite" className="text-sm text-destructive">
-              {state === "invalid" ? adminReset.invalid : null}
+              {state === "invalid"
+                ? adminReset.invalid
+                : state === "same"
+                  ? adminReset.samePassword
+                  : null}
             </p>
             {state === "invalid" && (
               // Same route without the token renders the request form.
@@ -109,8 +128,11 @@ function RequestReset() {
   }
 
   return (
-    <Card className="w-full max-w-sm">
+    <Card className="w-full">
       <CardHeader>
+        <p className="text-eyebrow text-muted-foreground">
+          {adminReset.eyebrow}
+        </p>
         <CardTitle className="text-h3">{adminReset.requestTitle}</CardTitle>
         <CardDescription aria-live="polite">
           {state === "sent" ? adminReset.requestSent : adminReset.requestLead}
@@ -126,6 +148,7 @@ function RequestReset() {
                 name="email"
                 type="email"
                 required
+                autoFocus
                 autoComplete="email"
               />
             </div>

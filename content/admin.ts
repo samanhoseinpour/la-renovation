@@ -18,12 +18,14 @@ export const adminNav = {
 } as const;
 
 export const adminLogin = {
+  eyebrow: "Admin",
   title: "Sign in",
   lead: "The private area for the people who run Araz Construction Group.",
   emailLabel: "Email",
   passwordLabel: "Password",
   submit: "Sign in",
   submitting: "Signing in…",
+  or: "or",
   passkey: "Sign in with a passkey",
   forgot: "Forgot your password?",
   error: "That email or password is incorrect.",
@@ -31,6 +33,7 @@ export const adminLogin = {
 } as const;
 
 export const adminReset = {
+  eyebrow: "Admin",
   setTitle: "Set your password",
   setLead:
     "Choose at least twelve characters. A password manager's suggestion is ideal.",
@@ -41,6 +44,7 @@ export const adminReset = {
   savedCta: "Go to sign in",
   invalid: "That link has expired or was already used.",
   invalidCta: "Request a fresh link",
+  samePassword: "That is already the current password. Choose a new one.",
   requestTitle: "Reset your password",
   requestLead: "Enter your email and we'll send a link if the account exists.",
   emailLabel: "Email",
@@ -111,7 +115,10 @@ export const adminSettings = {
     submit: "Update password",
     submitting: "Updating…",
     success: "Password updated. Other sessions were signed out.",
-    error: "That didn't work. Check the current password and try again.",
+    error: "That didn't work. Try again.",
+    errorCurrent: "The current password is incorrect.",
+    errorSame:
+      "The new password matches the current one. Choose a different password.",
   },
   passkeys: {
     title: "Passkeys",
@@ -137,4 +144,16 @@ export const adminError = {
   title: "Something went sideways.",
   body: "The error is logged. Try again, and if it keeps happening tell whoever maintains the site.",
   retry: "Try again",
+} as const;
+
+export const adminPasswordField = {
+  show: "Show password",
+} as const;
+
+export const adminStrength = {
+  label: "Password strength",
+  weak: "Weak",
+  fair: "Fair",
+  good: "Good",
+  strong: "Strong",
 } as const;

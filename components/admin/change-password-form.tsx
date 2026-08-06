@@ -3,32 +3,62 @@
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PasswordInput } from "@/components/admin/password-input";
+import { PasswordStrength } from "@/components/admin/password-strength";
 import { adminSettings } from "@/content/admin";
 import { authClient } from "@/lib/auth-client";
+import { MIN_PASSWORD_LENGTH } from "@/lib/auth-shared";
 import { cn } from "@/lib/utils";
 
+type FormState =
+  | "idle"
+  | "pending"
+  | "saved"
+  | "same"
+  | "wrongCurrent"
+  | "failed";
+
+const FEEDBACK: Partial<Record<FormState, string>> = {
+  saved: adminSettings.password.success,
+  same: adminSettings.password.errorSame,
+  wrongCurrent: adminSettings.password.errorCurrent,
+  failed: adminSettings.password.error,
+};
+
 export function ChangePasswordForm() {
-  const [state, setState] = useState<"idle" | "pending" | "saved" | "failed">(
-    "idle",
-  );
+  const [state, setState] = useState<FormState>("idle");
+  const [next, setNext] = useState("");
 
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
     const data = new FormData(form);
+    const currentPassword = String(data.get("current") ?? "");
+    const newPassword = String(data.get("next") ?? "");
+    // Cheap local check first; the server hook enforces the same rule.
+    if (currentPassword === newPassword) {
+      setState("same");
+      return;
+    }
     setState("pending");
     const { error } = await authClient.changePassword({
-      currentPassword: String(data.get("current") ?? ""),
-      newPassword: String(data.get("next") ?? ""),
+      currentPassword,
+      newPassword,
       revokeOtherSessions: true,
     });
     if (error) {
-      setState("failed");
+      setState(
+        error.code === "PASSWORD_UNCHANGED"
+          ? "same"
+          : error.code === "INVALID_PASSWORD"
+            ? "wrongCurrent"
+            : "failed",
+      );
       return;
     }
     form.reset();
+    setNext("");
     setState("saved");
   }
 
@@ -38,25 +68,25 @@ export function ChangePasswordForm() {
         <Label htmlFor="password-current">
           {adminSettings.password.currentLabel}
         </Label>
-        <Input
+        <PasswordInput
           id="password-current"
           name="current"
-          type="password"
           required
           autoComplete="current-password"
         />
       </div>
       <div className="grid gap-2">
         <Label htmlFor="password-next">{adminSettings.password.newLabel}</Label>
-        <Input
+        <PasswordInput
           id="password-next"
           name="next"
-          type="password"
           required
-          minLength={12}
+          minLength={MIN_PASSWORD_LENGTH}
           autoComplete="new-password"
+          onChange={(event) => setNext(event.target.value)}
         />
       </div>
+      <PasswordStrength password={next} />
       <Button type="submit" variant="brand" disabled={state === "pending"}>
         {state === "pending"
           ? adminSettings.password.submitting
@@ -66,14 +96,10 @@ export function ChangePasswordForm() {
         aria-live="polite"
         className={cn(
           "text-sm",
-          state === "failed" ? "text-destructive" : "text-muted-foreground",
+          state === "saved" ? "text-muted-foreground" : "text-destructive",
         )}
       >
-        {state === "saved"
-          ? adminSettings.password.success
-          : state === "failed"
-            ? adminSettings.password.error
-            : null}
+        {FEEDBACK[state] ?? null}
       </p>
     </form>
   );

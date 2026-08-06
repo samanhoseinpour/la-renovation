@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PasswordInput } from "@/components/admin/password-input";
 import { adminLogin } from "@/content/admin";
 import { authClient } from "@/lib/auth-client";
 
@@ -72,8 +73,11 @@ export function LoginForm() {
   }
 
   return (
-    <Card className="w-full max-w-sm">
+    <Card className="w-full">
       <CardHeader>
+        <p className="text-eyebrow text-muted-foreground">
+          {adminLogin.eyebrow}
+        </p>
         <CardTitle className="text-h3">{adminLogin.title}</CardTitle>
         <CardDescription>{adminLogin.lead}</CardDescription>
       </CardHeader>
@@ -86,15 +90,15 @@ export function LoginForm() {
               name="email"
               type="email"
               required
+              autoFocus
               autoComplete="username webauthn"
             />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="login-password">{adminLogin.passwordLabel}</Label>
-            <Input
+            <PasswordInput
               id="login-password"
               name="password"
-              type="password"
               required
               autoComplete="current-password"
             />
@@ -103,6 +107,13 @@ export function LoginForm() {
             {pending ? adminLogin.submitting : adminLogin.submit}
             <ArrowRight data-icon="inline-end" />
           </Button>
+          <div aria-hidden className="flex items-center gap-3">
+            <span className="h-px flex-1 bg-border" />
+            <span className="text-xs text-muted-foreground">
+              {adminLogin.or}
+            </span>
+            <span className="h-px flex-1 bg-border" />
+          </div>
           <Button type="button" variant="outline" onClick={handlePasskey}>
             <KeyRound data-icon="inline-start" />
             {adminLogin.passkey}
