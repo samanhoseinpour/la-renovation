@@ -7,7 +7,10 @@ export const adminNav = {
   groups: [
     {
       label: "Inbox",
-      items: [{ label: "Submissions", href: "/admin/submissions" }],
+      items: [
+        { label: "Overview", href: "/admin" },
+        { label: "Submissions", href: "/admin/submissions" },
+      ],
     },
     {
       label: "Account",
@@ -238,6 +241,35 @@ export const adminAvatars: Record<string, AdminAvatarEntry> = {
     alt: "Perseus Studio",
   },
 };
+
+export const adminNotFound = {
+  title: "That page isn't here.",
+  body: "The submission may have been deleted, or the link is wrong.",
+  cta: "Back to submissions",
+} as const;
+
+export const adminLoading = {
+  label: "Loading",
+} as const;
+
+export const adminOverview = {
+  title: "Overview",
+  tiles: {
+    newCount: "New enquiries",
+    week: "Last 7 days",
+    failed: "Failed emails",
+  },
+  latest: {
+    title: "Latest submissions",
+    viewAll: "Open the inbox",
+    empty: "New submissions from the contact form will land here.",
+  },
+  team: {
+    title: "Team",
+    lastSeen: "Last signed in",
+    never: "No recent sign-ins",
+  },
+} as const;
 
 export const adminExport = {
   // CSV column headers, mirroring adminSubmission.fields where one exists.

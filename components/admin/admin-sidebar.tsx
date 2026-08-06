@@ -1,6 +1,6 @@
 "use client";
 
-import { Inbox, LogOut, Settings } from "lucide-react";
+import { Inbox, LayoutDashboard, LogOut, Settings } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -31,6 +31,7 @@ import { adminNav } from "@/content/admin";
 import { authClient } from "@/lib/auth-client";
 
 const NAV_ICONS: Record<string, typeof Inbox> = {
+  "/admin": LayoutDashboard,
   "/admin/submissions": Inbox,
   "/admin/settings": Settings,
 };
@@ -56,7 +57,7 @@ export function AdminSidebar({
   return (
     <Sidebar>
       <SidebarHeader>
-        <Link href="/admin/submissions" className="px-2 py-1.5">
+        <Link href="/admin" className="px-2 py-1.5">
           <span className="text-eyebrow">ARAZ</span>{" "}
           <span className="text-sm text-muted-foreground">
             {adminNav.badge}
@@ -75,7 +76,12 @@ export function AdminSidebar({
                     <SidebarMenuItem key={item.href}>
                       <SidebarMenuButton
                         render={<Link href={item.href} />}
-                        isActive={pathname.startsWith(item.href)}
+                        isActive={
+                          // "/admin" would prefix-match every route.
+                          item.href === "/admin"
+                            ? pathname === "/admin"
+                            : pathname.startsWith(item.href)
+                        }
                       >
                         {Icon && <Icon />}
                         <span>{item.label}</span>

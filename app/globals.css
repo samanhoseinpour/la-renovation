@@ -366,3 +366,17 @@
     opacity: 1;
   }
 }
+
+/* The admin orb loader's breath (components/admin/orb-loader.tsx). The
+   reduced-motion clamp above flattens it like everything else. */
+@keyframes orb-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.88);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
