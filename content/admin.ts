@@ -134,6 +134,19 @@ export const adminSettings = {
     error: "That didn't work. Try again.",
     loadError: "Couldn't load passkeys. Reload the page to retry.",
   },
+  sessions: {
+    title: "Active sessions",
+    lead: "Everywhere this account is signed in. Sessions keep no device details by design, so go by the times.",
+    current: "This device",
+    signedIn: "Signed in",
+    lastActive: "Last active",
+    revoke: "Sign out",
+    revoking: "Signing out…",
+    revokeOthers: "Sign out everywhere else",
+    revokingOthers: "Signing out…",
+    error: "That didn't work. Try again.",
+    loadError: "Couldn't load sessions. Reload the page to retry.",
+  },
 } as const;
 
 export const adminDates = {
@@ -157,3 +170,31 @@ export const adminStrength = {
   good: "Good",
   strong: "Strong",
 } as const;
+
+export type AdminAvatarEntry =
+  | { kind: "photo"; src: string; alt: string }
+  | { kind: "mask"; src: string; alt: string };
+
+/**
+ * Identity marks for the admin accounts. An explicit map because the seeded
+ * names don't align with the team roster ("Reza" vs "G. Reza Ghasemi").
+ * Lowercase keys; AdminAvatar lowercases its lookups. Mask entries are black
+ * plus alpha, painted with the foreground token like the partner strip.
+ */
+export const adminAvatars: Record<string, AdminAvatarEntry> = {
+  "reza@arazconstructiongroup.com": {
+    kind: "photo",
+    src: "/images/team/reza-ghasemi.avif",
+    alt: "G. Reza Ghasemi",
+  },
+  "dylan@arazconstructiongroup.com": {
+    kind: "photo",
+    src: "/images/team/dylan-hughes.avif",
+    alt: "Dylan Hughes",
+  },
+  "teamperseustudio@gmail.com": {
+    kind: "mask",
+    src: "/images/admin/perseus-logo.avif",
+    alt: "Perseus Studio",
+  },
+};

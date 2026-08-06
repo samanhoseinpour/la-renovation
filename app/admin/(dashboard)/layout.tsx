@@ -20,7 +20,11 @@ export default async function DashboardLayout({
 
   return (
     <SidebarProvider>
-      <AdminSidebar email={session.user.email} newCount={counts.new} />
+      <AdminSidebar
+        name={session.user.name}
+        email={session.user.email}
+        newCount={counts.new}
+      />
       <SidebarInset>
         <header className="flex h-14 shrink-0 items-center gap-3 border-b border-border px-4">
           <SidebarTrigger />

@@ -4,11 +4,14 @@ import { Inbox, LogOut, Settings } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
+import { AdminAvatar } from "@/components/admin/admin-avatar";
 import { ThemeToggle } from "@/components/site/theme-toggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -33,9 +36,11 @@ const NAV_ICONS: Record<string, typeof Inbox> = {
 };
 
 export function AdminSidebar({
+  name,
   email,
   newCount,
 }: {
+  name: string;
   email: string;
   newCount: number;
 }) {
@@ -91,10 +96,23 @@ export function AdminSidebar({
       <SidebarFooter>
         <div className="flex items-center justify-between gap-2 px-2 pb-1">
           <DropdownMenu>
-            <DropdownMenuTrigger className="min-w-0 truncate text-left text-sm text-muted-foreground hover:text-foreground">
-              {email}
+            <DropdownMenuTrigger className="flex min-w-0 items-center gap-2 rounded-md p-1 text-left hover:bg-muted">
+              <AdminAvatar email={email} size={32} />
+              <span className="min-w-0">
+                <span className="block truncate text-sm">{name}</span>
+                <span className="block truncate text-xs text-muted-foreground">
+                  {email}
+                </span>
+              </span>
             </DropdownMenuTrigger>
             <DropdownMenuContent side="top" align="start">
+              <DropdownMenuLabel className="grid">
+                <span className="truncate text-sm font-medium">{name}</span>
+                <span className="truncate text-xs font-normal text-muted-foreground">
+                  {email}
+                </span>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleSignOut}>
                 <LogOut />
                 {adminNav.signOut}

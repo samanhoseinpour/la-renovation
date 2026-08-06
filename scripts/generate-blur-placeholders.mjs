@@ -4,8 +4,9 @@
 // content/blur-map.generated.ts and looked up at render time by
 // blurProps() in content/images.ts.
 //
-// Local sources: every AVIF under public/images except partners/ (ink marks
-// painted via CSS mask, never rendered through <Image>). Keyed by public path.
+// Local sources: every AVIF under public/images except partners/ and admin/
+// (ink marks painted via CSS mask, never rendered through <Image>). Keyed by
+// public path.
 //
 // Remote sources: every unsplash("photo-...") id referenced in content/*.ts,
 // fetched at 16px through the images.weserv.nl proxy because this machine
@@ -67,7 +68,10 @@ async function sipsFallback(file) {
 
 async function localEntries() {
   const files = (await walk(imagesDir)).filter(
-    (f) => f.endsWith('.avif') && !f.includes(`${path.sep}partners${path.sep}`),
+    (f) =>
+      f.endsWith('.avif') &&
+      !f.includes(`${path.sep}partners${path.sep}`) &&
+      !f.includes(`${path.sep}admin${path.sep}`),
   );
   const entries = [];
   const failed = [];
