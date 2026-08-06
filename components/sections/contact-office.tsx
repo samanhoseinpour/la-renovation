@@ -104,6 +104,14 @@ export function ContactOffice({
     if (state.status === "success") successHeadingRef.current?.focus();
   }, [state.status]);
 
+  // Monotonic mount time for the server action's minimum-fill trap; set in
+  // an effect so it is unambiguously the client's clock.
+  const mountedAt = useRef<number | null>(null);
+  const paceRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    mountedAt.current = performance.now();
+  }, []);
+
   return (
     <div>
       <div className="flex flex-col justify-between gap-12 lg:flex-row lg:items-end lg:gap-16">
@@ -173,7 +181,17 @@ export function ContactOffice({
           </p>
         </div>
       ) : (
-        <form action={formAction} className="mt-16 lg:mt-24">
+        <form
+          action={formAction}
+          onSubmit={() => {
+            if (mountedAt.current !== null && paceRef.current) {
+              paceRef.current.value = String(
+                Math.round(performance.now() - mountedAt.current),
+              );
+            }
+          }}
+          className="mt-16 lg:mt-24"
+        >
           <p className="max-w-2xl text-muted-foreground">{formIntro}</p>
 
           {/* Honeypot. display:none (not sr-only): browser autofill fills
@@ -190,6 +208,7 @@ export function ContactOffice({
               tabIndex={-1}
               autoComplete="off"
             />
+            <input ref={paceRef} type="hidden" name="form_ts" defaultValue="" />
           </div>
 
           <div className="mt-12 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">

@@ -16,7 +16,7 @@ export type LegalDoc = {
 export const privacyPolicy: LegalDoc = {
   slug: "privacy",
   title: "Privacy policy",
-  updated: "2026-08-05",
+  updated: "2026-08-06",
   intro:
     "This site is a brochure, not a platform. It collects almost nothing, and this page describes the little it does.",
   sections: [
@@ -28,7 +28,7 @@ export const privacyPolicy: LegalDoc = {
       ],
       items: [
         "Your name and email address",
-        "A phone number, project type, and project stage, all optional",
+        "A phone number, company, project type, and project stage, all optional",
         "Your message",
       ],
     },
@@ -36,14 +36,21 @@ export const privacyPolicy: LegalDoc = {
       heading: "How it's used",
       paragraphs: [
         "We use what you send to answer your enquiry. That's the whole list. We don't sell it, rent it, add it to a marketing list, or share it beyond the delivery service that carries it to our inbox.",
-        "To keep the form from being abused by scripts, submissions are rate-limited by network address. The address is held briefly in server memory while the limit applies. It is never written to storage and never attached to your enquiry.",
+        "To keep the form from being abused by scripts, submissions are rate-limited by network address. The address itself is never stored: what our database holds is a keyed one-way code derived from it, kept for about an hour while the limit applies and cleared when the next submission comes through. It is never attached to your enquiry.",
       ],
     },
     {
       heading: "Where it lives",
       paragraphs: [
-        "A form submission becomes an email. It travels through our delivery provider, Resend, and lands in our inbox with your address set as the reply-to. We keep no copy in a database; there isn't one. If delivery isn't working, the form says so plainly and nothing is stored anywhere.",
+        "A form submission is saved in a database we control and sent to our inbox by email through our delivery provider, Resend, with your address set as the reply-to. The stored copy exists so an enquiry is never lost if the email doesn't go through. It holds exactly what the form asked for, plus when it arrived and whether our notification email went out. No network address, no browser details. There is no automatic expiry: the record stays until someone here deletes it by hand, and we delete it outright if you ask.",
         "The site is hosted on Vercel, which keeps the standard server logs any host keeps. Pages, photographs, and fonts are all served through the site itself, so your browser makes no requests to third-party trackers or font services.",
+      ],
+    },
+    {
+      heading: "The admin sign-in",
+      paragraphs: [
+        "This site has a private admin area used by the people who run the company to read enquiries. Signing in there sets a cookie strictly for authentication, and it applies only to those sign-ins. Visiting the public site still sets no cookies.",
+        "Sign-in attempts are rate-limited the same way the contact form is: what the database briefly holds is a keyed one-way code derived from the network address, never the address itself.",
       ],
     },
     {
@@ -62,7 +69,7 @@ export const privacyPolicy: LegalDoc = {
     {
       heading: "Your choices",
       paragraphs: [
-        "The form is a convenience, not a requirement. The phone number and email on our contact page reach the same people. If you'd like an enquiry you sent deleted, email us and we'll delete it.",
+        "The form is a convenience, not a requirement. The phone number and email on our contact page reach the same people. If you'd like an enquiry you sent deleted, email us and we'll delete the stored record and our email copy.",
       ],
     },
     {
