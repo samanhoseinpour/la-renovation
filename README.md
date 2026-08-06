@@ -17,13 +17,14 @@ Open [http://localhost:3000](http://localhost:3000).
 - `/projects` and `/projects/[slug]` — currently a noindexed coming-soon page: the demo portfolio sits behind `published.projects`, the detail slugs 404, and the route stays out of the nav, footer and both sitemaps. The portfolio components (featured index, before/after compare gallery, lightbox, matched client notes) stay in the repo and return when the flag flips
 - `/services` and `/services/[slug]` — index of the seven divisions in the client's canonical order (energy, commercial, civil, multifamily, concrete, preconstruction, single-family) with a sticky image pane, process timeline, a delivery-model band on who does the work (in-house crews versus named licensed partners) and a three-question featured FAQ, closed by a brand statement; division pages carry the narrative and included scopes, five of them an in-depth band (energy's covers charging lead times and ground-source systems), two a brand statement, and each division its own closing CTA. The four legacy renovation slugs redirect permanently to `/services`
 - `/about` — company story, mission and vision, team, a six-value approach closed by a brand statement, and commitments, each an anchored section (`#story`, `#mission`, `#team`, `#approach`, `#commitments`), closing with a careers band into `/careers` and the shared partners band
-- `/contact` — enquiry form (project type, project stage and an optional company field) with a what-to-send intro and a response commitment, backed by a server action with email delivery
+- `/contact` — enquiry form (project type, project stage and an optional company field) with a what-to-send intro and a response commitment, backed by a server action that stores the enquiry, then notifies the office by email (see Contact form delivery)
 - `/faq` — every question grouped by topic behind an xl-and-up topic rail, each group rendered through the shared `FaqList`
 - `/careers` — values grid and a general-application panel; no openings to list, so there's no listings table
 - `/licenses` — how to verify a contractor's license, plus a bond/insurance summary; exists on disk but isn't linked from the footer or sitemap until the real CSLB number lands
 - `/privacy`, `/terms`, `/accessibility` — legal pages sharing one structured long-form renderer
 - `/sitemap` — a compact columned directory of every page, grouped into pages, projects, services and legal; `/sitemap.xml` serves its raw XML to everyone, crawlers and curious visitors alike, with no redirect between the two; `/llms.txt` is the same map in markdown for AI assistants, honoring the same publish gates
 - `/styleguide` — internal design reference (tokens, type scale, components)
+- `/admin` — private, noindexed area for the two principals and the site administrator: a submissions inbox and a settings page, behind better-auth sign-in
 - Every unmatched URL — a chrome-less 404 with the wordmark holding its header slot: a brand plumb line drops onto a survey marker above a per-section verdict (projects, services, about and the rest each carry their own message, picked from the dead URL on the client), the attempted address prints struck through in the mono face, and two exits lead back to the office and the sitemap
 
 ## Where things live
@@ -36,7 +37,7 @@ Open [http://localhost:3000](http://localhost:3000).
 - `components/ui/` — shadcn/ui primitives (base-nova style)
 - `content/` — `home.ts` owns all home copy, including the hero's; `services.ts` also carries the `/services` page copy, the delivery-model band and each division's optional in-depth band, statement and closing CTA; `about.ts` also carries the commitments and careers-band copy; `office.ts` the process phases, CTA variants, brand statements and contact-page copy; alongside projects, team and office copy, the image manifest and the nav-panel projection; `partners.ts` the partner strip's intro and roster; `faq.ts`, `careers.ts`, `legal.ts` and `licenses.ts` back the six support routes; `sitemap.ts` projects the site tree for `/sitemap`; `not-found.ts` holds the per-section 404 verdicts and both exit labels
 - `lib/site.ts` — single source of truth for name, nav, contact details, license and external profiles
-- `lib/delivery.ts` — email delivery boundary used by the contact action
+- `lib/delivery.ts` — shared Resend transport for the contact action and admin invite/reset email
 - `lib/seo.tsx` — the JSON-LD graph builders behind every route's structured data
 - `lib/og/template.tsx` — the shared social-card template (Archivo TTFs vendored in `assets/fonts/`)
 - `scripts/` — the image pipeline (AVIF migration, size auditing and blur-up generation)
@@ -51,11 +52,19 @@ A steel hairline along the top of the viewport tracks reading position. The nati
 
 ## Contact form delivery
 
-The contact action sends enquiries through Resend. Connect it via the Vercel
-Marketplace (or set `RESEND_API_KEY` in `.env.local`); until the key exists the
-form shows an honest "email us directly" error instead of a fake success.
-`CONTACT_FROM_EMAIL` overrides the onboarding sender once the company's domain
-is verified.
+Submissions are stored first and emailed second. A valid enquiry is written to Postgres with a delivery-state column, then one notification email goes to the office inbox through Resend with the sender's address as reply-to. If the email leg fails, the lead still exists and the admin inbox flags the failed delivery. Without a `DATABASE_URL` the action falls back to the email-only path; without either, the form shows an honest error instead of a fake success. Spam defense stays invisible: a honeypot, a minimum-fill-time trap, and a durable rate limit keyed on HMAC-hashed addresses that clear after an hour.
+
+Connect Resend via the Vercel Marketplace (or set `RESEND_API_KEY` in `.env.local`); `CONTACT_FROM_EMAIL` overrides the onboarding sender once the company's domain is verified.
+
+## Admin
+
+`/admin` is a private, noindexed area for the two principals and the site administrator: a submissions inbox (list, status filters, detail, mark read, archive, delete) and a settings page (password, passkeys). Auth is better-auth with email and password as the primary method, passkeys for day-to-day sign-in, and no public signup. Protection is layered: `proxy.ts` provides the UX redirect while `requireAdmin()` in `lib/admin-guard.ts` is the actual boundary, awaited by every protected layout, page, and server action. Auth endpoints are rate-limited on the same footing as the contact form: better-auth's limiter runs on a custom Postgres storage that HMAC-hashes its keys, and a session hook keeps the raw address and user agent off session rows, so no raw network address is ever at rest. Accounts are created only by `npm run db:seed` (`scripts/seed-admins.mts`), which emails set-password invite links.
+
+## Database
+
+Neon Postgres through the Vercel Marketplace, Drizzle ORM on the neon-http driver. App schema lives in `lib/db/schema.ts`, the generated better-auth schema in `lib/db/auth-schema.ts` (`npm run auth:schema`), and committed SQL migrations in `drizzle/` are the record. Scripts: `db:generate`, `db:migrate`, `db:push` (dev loop only), `db:studio`, `db:seed`. Local dev points `DATABASE_URL` at a Neon development branch; `.env.example` lists every variable.
+
+A committed `.npmrc` pins `legacy-peer-deps=true`: better-call, a better-auth dependency, carries an optional zod peer that conflicts under npm's default resolver. That covers local installs, CI, and Vercel deploys alike.
 
 ## Measurement
 
