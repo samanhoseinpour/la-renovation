@@ -24,28 +24,23 @@ export function ScrollThumb() {
     const track = ref.current;
     if (!track) return;
     let raf = 0;
+    let max = 0;
+    let trackH = 0;
+    let thumbH = 0;
 
     const update = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
       // A non-positive max is a page too short to scroll — no thumb at all,
       // like a healthy overlay bar.
       if (max <= 0) {
         track.style.setProperty("--thumb-h", "0px");
         return;
       }
-      const trackH = track.clientHeight;
-      // Proportional like a real thumb, with a floor so very long pages
-      // still show a pill, not a speck; progress spends the leftover run.
-      const h = Math.max(
-        trackH * (window.innerHeight / document.documentElement.scrollHeight),
-        40,
-      );
       const p = Math.min(Math.max(window.scrollY / max, 0), 1);
-      track.style.setProperty("--thumb-h", `${h}px`);
-      track.style.setProperty("--thumb-y", `${p * (trackH - h)}px`);
+      track.style.setProperty("--thumb-h", `${thumbH}px`);
+      track.style.setProperty("--thumb-y", `${p * (trackH - thumbH)}px`);
     };
 
-    const onScrollOrResize = () => {
+    const onScroll = () => {
       if (raf) return;
       raf = requestAnimationFrame(() => {
         raf = 0;
@@ -53,13 +48,31 @@ export function ScrollThumb() {
       });
     };
 
+    // Same contract as scroll-progress: layout reads live here, off the
+    // scroll path, re-run by the body observer as content height changes
+    // and by resize for viewport changes. Scrolled frames read only scrollY
+    // and write CSS vars — no interleaved read/write reflow.
+    const measure = () => {
+      const scrollH = document.documentElement.scrollHeight;
+      max = scrollH - window.innerHeight;
+      trackH = track.clientHeight;
+      // Proportional like a real thumb, with a floor so very long pages
+      // still show a pill, not a speck; progress spends the leftover run.
+      thumbH = Math.max(trackH * (window.innerHeight / scrollH), 40);
+      onScroll();
+    };
+
+    const ro = new ResizeObserver(measure);
+    ro.observe(document.body);
+
     // Scroll restoration and mid-page reloads start mid-document.
-    update();
-    window.addEventListener("scroll", onScrollOrResize, { passive: true });
-    window.addEventListener("resize", onScrollOrResize, { passive: true });
+    measure();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", measure, { passive: true });
     return () => {
-      window.removeEventListener("scroll", onScrollOrResize);
-      window.removeEventListener("resize", onScrollOrResize);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", measure);
+      ro.disconnect();
       cancelAnimationFrame(raf);
     };
   }, []);

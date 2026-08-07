@@ -21,17 +21,16 @@ export function ScrollProgress() {
 
   useEffect(() => {
     let raf = 0;
+    let max = 0;
 
     const update = () => {
-      // Read fresh every frame: scrollHeight moves as images load in.
-      const max = document.documentElement.scrollHeight - window.innerHeight;
       // A non-positive max is a page too short to scroll; the clamp also
       // swallows iOS rubber-banding at both ends.
       const p = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
       ref.current?.style.setProperty("--progress", String(p));
     };
 
-    const onScrollOrResize = () => {
+    const onScroll = () => {
       if (raf) return;
       raf = requestAnimationFrame(() => {
         raf = 0;
@@ -39,13 +38,27 @@ export function ScrollProgress() {
       });
     };
 
+    // The layout reads live here, off the scroll path: scrollHeight forces
+    // layout, and reading it every scrolled frame showed up as forced reflow
+    // in traces. The body observer re-measures as content height changes
+    // (images landing), the resize listener covers viewport-height changes
+    // the observer can't see. Scrolled frames read only scrollY.
+    const measure = () => {
+      max = document.documentElement.scrollHeight - window.innerHeight;
+      onScroll();
+    };
+
+    const ro = new ResizeObserver(measure);
+    ro.observe(document.body);
+
     // Scroll restoration and mid-page reloads start mid-document.
-    update();
-    window.addEventListener("scroll", onScrollOrResize, { passive: true });
-    window.addEventListener("resize", onScrollOrResize, { passive: true });
+    measure();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", measure, { passive: true });
     return () => {
-      window.removeEventListener("scroll", onScrollOrResize);
-      window.removeEventListener("resize", onScrollOrResize);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", measure);
+      ro.disconnect();
       cancelAnimationFrame(raf);
     };
   }, []);
