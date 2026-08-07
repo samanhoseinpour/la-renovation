@@ -6,22 +6,18 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/admin/password-input";
+import { Reveal } from "@/components/motion/reveal";
 import { adminLogin } from "@/content/admin";
 import { authClient } from "@/lib/auth-client";
 
 export function LoginForm() {
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
+  // Which surface failed, not a message: the slot maps it to copy, and the
+  // generic credentials error flags both fields (no user enumeration).
+  const [error, setError] = useState<"credentials" | "passkey" | null>(null);
   const [pending, setPending] = useState(false);
 
   // Conditional UI: the browser offers saved passkeys inside the email
@@ -55,8 +51,7 @@ export function LoginForm() {
     });
     setPending(false);
     if (signInError) {
-      // One generic message: no user enumeration.
-      setError(adminLogin.error);
+      setError("credentials");
       return;
     }
     router.push("/admin/submissions");
@@ -66,23 +61,20 @@ export function LoginForm() {
     setError(null);
     const result = await authClient.signIn.passkey();
     if (result?.error) {
-      setError(adminLogin.passkeyError);
+      setError("passkey");
       return;
     }
     router.push("/admin/submissions");
   }
 
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <p className="text-eyebrow text-muted-foreground">
-          {adminLogin.eyebrow}
-        </p>
-        <CardTitle className="text-h3">{adminLogin.title}</CardTitle>
-        <CardDescription>{adminLogin.lead}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="grid gap-4">
+    <div>
+      <Reveal mode="mount">
+        <h1 className="text-h2">{adminLogin.title}</h1>
+        <p className="mt-4 text-muted-foreground">{adminLogin.lead}</p>
+      </Reveal>
+      <form onSubmit={handleSubmit}>
+        <Reveal mode="mount" delay={0.08} className="mt-10 grid gap-5">
           <div className="grid gap-2">
             <Label htmlFor="login-email">{adminLogin.emailLabel}</Label>
             <Input
@@ -92,6 +84,8 @@ export function LoginForm() {
               required
               autoFocus
               autoComplete="username webauthn"
+              className="h-11"
+              aria-invalid={error === "credentials" || undefined}
             />
           </div>
           <div className="grid gap-2">
@@ -101,9 +95,28 @@ export function LoginForm() {
               name="password"
               required
               autoComplete="current-password"
+              className="h-11"
+              aria-invalid={error === "credentials" || undefined}
             />
           </div>
-          <Button type="submit" variant="brand" disabled={pending}>
+        </Reveal>
+        <Reveal mode="mount" delay={0.16} className="mt-8 grid gap-4">
+          {/* min-h reserves the line so an appearing error shifts nothing,
+              the strength meter's trick. */}
+          <p aria-live="polite" className="min-h-5 text-sm text-destructive">
+            {error === "credentials"
+              ? adminLogin.error
+              : error === "passkey"
+                ? adminLogin.passkeyError
+                : null}
+          </p>
+          <Button
+            type="submit"
+            variant="brand"
+            size="xl"
+            className="w-full"
+            disabled={pending}
+          >
             {pending ? adminLogin.submitting : adminLogin.submit}
             <ArrowRight data-icon="inline-end" />
           </Button>
@@ -114,21 +127,26 @@ export function LoginForm() {
             </span>
             <span className="h-px flex-1 bg-border" />
           </div>
-          <Button type="button" variant="outline" onClick={handlePasskey}>
+          <Button
+            type="button"
+            variant="outline"
+            size="xl"
+            className="w-full"
+            onClick={handlePasskey}
+          >
             <KeyRound data-icon="inline-start" />
             {adminLogin.passkey}
           </Button>
-          <p aria-live="polite" className="text-sm text-destructive">
-            {error}
-          </p>
-          <Link
-            href="/admin/reset-password"
-            className="text-sm text-muted-foreground underline-offset-4 hover:underline"
-          >
-            {adminLogin.forgot}
-          </Link>
-        </form>
-      </CardContent>
-    </Card>
+        </Reveal>
+      </form>
+      <Reveal mode="mount" delay={0.16}>
+        <Link
+          href="/admin/reset-password"
+          className="mt-8 block text-center text-sm text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
+        >
+          {adminLogin.forgot}
+        </Link>
+      </Reveal>
+    </div>
   );
 }

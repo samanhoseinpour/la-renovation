@@ -20,8 +20,12 @@ export const adminNav = {
   signOut: "Sign out",
 } as const;
 
-export const adminLogin = {
+/** The auth shell's brand panel and phone band. */
+export const adminAuthPanel = {
   eyebrow: "Admin",
+} as const;
+
+export const adminLogin = {
   title: "Sign in",
   lead: "The private area for the people who run Araz Construction Group.",
   emailLabel: "Email",
@@ -36,7 +40,6 @@ export const adminLogin = {
 } as const;
 
 export const adminReset = {
-  eyebrow: "Admin",
   setTitle: "Set your password",
   setLead:
     "Choose at least twelve characters. A password manager's suggestion is ideal.",
@@ -54,6 +57,8 @@ export const adminReset = {
   requestSubmit: "Send reset link",
   requestSubmitting: "Sending…",
   requestSent: "If that account exists, an email is on its way.",
+  requestError: "That didn't work. Try again.",
+  backToLogin: "Back to sign in",
 } as const;
 
 export const adminInbox = {

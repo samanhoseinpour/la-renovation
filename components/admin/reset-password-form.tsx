@@ -4,17 +4,11 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/admin/password-input";
 import { PasswordStrength } from "@/components/admin/password-strength";
+import { Reveal } from "@/components/motion/reveal";
 import { adminReset } from "@/content/admin";
 import { authClient } from "@/lib/auth-client";
 import { MIN_PASSWORD_LENGTH } from "@/lib/auth-shared";
@@ -49,26 +43,28 @@ function SetPassword({ token }: { token: string }) {
   }
 
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <p className="text-eyebrow text-muted-foreground">
-          {adminReset.eyebrow}
-        </p>
-        <CardTitle className="text-h3">{adminReset.setTitle}</CardTitle>
-        <CardDescription aria-live="polite">
+    <div>
+      <Reveal mode="mount">
+        <h1 className="text-h2">{adminReset.setTitle}</h1>
+        <p aria-live="polite" className="mt-4 text-muted-foreground">
           {state === "saved" ? adminReset.saved : adminReset.setLead}
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        {state === "saved" ? (
+        </p>
+      </Reveal>
+      {state === "saved" ? (
+        <Reveal mode="mount" className="mt-10">
           <Link
             href="/admin/login"
-            className={cn(buttonVariants({ variant: "brand" }))}
+            className={cn(
+              buttonVariants({ variant: "brand", size: "xl" }),
+              "w-full",
+            )}
           >
             {adminReset.savedCta}
           </Link>
-        ) : (
-          <form onSubmit={handleSubmit} className="grid gap-4">
+        </Reveal>
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <Reveal mode="mount" delay={0.08} className="mt-10 grid gap-5">
             <div className="grid gap-2">
               <Label htmlFor="reset-password">{adminReset.passwordLabel}</Label>
               <PasswordInput
@@ -78,92 +74,131 @@ function SetPassword({ token }: { token: string }) {
                 autoFocus
                 minLength={MIN_PASSWORD_LENGTH}
                 autoComplete="new-password"
+                className="h-11"
+                aria-invalid={state === "same" || undefined}
                 onChange={(event) => setPassword(event.target.value)}
               />
+              <PasswordStrength password={password} />
             </div>
-            <PasswordStrength password={password} />
-            <Button
-              type="submit"
-              variant="brand"
-              disabled={state === "pending"}
-            >
-              {state === "pending" ? adminReset.submitting : adminReset.submit}
-            </Button>
-            <p aria-live="polite" className="text-sm text-destructive">
+          </Reveal>
+          <Reveal mode="mount" delay={0.16} className="mt-8 grid gap-4">
+            <p aria-live="polite" className="min-h-5 text-sm text-destructive">
               {state === "invalid"
                 ? adminReset.invalid
                 : state === "same"
                   ? adminReset.samePassword
                   : null}
             </p>
+            <Button
+              type="submit"
+              variant="brand"
+              size="xl"
+              className="w-full"
+              disabled={state === "pending"}
+            >
+              {state === "pending" ? adminReset.submitting : adminReset.submit}
+            </Button>
             {state === "invalid" && (
               // Same route without the token renders the request form.
               <Link
                 href="/admin/reset-password"
-                className="text-sm text-muted-foreground underline-offset-4 hover:underline"
+                className="text-center text-sm text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
               >
                 {adminReset.invalidCta}
               </Link>
             )}
-          </form>
-        )}
-      </CardContent>
-    </Card>
+          </Reveal>
+        </form>
+      )}
+    </div>
   );
 }
 
 function RequestReset() {
-  const [state, setState] = useState<"idle" | "pending" | "sent">("idle");
+  const [state, setState] = useState<"idle" | "pending" | "sent" | "failed">(
+    "idle",
+  );
 
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     setState("pending");
-    // Same response either way: whether an account exists is not disclosed.
-    await authClient.requestPasswordReset({
+    // Success copy is the same whether the account exists (no enumeration);
+    // only a transport-level failure surfaces, so the form stays usable.
+    const { error } = await authClient.requestPasswordReset({
       email: String(form.get("email") ?? ""),
       redirectTo: "/admin/reset-password",
     });
-    setState("sent");
+    setState(error ? "failed" : "sent");
   }
 
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <p className="text-eyebrow text-muted-foreground">
-          {adminReset.eyebrow}
-        </p>
-        <CardTitle className="text-h3">{adminReset.requestTitle}</CardTitle>
-        <CardDescription aria-live="polite">
+    <div>
+      <Reveal mode="mount">
+        <h1 className="text-h2">{adminReset.requestTitle}</h1>
+        <p aria-live="polite" className="mt-4 text-muted-foreground">
           {state === "sent" ? adminReset.requestSent : adminReset.requestLead}
-        </CardDescription>
-      </CardHeader>
-      {state !== "sent" && (
-        <CardContent>
-          <form onSubmit={handleSubmit} className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="reset-email">{adminReset.emailLabel}</Label>
-              <Input
-                id="reset-email"
-                name="email"
-                type="email"
-                required
-                autoFocus
-                autoComplete="email"
-              />
-            </div>
-            <Button
-              type="submit"
-              variant="brand"
-              disabled={state === "pending"}
-            >
-              {state === "pending"
-                ? adminReset.requestSubmitting
-                : adminReset.requestSubmit}
-            </Button>
+        </p>
+      </Reveal>
+      {state === "sent" ? (
+        <Reveal mode="mount" className="mt-10">
+          <Link
+            href="/admin/login"
+            className={cn(
+              buttonVariants({ variant: "brand", size: "xl" }),
+              "w-full",
+            )}
+          >
+            {adminReset.backToLogin}
+          </Link>
+        </Reveal>
+      ) : (
+        <>
+          <form onSubmit={handleSubmit}>
+            <Reveal mode="mount" delay={0.08} className="mt-10 grid gap-5">
+              <div className="grid gap-2">
+                <Label htmlFor="reset-email">{adminReset.emailLabel}</Label>
+                <Input
+                  id="reset-email"
+                  name="email"
+                  type="email"
+                  required
+                  autoFocus
+                  autoComplete="email"
+                  className="h-11"
+                />
+              </div>
+            </Reveal>
+            <Reveal mode="mount" delay={0.16} className="mt-8 grid gap-4">
+              <p
+                aria-live="polite"
+                className="min-h-5 text-sm text-destructive"
+              >
+                {state === "failed" ? adminReset.requestError : null}
+              </p>
+              <Button
+                type="submit"
+                variant="brand"
+                size="xl"
+                className="w-full"
+                disabled={state === "pending"}
+              >
+                {state === "pending"
+                  ? adminReset.requestSubmitting
+                  : adminReset.requestSubmit}
+              </Button>
+            </Reveal>
           </form>
-        </CardContent>
+          <Reveal mode="mount" delay={0.16}>
+            <Link
+              href="/admin/login"
+              className="mt-8 block text-center text-sm text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
+            >
+              {adminReset.backToLogin}
+            </Link>
+          </Reveal>
+        </>
       )}
-    </Card>
+    </div>
   );
 }
