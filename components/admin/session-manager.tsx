@@ -92,10 +92,13 @@ export function SessionManager({
           return (
             <li
               key={row.id}
-              className="flex items-center justify-between gap-4 rounded-lg border border-border px-4 py-3"
+              className="flex min-w-0 items-center justify-between gap-4 rounded-lg border border-border px-4 py-3"
             >
               <span className="flex min-w-0 items-center gap-3">
-                <Monitor className="size-4 shrink-0 text-muted-foreground" />
+                <Monitor
+                  className="size-4 shrink-0 text-muted-foreground"
+                  aria-hidden
+                />
                 <span className="min-w-0">
                   <span className="block truncate text-sm">
                     {adminSettings.sessions.signedIn}{" "}
@@ -141,7 +144,7 @@ export function SessionManager({
             : adminSettings.sessions.revokeOthers}
         </Button>
       )}
-      <p aria-live="polite" className="text-sm text-destructive">
+      <p aria-live="polite" className="min-h-5 text-sm text-destructive">
         {error}
       </p>
     </div>
