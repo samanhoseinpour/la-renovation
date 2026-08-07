@@ -151,6 +151,16 @@ export const adminSubmission = {
 
 export const adminSettings = {
   title: "Settings",
+  profile: {
+    title: "Profile",
+    lead: "How your name appears across the admin area.",
+    nameLabel: "Display name",
+    submit: "Save name",
+    submitting: "Saving…",
+    success: "Name updated.",
+    error: "That didn't work. Try again.",
+    errorInvalid: "Enter a name of no more than eighty characters.",
+  },
   password: {
     title: "Change password",
     currentLabel: "Current password",
