@@ -11,6 +11,7 @@ import {
   type ContactField,
   type ContactState,
 } from "@/app/(site)/contact/schema";
+import { ArrowLink } from "@/components/layout/arrow-link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -241,6 +242,15 @@ export function ContactOffice({
             >
               {site.contact.email}
             </a>
+          </div>
+        </div>
+
+        <div className="mt-12 border-t border-border pt-10">
+          <p className="text-sm text-muted-foreground">{page.faq.note}</p>
+          <div className="mt-5">
+            <ArrowLink href={page.faq.link.href}>
+              {page.faq.link.label}
+            </ArrowLink>
           </div>
         </div>
       </div>

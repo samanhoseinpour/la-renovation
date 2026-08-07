@@ -112,6 +112,8 @@ export type ContactPageCopy = {
   /** The response promise under the lead. Client-authored; flagged in the spec. */
   commitment: string;
   officeHeading: string;
+  /** Rail closer: deflects question-shaped visits to the FAQ. */
+  faq: { note: string; link: { label: string; href: string } };
 };
 
 /** /contact page copy. Title and lead moved out of the route unchanged. */
@@ -124,6 +126,10 @@ export const contactPage: ContactPageCopy = {
   commitment:
     "We respond to every enquiry. If the project isn't a fit for us, we'll say so and point you toward someone better suited rather than taking the meeting anyway.",
   officeHeading: "Office",
+  faq: {
+    note: "Here with a question rather than a project? The FAQ may already have the answer.",
+    link: { label: "Browse the FAQ", href: "/faq" },
+  },
 };
 
 /**
