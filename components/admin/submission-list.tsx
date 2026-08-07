@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { AdminEmpty } from "@/components/admin/admin-empty";
 import { formatRelative } from "@/components/admin/dates";
+import { inboxHref } from "@/components/admin/inbox-params";
 import { InboxToolbar } from "@/components/admin/inbox-toolbar";
 import {
   RowCheckbox,
@@ -18,28 +19,24 @@ import type {
   InboxPage,
   SubmissionStatus,
 } from "@/lib/db/submissions";
+import type { RangePreset } from "@/lib/la-ranges";
 import { cn } from "@/lib/utils";
-
-function inboxHref(filter: InboxFilter, q?: string, before?: string): string {
-  const params = new URLSearchParams();
-  if (filter !== "all") params.set("status", filter);
-  if (q) params.set("q", q);
-  if (before) params.set("before", before);
-  const query = params.toString();
-  return query ? `/admin/submissions?${query}` : "/admin/submissions";
-}
 
 export function SubmissionList({
   page,
   counts,
+  failed,
   active,
   q,
+  range,
   before,
 }: {
   page: InboxPage;
   counts: Record<SubmissionStatus, number>;
+  failed: number;
   active: InboxFilter;
   q?: string;
+  range: RangePreset;
   /** Raw cursor of the current page, when it sits behind one. */
   before?: string;
 }) {
@@ -59,6 +56,15 @@ export function SubmissionList({
       count: counts.archived,
     },
   ];
+  // Quiet while the pipeline is healthy; always present when it's the view,
+  // so a bookmarked failed URL keeps its active tab at zero.
+  if (failed > 0 || active === "failed") {
+    filters.push({
+      key: "failed",
+      label: adminInbox.filters.failed,
+      count: failed,
+    });
+  }
   const last = page.items.at(-1);
 
   return (
@@ -69,7 +75,7 @@ export function SubmissionList({
         {filters.map((filter) => (
           <Link
             key={filter.key}
-            href={inboxHref(filter.key, q)}
+            href={inboxHref({ status: filter.key, q, range })}
             className={cn(
               "transition-colors",
               active === filter.key
@@ -82,13 +88,17 @@ export function SubmissionList({
         ))}
       </nav>
 
-      <InboxToolbar active={active} q={q} />
+      <InboxToolbar active={active} q={q} range={range} />
 
       {page.items.length === 0 ? (
-        <AdminEmpty variant={active === "all" && !q ? "all" : "filtered"} />
+        <AdminEmpty
+          variant={
+            active === "all" && !q && range === "all" ? "all" : "filtered"
+          }
+        />
       ) : (
         <SelectionProvider
-          key={`${active}|${q ?? ""}|${before ?? ""}`}
+          key={`${active}|${q ?? ""}|${range}|${before ?? ""}`}
           visibleIds={page.items.map((item) => item.id)}
         >
           <div className="mt-6 flex min-h-8 flex-wrap items-center gap-3">
@@ -157,7 +167,12 @@ export function SubmissionList({
             <div className="mt-6 flex flex-wrap gap-3">
               {page.hasMore && last && (
                 <Link
-                  href={inboxHref(active, q, `${last.cursor}_${last.id}`)}
+                  href={inboxHref({
+                    status: active,
+                    q,
+                    range,
+                    before: `${last.cursor}_${last.id}`,
+                  })}
                   className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
                 >
                   {adminInbox.pagination.older}
@@ -165,7 +180,7 @@ export function SubmissionList({
               )}
               {before && (
                 <Link
-                  href={inboxHref(active, q)}
+                  href={inboxHref({ status: active, q, range })}
                   className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}
                 >
                   {adminInbox.pagination.newest}

@@ -63,7 +63,13 @@ export const adminReset = {
 
 export const adminInbox = {
   title: "Submissions",
-  filters: { all: "All", new: "New", read: "Read", archived: "Archived" },
+  filters: {
+    all: "All",
+    new: "New",
+    read: "Read",
+    archived: "Archived",
+    failed: "Email failed",
+  },
   empty: {
     all: {
       title: "No enquiries yet.",
@@ -81,8 +87,8 @@ export const adminInbox = {
   },
   search: {
     placeholder: "Search name, email, company, or message",
-    submit: "Search",
     clear: "Clear search",
+    searching: "Searching…",
   },
   pagination: {
     older: "Load older",
@@ -107,16 +113,18 @@ export const adminInbox = {
     confirm: "Delete",
     cancel: "Cancel",
   },
-  exportCsv: {
-    button: "Export CSV",
-    rangeLabel: "Date range",
-    ranges: {
+  range: {
+    label: "Date range",
+    presets: {
       today: "Today",
       "7d": "Last 7 days",
       "30d": "Last 30 days",
       month: "This month",
       all: "All time",
     },
+  },
+  exportCsv: {
+    button: "Export CSV",
   },
 } as const;
 

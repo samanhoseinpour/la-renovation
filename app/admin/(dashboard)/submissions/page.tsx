@@ -3,11 +3,13 @@ import type { Metadata } from "next";
 import { SubmissionList } from "@/components/admin/submission-list";
 import { requireAdmin } from "@/lib/admin-guard";
 import {
+  countFailedDeliveries,
   countSubmissionsByStatus,
   listSubmissionsPage,
   type InboxCursor,
   type InboxFilter,
 } from "@/lib/db/submissions";
+import { RANGE_PRESETS, rangeStart, type RangePreset } from "@/lib/la-ranges";
 
 export const metadata: Metadata = { title: "Submissions" };
 
@@ -16,7 +18,10 @@ const FILTERS: ReadonlySet<string> = new Set([
   "new",
   "read",
   "archived",
+  "failed",
 ]);
+
+const RANGES: ReadonlySet<string> = new Set(RANGE_PRESETS);
 
 const UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -38,35 +43,59 @@ function parseCursor(raw?: string): InboxCursor | undefined {
   return { ts, id };
 }
 
+// Next hands back string[] for a duplicated key; take the first and let the
+// whitelists keep malformed URLs on the degrade path instead of throwing.
+function first(value?: string | string[]): string | undefined {
+  return Array.isArray(value) ? value[0] : value;
+}
+
 export default async function SubmissionsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string; q?: string; before?: string }>;
+  searchParams: Promise<{
+    status?: string | string[];
+    q?: string | string[];
+    range?: string | string[];
+    before?: string | string[];
+  }>;
 }) {
   // Defense in depth: the layout checked too, but pages guard themselves.
   await requireAdmin();
 
-  const { status, q: rawQ, before: rawBefore } = await searchParams;
+  const params = await searchParams;
+  const status = first(params.status);
+  const rawRange = first(params.range);
+  const rawBefore = first(params.before);
   const active =
     status && FILTERS.has(status) ? (status as InboxFilter) : "all";
+  const range =
+    rawRange && RANGES.has(rawRange) ? (rawRange as RangePreset) : "all";
   const q =
-    rawQ
+    first(params.q)
       ?.replace(/[\u0000-\u001F\u007F]/g, "")
       .trim()
       .slice(0, 200) || undefined;
   const before = parseCursor(rawBefore);
 
-  const [page, counts] = await Promise.all([
-    listSubmissionsPage({ filter: active, q, before }),
+  const [page, counts, failed] = await Promise.all([
+    listSubmissionsPage({
+      filter: active,
+      q,
+      start: rangeStart(range),
+      before,
+    }),
     countSubmissionsByStatus(),
+    countFailedDeliveries(),
   ]);
 
   return (
     <SubmissionList
       page={page}
       counts={counts}
+      failed={failed}
       active={active}
       q={q}
+      range={range}
       before={before ? rawBefore : undefined}
     />
   );

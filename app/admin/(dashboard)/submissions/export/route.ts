@@ -8,11 +8,11 @@ import {
   getSubmissionsByIds,
   listSubmissionsForExport,
 } from "@/lib/db/submissions";
-import { laDateStamp, rangeStart } from "@/lib/la-ranges";
+import { laDateStamp, RANGE_PRESETS, rangeStart } from "@/lib/la-ranges";
 
 const paramsSchema = z.object({
-  status: z.enum(["all", "new", "read", "archived"]).default("all"),
-  range: z.enum(["today", "7d", "30d", "month", "all"]).default("all"),
+  status: z.enum(["all", "new", "read", "archived", "failed"]).default("all"),
+  range: z.enum(RANGE_PRESETS).default("all"),
   q: z.string().trim().max(200).optional(),
   ids: z
     .string()
