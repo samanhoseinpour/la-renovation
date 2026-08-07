@@ -20,20 +20,33 @@ export function ThemeColorSync() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const background = getComputedStyle(document.documentElement)
-      .getPropertyValue("--background")
-      .trim();
-    if (!background) return;
+    const apply = () => {
+      const background = getComputedStyle(document.documentElement)
+        .getPropertyValue("--background")
+        .trim();
+      if (!background) return;
 
-    let meta = document.querySelector<HTMLMetaElement>(
-      'meta[name="theme-color"]',
-    );
-    if (!meta) {
-      meta = document.createElement("meta");
-      meta.name = "theme-color";
-      document.head.appendChild(meta);
+      let meta = document.querySelector<HTMLMetaElement>(
+        'meta[name="theme-color"]',
+      );
+      if (!meta) {
+        meta = document.createElement("meta");
+        meta.name = "theme-color";
+        document.head.appendChild(meta);
+      }
+      meta.content = background;
+    };
+
+    // At idle on purpose: getComputedStyle forces a style recalc, and running
+    // it synchronously in the effect lands that recalc inside the hydration
+    // task. Browser-chrome tint can wait a frame; the viewport export covers
+    // the gap. Safari still lacks requestIdleCallback, hence the fallback.
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(apply);
+      return () => window.cancelIdleCallback(id);
     }
-    meta.content = background;
+    const id = window.setTimeout(apply, 0);
+    return () => window.clearTimeout(id);
   }, [resolvedTheme, pathname]);
 
   return null;
