@@ -40,6 +40,7 @@ export function HomeHero() {
         {...blurProps(siteImages.homeHero.src)}
         fill
         preload
+        fetchPriority="high"
         sizes="100vw"
         className="object-cover"
       />
