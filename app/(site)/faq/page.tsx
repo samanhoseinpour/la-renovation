@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Reveal } from "@/components/motion/reveal";
 import { ContactCta } from "@/components/sections/contact-cta";
 import { FaqTopics } from "@/components/sections/faq-topics";
 import { PageHeader } from "@/components/sections/page-header";
@@ -47,12 +46,10 @@ export default function FaqPage() {
 
       <Section>
         <Container>
-          <Reveal>
-            <p className="text-eyebrow text-muted-foreground">By topic</p>
-            <h2 className="mt-6 max-w-2xl text-h2 text-balance">
-              Start with the part you&rsquo;re worried about.
-            </h2>
-          </Reveal>
+          <p className="text-eyebrow text-muted-foreground">By topic</p>
+          <h2 className="mt-6 max-w-2xl text-h2 text-balance">
+            Start with the part you&rsquo;re worried about.
+          </h2>
           <div className="mt-14">
             <FaqTopics topics={faqTopics} />
           </div>

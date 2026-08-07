@@ -1,7 +1,6 @@
 import { ArrowLink } from "@/components/layout/arrow-link";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Reveal } from "@/components/motion/reveal";
 import type { CareersValue } from "@/content/careers";
 
 type CareersOverviewProps = {
@@ -33,36 +32,32 @@ export function CareersOverview({
       <Container>
         <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
           {values.map((value, index) => (
-            <Reveal key={value.title} delay={Math.min(index * 0.05, 0.2)}>
-              <div className="border-t border-border pt-6">
-                <p className="text-eyebrow text-muted-foreground">
-                  {String(index + 1).padStart(2, "0")}
-                </p>
-                <h2 className="mt-4 text-h3">{value.title}</h2>
-                <p className="mt-3 text-sm text-muted-foreground">
-                  {value.body}
-                </p>
-              </div>
-            </Reveal>
+            <div key={value.title} className="border-t border-border pt-6">
+              <p className="text-eyebrow text-muted-foreground">
+                {String(index + 1).padStart(2, "0")}
+              </p>
+              <h2 className="mt-4 text-h3">{value.title}</h2>
+              <p className="mt-3 text-sm text-muted-foreground">
+                {value.body}
+              </p>
+            </div>
           ))}
         </div>
 
-        <Reveal>
-          <div
-            id="apply"
-            className="mt-20 scroll-mt-16 rounded-3xl border border-border bg-card p-8 md:p-14"
-          >
-            <h2 className="max-w-2xl text-h2 text-balance">
-              {application.heading}
-            </h2>
-            <p className="mt-6 max-w-2xl text-muted-foreground">
-              {application.body}
-            </p>
-            <div className="mt-10">
-              <ArrowLink href={`mailto:${email}`}>{email}</ArrowLink>
-            </div>
+        <div
+          id="apply"
+          className="mt-20 scroll-mt-16 rounded-3xl border border-border bg-card p-8 md:p-14"
+        >
+          <h2 className="max-w-2xl text-h2 text-balance">
+            {application.heading}
+          </h2>
+          <p className="mt-6 max-w-2xl text-muted-foreground">
+            {application.body}
+          </p>
+          <div className="mt-10">
+            <ArrowLink href={`mailto:${email}`}>{email}</ArrowLink>
           </div>
-        </Reveal>
+        </div>
       </Container>
     </Section>
   );

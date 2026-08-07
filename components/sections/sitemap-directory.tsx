@@ -2,7 +2,6 @@ import Link from "next/link";
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Reveal } from "@/components/motion/reveal";
 import type { SitemapGroup } from "@/content/sitemap";
 
 type SitemapDirectoryProps = {
@@ -20,8 +19,8 @@ export function SitemapDirectory({ groups }: SitemapDirectoryProps) {
     <Section size="sm">
       <Container>
         <div className="grid grid-cols-1 gap-x-gutter gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-          {groups.map((group, i) => (
-            <Reveal key={group.label} delay={i * 0.08}>
+          {groups.map((group) => (
+            <div key={group.label}>
               <h2 className="text-eyebrow text-muted-foreground">
                 {group.label}
               </h2>
@@ -43,7 +42,7 @@ export function SitemapDirectory({ groups }: SitemapDirectoryProps) {
                   </li>
                 ))}
               </ul>
-            </Reveal>
+            </div>
           ))}
         </div>
       </Container>

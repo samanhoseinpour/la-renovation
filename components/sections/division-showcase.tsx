@@ -3,7 +3,6 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 import { ArrowLink, ArrowMark } from "@/components/layout/arrow-link";
-import { Reveal } from "@/components/motion/reveal";
 import { blurProps } from "@/content/blur";
 import type { SectionIntro } from "@/content/home";
 import type { SiteImage } from "@/content/images";
@@ -28,15 +27,13 @@ export function DivisionShowcase({
   return (
     <div className="grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-16">
       <div className="lg:sticky lg:top-24 lg:self-start">
-        <Reveal>
-          <h2 className="text-eyebrow text-muted-foreground">{intro.eyebrow}</h2>
-          <p className="mt-6 max-w-xs text-h2">{intro.heading}</p>
-          {intro.link && (
-            <div className="mt-8">
-              <ArrowLink href={intro.link.href}>{intro.link.label}</ArrowLink>
-            </div>
-          )}
-        </Reveal>
+        <h2 className="text-eyebrow text-muted-foreground">{intro.eyebrow}</h2>
+        <p className="mt-6 max-w-xs text-h2">{intro.heading}</p>
+        {intro.link && (
+          <div className="mt-8">
+            <ArrowLink href={intro.link.href}>{intro.link.label}</ArrowLink>
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2">

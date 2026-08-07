@@ -1,6 +1,5 @@
 import Image from "next/image";
 
-import { Reveal } from "@/components/motion/reveal";
 import { blurProps } from "@/content/blur";
 import type { Service } from "@/content/services";
 import { cn } from "@/lib/utils";
@@ -19,38 +18,39 @@ export function ServiceNarrative({ service }: { service: Service }) {
         const reversed = index % 2 === 1;
 
         return (
-          <Reveal key={index}>
-            <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-x-20">
-              {/* Guard the whole frame, not just the <Image>: a body paragraph
-                  without a paired rowImage would otherwise render an empty grey
-                  panel rather than simply dropping out of the row. */}
-              {image && (
-                <div
-                  className={cn(
-                    "relative aspect-4/3 overflow-hidden rounded-3xl bg-secondary",
-                    reversed && "lg:order-2",
-                  )}
-                >
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    {...blurProps(image.src)}
-                    fill
-                    sizes="(min-width: 1024px) 50vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-              )}
-              <div className={cn(reversed && "lg:order-1")}>
-                <p className="text-eyebrow text-muted-foreground">
-                  {String(index + 1).padStart(2, "0")}
-                </p>
-                <p className="mt-6 max-w-xl text-lead text-muted-foreground">
-                  {paragraph}
-                </p>
+          <div
+            key={index}
+            className="grid items-center gap-8 lg:grid-cols-2 lg:gap-x-20"
+          >
+            {/* Guard the whole frame, not just the <Image>: a body paragraph
+                without a paired rowImage would otherwise render an empty grey
+                panel rather than simply dropping out of the row. */}
+            {image && (
+              <div
+                className={cn(
+                  "relative aspect-4/3 overflow-hidden rounded-3xl bg-secondary",
+                  reversed && "lg:order-2",
+                )}
+              >
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  {...blurProps(image.src)}
+                  fill
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="object-cover"
+                />
               </div>
+            )}
+            <div className={cn(reversed && "lg:order-1")}>
+              <p className="text-eyebrow text-muted-foreground">
+                {String(index + 1).padStart(2, "0")}
+              </p>
+              <p className="mt-6 max-w-xl text-lead text-muted-foreground">
+                {paragraph}
+              </p>
             </div>
-          </Reveal>
+          </div>
         );
       })}
     </div>

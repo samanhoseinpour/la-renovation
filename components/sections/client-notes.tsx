@@ -1,6 +1,5 @@
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Reveal } from "@/components/motion/reveal";
 import type { Testimonial } from "@/content/office";
 
 /**
@@ -21,16 +20,17 @@ export function ClientNotes({
 
         <div className="mt-14">
           {testimonials.map((testimonial, i) => (
-            <Reveal key={i}>
-              <figure className="flex flex-col gap-6 border-t border-border py-10 md:flex-row md:items-baseline md:justify-between md:gap-16 md:py-14">
-                <blockquote className="max-w-3xl text-h3">
-                  &ldquo;{testimonial.quote}&rdquo;
-                </blockquote>
-                <figcaption className="shrink-0 text-eyebrow text-muted-foreground">
-                  {testimonial.attribution}
-                </figcaption>
-              </figure>
-            </Reveal>
+            <figure
+              key={i}
+              className="flex flex-col gap-6 border-t border-border py-10 md:flex-row md:items-baseline md:justify-between md:gap-16 md:py-14"
+            >
+              <blockquote className="max-w-3xl text-h3">
+                &ldquo;{testimonial.quote}&rdquo;
+              </blockquote>
+              <figcaption className="shrink-0 text-eyebrow text-muted-foreground">
+                {testimonial.attribution}
+              </figcaption>
+            </figure>
           ))}
         </div>
       </Container>

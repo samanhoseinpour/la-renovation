@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { ArrowLink } from "@/components/layout/arrow-link";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Reveal } from "@/components/motion/reveal";
 import { ContactCta } from "@/components/sections/contact-cta";
 import { DivisionDeepDive } from "@/components/sections/division-deep-dive";
 import { ProjectCard } from "@/components/sections/project-card";
@@ -92,23 +91,21 @@ export default async function ServicePage({ params }: Props) {
 
       <Section size="sm" className="border-t border-border">
         <Container>
-          <Reveal>
-            <div className="grid gap-10 lg:grid-cols-12">
-              <h2 className="text-eyebrow text-muted-foreground lg:col-span-4">
-                What&rsquo;s included
-              </h2>
-              <ul className="border-t border-border lg:col-span-7 lg:col-start-6">
-                {service.includes.map((item) => (
-                  <li
-                    key={item}
-                    className="border-b border-border py-4 text-sm"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
+          <div className="grid gap-10 lg:grid-cols-12">
+            <h2 className="text-eyebrow text-muted-foreground lg:col-span-4">
+              What&rsquo;s included
+            </h2>
+            <ul className="border-t border-border lg:col-span-7 lg:col-start-6">
+              {service.includes.map((item) => (
+                <li
+                  key={item}
+                  className="border-b border-border py-4 text-sm"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
         </Container>
       </Section>
 

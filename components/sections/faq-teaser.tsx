@@ -1,5 +1,4 @@
 import { ArrowLink } from "@/components/layout/arrow-link";
-import { Reveal } from "@/components/motion/reveal";
 import type { Faq } from "@/content/faq";
 import type { SectionIntro } from "@/content/home";
 
@@ -18,7 +17,7 @@ export function FaqTeaser({
 }) {
   return (
     <div className="grid gap-14 lg:grid-cols-3 lg:gap-20">
-      <Reveal>
+      <div>
         <h2 className="text-eyebrow text-muted-foreground">{intro.eyebrow}</h2>
         <p className="mt-6 max-w-xs text-h2 text-balance">{intro.heading}</p>
         {intro.link && (
@@ -26,16 +25,14 @@ export function FaqTeaser({
             <ArrowLink href={intro.link.href}>{intro.link.label}</ArrowLink>
           </div>
         )}
-      </Reveal>
+      </div>
 
       <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:col-span-2">
-        {faqs.map((faq, index) => (
-          <Reveal key={faq.question} delay={Math.min(index * 0.05, 0.2)}>
-            <div className="border-t border-border pt-6">
-              <h3 className="text-base font-medium text-balance">{faq.question}</h3>
-              <p className="mt-3 text-sm text-muted-foreground">{faq.answer}</p>
-            </div>
-          </Reveal>
+        {faqs.map((faq) => (
+          <div key={faq.question} className="border-t border-border pt-6">
+            <h3 className="text-base font-medium text-balance">{faq.question}</h3>
+            <p className="mt-3 text-sm text-muted-foreground">{faq.answer}</p>
+          </div>
         ))}
       </div>
     </div>

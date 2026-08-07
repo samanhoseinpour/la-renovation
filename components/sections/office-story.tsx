@@ -2,7 +2,6 @@ import Image from "next/image";
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Reveal } from "@/components/motion/reveal";
 import { blurProps } from "@/content/blur";
 
 type OfficeStoryProps = {
@@ -33,27 +32,21 @@ export function OfficeStory({
       <Container>
         <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
           <div className="flex flex-col gap-14 lg:gap-20">
-            <Reveal>
-              <div className="space-y-8">
-                <StoryImage image={images[0]} eager />
-                <p className="max-w-xl text-lead">{paragraphs[0]}</p>
-              </div>
-            </Reveal>
-            <Reveal>
-              <div className="space-y-8">
-                <p className="max-w-xl text-lead">{paragraphs[1]}</p>
-                <StoryImage image={images[1]} />
-              </div>
-            </Reveal>
+            <div className="space-y-8">
+              <StoryImage image={images[0]} eager />
+              <p className="max-w-xl text-lead">{paragraphs[0]}</p>
+            </div>
+            <div className="space-y-8">
+              <p className="max-w-xl text-lead">{paragraphs[1]}</p>
+              <StoryImage image={images[1]} />
+            </div>
           </div>
 
           <div className="flex flex-col gap-14 lg:gap-20 lg:pt-28">
-            <Reveal>
-              <div className="space-y-8">
-                <StoryImage image={images[2]} portrait />
-                <p className="max-w-xl text-lead">{paragraphs[2]}</p>
-              </div>
-            </Reveal>
+            <div className="space-y-8">
+              <StoryImage image={images[2]} portrait />
+              <p className="max-w-xl text-lead">{paragraphs[2]}</p>
+            </div>
           </div>
         </div>
       </Container>

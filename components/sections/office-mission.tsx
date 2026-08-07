@@ -1,6 +1,5 @@
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Reveal } from "@/components/motion/reveal";
 
 type Statement = { title: string; body: string };
 
@@ -26,31 +25,27 @@ export function OfficeMission({ id, mission, vision }: OfficeMissionProps) {
     // components/site/site-header.tsx).
     <Section id={id} size="default" className="scroll-mt-16">
       <Container>
-        <Reveal>
-          <div className="grid gap-6 border-t border-border pt-10 lg:grid-cols-7 lg:gap-12">
-            <p className="text-eyebrow text-muted-foreground lg:col-span-2">
-              Mission
+        <div className="grid gap-6 border-t border-border pt-10 lg:grid-cols-7 lg:gap-12">
+          <p className="text-eyebrow text-muted-foreground lg:col-span-2">
+            Mission
+          </p>
+          <div className="max-w-2xl space-y-6 lg:col-span-4 lg:col-start-4">
+            <h2 className="text-h2 text-balance">{mission.title}</h2>
+            <p className="text-lead text-muted-foreground">
+              {mission.body}
             </p>
-            <div className="max-w-2xl space-y-6 lg:col-span-4 lg:col-start-4">
-              <h2 className="text-h2 text-balance">{mission.title}</h2>
-              <p className="text-lead text-muted-foreground">
-                {mission.body}
-              </p>
-            </div>
           </div>
-        </Reveal>
+        </div>
 
-        <Reveal>
-          <div className="mt-20 grid gap-6 border-t border-border pt-10 lg:grid-cols-7 lg:gap-12">
-            <p className="text-eyebrow text-muted-foreground lg:col-span-2">
-              Vision
-            </p>
-            <div className="max-w-2xl space-y-6 lg:col-span-4 lg:col-start-4">
-              <h2 className="text-h2 text-balance">{vision.title}</h2>
-              <p className="text-lead text-muted-foreground">{vision.body}</p>
-            </div>
+        <div className="mt-20 grid gap-6 border-t border-border pt-10 lg:grid-cols-7 lg:gap-12">
+          <p className="text-eyebrow text-muted-foreground lg:col-span-2">
+            Vision
+          </p>
+          <div className="max-w-2xl space-y-6 lg:col-span-4 lg:col-start-4">
+            <h2 className="text-h2 text-balance">{vision.title}</h2>
+            <p className="text-lead text-muted-foreground">{vision.body}</p>
           </div>
-        </Reveal>
+        </div>
       </Container>
     </Section>
   );

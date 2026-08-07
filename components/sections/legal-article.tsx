@@ -1,6 +1,5 @@
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Reveal } from "@/components/motion/reveal";
 import type { LegalDoc } from "@/content/legal";
 
 // Explicit locale and UTC: `new Date("2026-07-28")` lands on UTC midnight, so
@@ -23,21 +22,18 @@ function slugify(heading: string) {
  * No source block: LegalDoc is already structured, so it maps straight onto
  * elements with the house tokens inside the prose measure — a registry
  * long-form layout would drag in prose styles the site deliberately doesn't
- * carry. PageHeader owns the h1, so the article opens on the updated line, and
- * a single Reveal covers that opening: staggering legal paragraphs is noise.
+ * carry. PageHeader owns the h1, so the article opens on the updated line.
  */
 export function LegalArticle({ doc }: { doc: LegalDoc }) {
   return (
     <Section as="article" size="sm">
       <Container width="prose">
-        <Reveal>
-          <div>
-            <p className="text-eyebrow text-muted-foreground">
-              Last updated {updatedFormat.format(new Date(doc.updated))}
-            </p>
-            <p className="mt-8 text-lead text-muted-foreground">{doc.intro}</p>
-          </div>
-        </Reveal>
+        <div>
+          <p className="text-eyebrow text-muted-foreground">
+            Last updated {updatedFormat.format(new Date(doc.updated))}
+          </p>
+          <p className="mt-8 text-lead text-muted-foreground">{doc.intro}</p>
+        </div>
 
         {doc.sections.map((section) => {
           const id = slugify(section.heading);

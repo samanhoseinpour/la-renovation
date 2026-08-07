@@ -3,7 +3,6 @@ import Image from "next/image";
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Reveal } from "@/components/motion/reveal";
 import { blurProps } from "@/content/blur";
 import type { TeamMember } from "@/content/team";
 
@@ -31,37 +30,35 @@ export function OfficeTeam({ id, members }: OfficeTeamProps) {
         <h2 className="text-eyebrow text-muted-foreground">Team</h2>
 
         <div className="mt-14 grid gap-x-6 gap-y-12 grid-cols-2 sm:grid-cols-4 lg:grid-cols-6">
-          {members.map((member, index) => (
-            <Reveal key={member.name} delay={Math.min(index * 0.05, 0.2)}>
-              <div>
-                <div className="relative flex aspect-3/4 items-center justify-center overflow-hidden rounded-2xl bg-secondary">
-                  {member.photo ? (
-                    <Image
-                      src={member.photo.src}
-                      alt={member.photo.alt}
-                      {...blurProps(member.photo.src)}
-                      fill
-                      // Six-across on lg, four on sm, two below — the shell
-                      // caps at 88rem, so cards never pass ~13rem.
-                      sizes="(min-width: 88rem) 13rem, (min-width: 1024px) 16vw, (min-width: 640px) 24vw, 48vw"
-                      className="object-cover"
-                    />
-                  ) : (
-                    // Decorative stand-in until a portrait lands; the name
-                    // below is the card's accessible label.
-                    <UserRound
-                      aria-hidden
-                      strokeWidth={1.25}
-                      className="size-20 text-muted-foreground/50"
-                    />
-                  )}
-                </div>
-                <h3 className="mt-4 text-h4">{member.name}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {member.role}
-                </p>
+          {members.map((member) => (
+            <div key={member.name}>
+              <div className="relative flex aspect-3/4 items-center justify-center overflow-hidden rounded-2xl bg-secondary">
+                {member.photo ? (
+                  <Image
+                    src={member.photo.src}
+                    alt={member.photo.alt}
+                    {...blurProps(member.photo.src)}
+                    fill
+                    // Six-across on lg, four on sm, two below — the shell
+                    // caps at 88rem, so cards never pass ~13rem.
+                    sizes="(min-width: 88rem) 13rem, (min-width: 1024px) 16vw, (min-width: 640px) 24vw, 48vw"
+                    className="object-cover"
+                  />
+                ) : (
+                  // Decorative stand-in until a portrait lands; the name
+                  // below is the card's accessible label.
+                  <UserRound
+                    aria-hidden
+                    strokeWidth={1.25}
+                    className="size-20 text-muted-foreground/50"
+                  />
+                )}
               </div>
-            </Reveal>
+              <h3 className="mt-4 text-h4">{member.name}</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {member.role}
+              </p>
+            </div>
           ))}
         </div>
       </Container>

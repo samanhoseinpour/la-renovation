@@ -1,6 +1,5 @@
 import Image from "next/image";
 
-import { Reveal } from "@/components/motion/reveal";
 import { blurProps } from "@/content/blur";
 import type { DeliveryModelCopy } from "@/content/services";
 
@@ -16,13 +15,11 @@ export function DeliveryModel({ copy }: { copy: DeliveryModelCopy }) {
       <div>
         <p className="max-w-xl text-lead text-muted-foreground">{copy.lead}</p>
         <div className="mt-12">
-          {copy.columns.map((column, index) => (
-            <Reveal key={column.title} delay={Math.min(index * 0.05, 0.2)}>
-              <div className="border-t border-border py-8">
-                <h3 className="text-h3">{column.title}</h3>
-                <p className="mt-3 max-w-xl text-muted-foreground">{column.body}</p>
-              </div>
-            </Reveal>
+          {copy.columns.map((column) => (
+            <div key={column.title} className="border-t border-border py-8">
+              <h3 className="text-h3">{column.title}</h3>
+              <p className="mt-3 max-w-xl text-muted-foreground">{column.body}</p>
+            </div>
           ))}
         </div>
       </div>

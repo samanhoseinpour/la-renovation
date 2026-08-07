@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Reveal } from "@/components/motion/reveal";
 import { ContactCta } from "@/components/sections/contact-cta";
 import { PageHeader } from "@/components/sections/page-header";
 import { licensesIntro, licensesStance } from "@/content/licenses";
@@ -57,37 +56,33 @@ export default function LicensesPage() {
 
       <Section>
         <Container>
-          <Reveal>
-            <div className="max-w-2xl space-y-6">
-              {licensesStance.map((paragraph) => (
-                <p key={paragraph} className="text-lead">
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </Reveal>
+          <div className="max-w-2xl space-y-6">
+            {licensesStance.map((paragraph) => (
+              <p key={paragraph} className="text-lead">
+                {paragraph}
+              </p>
+            ))}
+          </div>
 
           {facts.length > 0 && (
-            <Reveal>
-              <div className="mt-20">
-                <h2 className="text-eyebrow text-muted-foreground">On file</h2>
-                <dl className="mt-6 max-w-xl border-t border-border">
-                  {facts.map((fact) => (
-                    <div
-                      key={fact.label}
-                      className="flex justify-between gap-6 border-b border-border py-4"
-                    >
-                      <dt className="text-sm text-muted-foreground">
-                        {fact.label}
-                      </dt>
-                      <dd className="text-sm tabular text-right">
-                        {fact.value}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-            </Reveal>
+            <div className="mt-20">
+              <h2 className="text-eyebrow text-muted-foreground">On file</h2>
+              <dl className="mt-6 max-w-xl border-t border-border">
+                {facts.map((fact) => (
+                  <div
+                    key={fact.label}
+                    className="flex justify-between gap-6 border-b border-border py-4"
+                  >
+                    <dt className="text-sm text-muted-foreground">
+                      {fact.label}
+                    </dt>
+                    <dd className="text-sm tabular text-right">
+                      {fact.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           )}
         </Container>
       </Section>

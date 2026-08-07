@@ -2,7 +2,6 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { AuthPanelMotif } from "@/components/admin/auth-panel-motif";
-import { Reveal } from "@/components/motion/reveal";
 import { adminAuthPanel } from "@/content/admin";
 import { site } from "@/lib/site";
 
@@ -43,14 +42,12 @@ export function AuthShell({ children }: { children: ReactNode }) {
         <div className="relative hidden flex-1 overflow-hidden lg:flex lg:flex-col lg:justify-end lg:px-gutter lg:pb-14">
           <div className="relative">
             <AuthPanelMotif />
-            <Reveal mode="mount" delay={0.1}>
-              <p className="text-eyebrow text-muted-foreground">
-                {adminAuthPanel.eyebrow}
-              </p>
-              <p className="mt-6 text-display-2 text-balance">
-                {site.tagline}
-              </p>
-            </Reveal>
+            <p className="text-eyebrow text-muted-foreground">
+              {adminAuthPanel.eyebrow}
+            </p>
+            <p className="mt-6 text-display-2 text-balance">
+              {site.tagline}
+            </p>
           </div>
         </div>
       </div>

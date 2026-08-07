@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Reveal } from "@/components/motion/reveal";
 import { ContactOffice } from "@/components/sections/contact-office";
 import { WhatHappensNext } from "@/components/sections/what-happens-next";
 import {
@@ -64,11 +63,9 @@ export default function ContactPage() {
           <h2 className="text-eyebrow text-muted-foreground">
             What happens next
           </h2>
-          <Reveal>
-            <div className="mt-12">
-              <WhatHappensNext steps={contactSteps} />
-            </div>
-          </Reveal>
+          <div className="mt-12">
+            <WhatHappensNext steps={contactSteps} />
+          </div>
         </Container>
       </Section>
     </>

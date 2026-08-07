@@ -5,7 +5,6 @@ import { ChevronLeft, ChevronRight, XIcon } from "lucide-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
 
-import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import type { BlurProps, SiteImage } from "@/content/images";
 import { cn } from "@/lib/utils";
@@ -51,7 +50,7 @@ export function GalleryLightbox({ images }: GalleryLightboxProps) {
           const fullWidth = oddCount && i === 0;
 
           return (
-            <Reveal key={i} className={fullWidth ? "lg:col-span-2" : undefined}>
+            <div key={i} className={fullWidth ? "lg:col-span-2" : undefined}>
               <button
                 type="button"
                 // The accessible name comes from the image alt inside; the
@@ -74,7 +73,7 @@ export function GalleryLightbox({ images }: GalleryLightboxProps) {
                   className="object-cover"
                 />
               </button>
-            </Reveal>
+            </div>
           );
         })}
       </div>

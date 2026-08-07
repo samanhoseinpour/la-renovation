@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import { ArrowLink } from "@/components/layout/arrow-link";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Reveal } from "@/components/motion/reveal";
 import { ThemeToggle } from "@/components/site/theme-toggle";
 import { Button } from "@/components/ui/button";
 
@@ -363,18 +362,19 @@ export default function StyleguidePage() {
       </Block>
 
       <Block title="Motion">
-        <Reveal>
-          <div className="rounded-3xl border border-border p-8">
-            <p className="text-h3">
-              Entrance reveals use one component and one curve.
-            </p>
-            <p className="mt-3 max-w-xl text-sm text-muted-foreground">
-              A 16px rise over 0.6s on the editorial ease, once, on entering
-              the viewport. Reduced-motion users get an opacity fade only.
-              Hovers stay in CSS.
-            </p>
-          </div>
-        </Reveal>
+        <div className="rounded-3xl border border-border p-8">
+          <p className="text-h3">
+            Content arrives visible. Motion is feedback, not entrance.
+          </p>
+          <p className="mt-3 max-w-xl text-sm text-muted-foreground">
+            There is no entrance animation: it was removed for Core Web
+            Vitals, so every section renders visible in the server HTML.
+            Motion is limited to hover and press transitions, the
+            CSS-keyframe plumb-line motif on the 404 and auth panel, and
+            Lenis smooth scroll on desktop pointers with reduced motion
+            excluded.
+          </p>
+        </div>
       </Block>
     </main>
   );

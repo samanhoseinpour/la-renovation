@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/admin/password-input";
-import { Reveal } from "@/components/motion/reveal";
 import { adminLogin } from "@/content/admin";
 import { authClient } from "@/lib/auth-client";
 
@@ -69,12 +68,10 @@ export function LoginForm() {
 
   return (
     <div>
-      <Reveal mode="mount">
-        <h1 className="text-h2">{adminLogin.title}</h1>
-        <p className="mt-4 text-muted-foreground">{adminLogin.lead}</p>
-      </Reveal>
+      <h1 className="text-h2">{adminLogin.title}</h1>
+      <p className="mt-4 text-muted-foreground">{adminLogin.lead}</p>
       <form onSubmit={handleSubmit}>
-        <Reveal mode="mount" delay={0.08} className="mt-10 grid gap-5">
+        <div className="mt-10 grid gap-5">
           <div className="grid gap-2">
             <Label htmlFor="login-email">{adminLogin.emailLabel}</Label>
             <Input
@@ -99,8 +96,8 @@ export function LoginForm() {
               aria-invalid={error === "credentials" || undefined}
             />
           </div>
-        </Reveal>
-        <Reveal mode="mount" delay={0.16} className="mt-8 grid gap-4">
+        </div>
+        <div className="mt-8 grid gap-4">
           {/* min-h reserves the line so an appearing error shifts nothing,
               the strength meter's trick. */}
           <p aria-live="polite" className="min-h-5 text-sm text-destructive">
@@ -137,16 +134,14 @@ export function LoginForm() {
             <KeyRound data-icon="inline-start" />
             {adminLogin.passkey}
           </Button>
-        </Reveal>
+        </div>
       </form>
-      <Reveal mode="mount" delay={0.16}>
-        <Link
-          href="/admin/reset-password"
-          className="mt-8 block text-center text-sm text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
-        >
-          {adminLogin.forgot}
-        </Link>
-      </Reveal>
+      <Link
+        href="/admin/reset-password"
+        className="mt-8 block text-center text-sm text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
+      >
+        {adminLogin.forgot}
+      </Link>
     </div>
   );
 }

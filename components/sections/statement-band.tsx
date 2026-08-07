@@ -1,4 +1,3 @@
-import { Reveal } from "@/components/motion/reveal";
 import { cn } from "@/lib/utils";
 
 /**
@@ -16,20 +15,18 @@ export function StatementBand({
   statement: string;
 }) {
   return (
-    <Reveal>
-      <div className="text-center">
-        {eyebrow && (
-          <h2 className="text-eyebrow text-muted-foreground">{eyebrow}</h2>
+    <div className="text-center">
+      {eyebrow && (
+        <h2 className="text-eyebrow text-muted-foreground">{eyebrow}</h2>
+      )}
+      <p
+        className={cn(
+          "mx-auto max-w-4xl text-h2 text-balance",
+          eyebrow && "mt-10",
         )}
-        <p
-          className={cn(
-            "mx-auto max-w-4xl text-h2 text-balance",
-            eyebrow && "mt-10",
-          )}
-        >
-          {statement}
-        </p>
-      </div>
-    </Reveal>
+      >
+        {statement}
+      </p>
+    </div>
   );
 }

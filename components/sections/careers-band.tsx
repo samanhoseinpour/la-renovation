@@ -1,7 +1,6 @@
 import { ArrowLink } from "@/components/layout/arrow-link";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Reveal } from "@/components/motion/reveal";
 import type { AboutCareersCopy } from "@/content/about";
 
 /**
@@ -16,14 +15,12 @@ export function CareersBand({ copy }: { copy: AboutCareersCopy }) {
   return (
     <Section size="default">
       <Container>
-        <Reveal>
-          <h2 className="text-eyebrow text-muted-foreground">{copy.eyebrow}</h2>
-          <p className="mt-6 max-w-2xl text-h2 text-balance">{copy.statement}</p>
-          <p className="mt-6 max-w-xl text-muted-foreground">{copy.body}</p>
-          <div className="mt-8">
-            <ArrowLink href={copy.link.href}>{copy.link.label}</ArrowLink>
-          </div>
-        </Reveal>
+        <h2 className="text-eyebrow text-muted-foreground">{copy.eyebrow}</h2>
+        <p className="mt-6 max-w-2xl text-h2 text-balance">{copy.statement}</p>
+        <p className="mt-6 max-w-xl text-muted-foreground">{copy.body}</p>
+        <div className="mt-8">
+          <ArrowLink href={copy.link.href}>{copy.link.label}</ArrowLink>
+        </div>
       </Container>
     </Section>
   );

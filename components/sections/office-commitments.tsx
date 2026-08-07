@@ -1,6 +1,5 @@
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Reveal } from "@/components/motion/reveal";
 import type { Commitment } from "@/content/about";
 
 type OfficeCommitmentsProps = {
@@ -27,15 +26,16 @@ export function OfficeCommitments({ id, items }: OfficeCommitmentsProps) {
         <h2 className="text-eyebrow text-muted-foreground">Commitments</h2>
 
         <div className="mt-14">
-          {items.map((item, index) => (
-            <Reveal key={item.title} delay={Math.min(index * 0.05, 0.2)}>
-              <div className="grid gap-6 border-t border-border py-10 lg:grid-cols-7 lg:gap-12">
-                <h3 className="text-h3 lg:col-span-2">{item.title}</h3>
-                <p className="max-w-2xl text-lead text-muted-foreground lg:col-span-4 lg:col-start-4">
-                  {item.body}
-                </p>
-              </div>
-            </Reveal>
+          {items.map((item) => (
+            <div
+              key={item.title}
+              className="grid gap-6 border-t border-border py-10 lg:grid-cols-7 lg:gap-12"
+            >
+              <h3 className="text-h3 lg:col-span-2">{item.title}</h3>
+              <p className="max-w-2xl text-lead text-muted-foreground lg:col-span-4 lg:col-start-4">
+                {item.body}
+              </p>
+            </div>
           ))}
         </div>
       </Container>

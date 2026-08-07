@@ -1,4 +1,3 @@
-import { Reveal } from "@/components/motion/reveal";
 import { CompareSlider } from "@/components/sections/compare-slider";
 import { blurProps } from "@/content/blur";
 import type { ComparePair } from "@/content/projects";
@@ -19,7 +18,7 @@ export function CompareGallery({ pairs }: { pairs: ComparePair[] }) {
           const fullWidth = oddCount && i === 0;
 
           return (
-            <Reveal
+            <div
               key={pair.before.src}
               className={fullWidth ? "lg:col-span-2" : undefined}
             >
@@ -36,7 +35,7 @@ export function CompareGallery({ pairs }: { pairs: ComparePair[] }) {
                   {pair.caption}
                 </p>
               ) : null}
-            </Reveal>
+            </div>
           );
         })}
       </div>

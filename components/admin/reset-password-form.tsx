@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/admin/password-input";
 import { PasswordStrength } from "@/components/admin/password-strength";
-import { Reveal } from "@/components/motion/reveal";
 import { adminReset } from "@/content/admin";
 import { authClient } from "@/lib/auth-client";
 import { MIN_PASSWORD_LENGTH } from "@/lib/auth-shared";
@@ -44,14 +43,12 @@ function SetPassword({ token }: { token: string }) {
 
   return (
     <div>
-      <Reveal mode="mount">
-        <h1 className="text-h2">{adminReset.setTitle}</h1>
-        <p aria-live="polite" className="mt-4 text-muted-foreground">
-          {state === "saved" ? adminReset.saved : adminReset.setLead}
-        </p>
-      </Reveal>
+      <h1 className="text-h2">{adminReset.setTitle}</h1>
+      <p aria-live="polite" className="mt-4 text-muted-foreground">
+        {state === "saved" ? adminReset.saved : adminReset.setLead}
+      </p>
       {state === "saved" ? (
-        <Reveal mode="mount" className="mt-10">
+        <div className="mt-10">
           <Link
             href="/admin/login"
             className={cn(
@@ -61,10 +58,10 @@ function SetPassword({ token }: { token: string }) {
           >
             {adminReset.savedCta}
           </Link>
-        </Reveal>
+        </div>
       ) : (
         <form onSubmit={handleSubmit}>
-          <Reveal mode="mount" delay={0.08} className="mt-10 grid gap-5">
+          <div className="mt-10 grid gap-5">
             <div className="grid gap-2">
               <Label htmlFor="reset-password">{adminReset.passwordLabel}</Label>
               <PasswordInput
@@ -80,8 +77,8 @@ function SetPassword({ token }: { token: string }) {
               />
               <PasswordStrength password={password} />
             </div>
-          </Reveal>
-          <Reveal mode="mount" delay={0.16} className="mt-8 grid gap-4">
+          </div>
+          <div className="mt-8 grid gap-4">
             <p aria-live="polite" className="min-h-5 text-sm text-destructive">
               {state === "invalid"
                 ? adminReset.invalid
@@ -107,7 +104,7 @@ function SetPassword({ token }: { token: string }) {
                 {adminReset.invalidCta}
               </Link>
             )}
-          </Reveal>
+          </div>
         </form>
       )}
     </div>
@@ -134,14 +131,12 @@ function RequestReset() {
 
   return (
     <div>
-      <Reveal mode="mount">
-        <h1 className="text-h2">{adminReset.requestTitle}</h1>
-        <p aria-live="polite" className="mt-4 text-muted-foreground">
-          {state === "sent" ? adminReset.requestSent : adminReset.requestLead}
-        </p>
-      </Reveal>
+      <h1 className="text-h2">{adminReset.requestTitle}</h1>
+      <p aria-live="polite" className="mt-4 text-muted-foreground">
+        {state === "sent" ? adminReset.requestSent : adminReset.requestLead}
+      </p>
       {state === "sent" ? (
-        <Reveal mode="mount" className="mt-10">
+        <div className="mt-10">
           <Link
             href="/admin/login"
             className={cn(
@@ -151,11 +146,11 @@ function RequestReset() {
           >
             {adminReset.backToLogin}
           </Link>
-        </Reveal>
+        </div>
       ) : (
         <>
           <form onSubmit={handleSubmit}>
-            <Reveal mode="mount" delay={0.08} className="mt-10 grid gap-5">
+            <div className="mt-10 grid gap-5">
               <div className="grid gap-2">
                 <Label htmlFor="reset-email">{adminReset.emailLabel}</Label>
                 <Input
@@ -168,8 +163,8 @@ function RequestReset() {
                   className="h-11"
                 />
               </div>
-            </Reveal>
-            <Reveal mode="mount" delay={0.16} className="mt-8 grid gap-4">
+            </div>
+            <div className="mt-8 grid gap-4">
               <p
                 aria-live="polite"
                 className="min-h-5 text-sm text-destructive"
@@ -187,16 +182,14 @@ function RequestReset() {
                   ? adminReset.requestSubmitting
                   : adminReset.requestSubmit}
               </Button>
-            </Reveal>
+            </div>
           </form>
-          <Reveal mode="mount" delay={0.16}>
-            <Link
-              href="/admin/login"
-              className="mt-8 block text-center text-sm text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
-            >
-              {adminReset.backToLogin}
-            </Link>
-          </Reveal>
+          <Link
+            href="/admin/login"
+            className="mt-8 block text-center text-sm text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
+          >
+            {adminReset.backToLogin}
+          </Link>
         </>
       )}
     </div>

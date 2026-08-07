@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { ArrowLink } from "@/components/layout/arrow-link";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Reveal } from "@/components/motion/reveal";
 import { ContactCta } from "@/components/sections/contact-cta";
 import { DeliveryModel } from "@/components/sections/delivery-model";
 import { FaqList } from "@/components/sections/faq-list";
@@ -51,12 +50,10 @@ export default function ServicesPage() {
 
       <Section surface="muted">
         <Container>
-          <Reveal>
-            <p className="text-eyebrow text-muted-foreground">{servicesPage.process.eyebrow}</p>
-            <h2 className="mt-6 max-w-2xl text-h2 text-balance">
-              {servicesPage.process.heading}
-            </h2>
-          </Reveal>
+          <p className="text-eyebrow text-muted-foreground">{servicesPage.process.eyebrow}</p>
+          <h2 className="mt-6 max-w-2xl text-h2 text-balance">
+            {servicesPage.process.heading}
+          </h2>
           <div className="mt-14">
             <ProcessTimeline phases={processPhases} />
           </div>
@@ -65,10 +62,8 @@ export default function ServicesPage() {
 
       <Section>
         <Container>
-          <Reveal>
-            <p className="text-eyebrow text-muted-foreground">{deliveryModel.eyebrow}</p>
-            <h2 className="mt-6 max-w-2xl text-h2 text-balance">{deliveryModel.heading}</h2>
-          </Reveal>
+          <p className="text-eyebrow text-muted-foreground">{deliveryModel.eyebrow}</p>
+          <h2 className="mt-6 max-w-2xl text-h2 text-balance">{deliveryModel.heading}</h2>
           <div className="mt-14">
             <DeliveryModel copy={deliveryModel} />
           </div>
@@ -77,12 +72,10 @@ export default function ServicesPage() {
 
       <Section surface="muted">
         <Container>
-          <Reveal>
-            <p className="text-eyebrow text-muted-foreground">{servicesPage.faq.eyebrow}</p>
-            <h2 className="mt-6 max-w-2xl text-h2 text-balance">
-              {servicesPage.faq.heading}
-            </h2>
-          </Reveal>
+          <p className="text-eyebrow text-muted-foreground">{servicesPage.faq.eyebrow}</p>
+          <h2 className="mt-6 max-w-2xl text-h2 text-balance">
+            {servicesPage.faq.heading}
+          </h2>
           <div className="mt-14">
             <FaqList faqs={getFeaturedFaqs()} />
           </div>

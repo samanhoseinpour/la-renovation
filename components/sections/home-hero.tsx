@@ -4,7 +4,6 @@ import Link from "next/link";
 
 import { ArrowLink } from "@/components/layout/arrow-link";
 import { Container } from "@/components/layout/container";
-import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 import { blurProps } from "@/content/blur";
 import { homeHero } from "@/content/home";
@@ -15,7 +14,7 @@ import { published } from "@/lib/site";
  * Adapted from @shadcnblocks/hero157: kept the full-bleed viewport photograph
  * with the text stack anchored to its bottom edge and the border-left lead
  * paragraph. Replaced its CSS background-image with a preloaded next/image —
- * the LCP element must exist in server HTML and must not sit behind a Reveal —
+ * the hero renders static server markup, entrance animation removed for LCP —
  * its flat black overlay with a bottom-weighted gradient scrim, and its
  * uppercase outline CTA with the house brand pill + ArrowLink.
  *
@@ -59,45 +58,41 @@ export function HomeHero() {
       />
 
       <Container className="relative pt-40 pb-14 md:pb-20">
-        <Reveal mode="mount">
-          <p className="text-eyebrow text-foreground/80">
-            {homeHero.eyebrow}
-          </p>
-          <h1 className="mt-6 max-w-5xl text-display-1 text-balance text-foreground">
-            {homeHero.heading}
-          </h1>
-        </Reveal>
+        <p className="text-eyebrow text-foreground/80">
+          {homeHero.eyebrow}
+        </p>
+        <h1 className="mt-6 max-w-5xl text-display-1 text-balance text-foreground">
+          {homeHero.heading}
+        </h1>
 
-        <Reveal mode="mount" delay={0.08}>
-          <div className="mt-10 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-            {/* The lead is the client's full positioning paragraph, not a
-                one-liner: body size at xl width keeps it from rivalling the
-                headline while holding a readable measure. */}
-            <p className="max-w-xl border-l border-foreground/40 pl-6 text-base text-foreground/85">
-              {homeHero.lead}
-            </p>
-            <div className="flex flex-wrap items-center gap-6">
-              <Button
-                size="xl"
-                variant="brand"
-                render={<Link href={homeHero.primaryCta.href} />}
-                nativeButton={false}
-              >
-                {homeHero.primaryCta.label}
-                <ArrowRight data-icon="inline-end" />
-              </Button>
-              {published.projects ? (
-                <ArrowLink href={homeHero.secondaryCta.published.href}>
-                  {homeHero.secondaryCta.published.label}
-                </ArrowLink>
-              ) : (
-                <ArrowLink href={homeHero.secondaryCta.unpublished.href}>
-                  {homeHero.secondaryCta.unpublished.label}
-                </ArrowLink>
-              )}
-            </div>
+        <div className="mt-10 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          {/* The lead is the client's full positioning paragraph, not a
+              one-liner: body size at xl width keeps it from rivalling the
+              headline while holding a readable measure. */}
+          <p className="max-w-xl border-l border-foreground/40 pl-6 text-base text-foreground/85">
+            {homeHero.lead}
+          </p>
+          <div className="flex flex-wrap items-center gap-6">
+            <Button
+              size="xl"
+              variant="brand"
+              render={<Link href={homeHero.primaryCta.href} />}
+              nativeButton={false}
+            >
+              {homeHero.primaryCta.label}
+              <ArrowRight data-icon="inline-end" />
+            </Button>
+            {published.projects ? (
+              <ArrowLink href={homeHero.secondaryCta.published.href}>
+                {homeHero.secondaryCta.published.label}
+              </ArrowLink>
+            ) : (
+              <ArrowLink href={homeHero.secondaryCta.unpublished.href}>
+                {homeHero.secondaryCta.unpublished.label}
+              </ArrowLink>
+            )}
           </div>
-        </Reveal>
+        </div>
       </Container>
     </section>
   );
