@@ -128,9 +128,10 @@ export const contactPage: ContactPageCopy = {
 
 /**
  * Every string the contact form renders: group headings, field labels,
- * legends, helper lines, the submit pair and the confirmation panel. The
- * zod error messages stay beside the schema in app/(site)/contact/schema.ts;
- * the server-only outcome messages stay in the action.
+ * placeholders, legends, helper lines, the submit pair and the confirmation
+ * panel. The zod error messages stay beside the schema in
+ * app/(site)/contact/schema.ts; the server-only outcome messages stay in
+ * the action.
  */
 export const contactForm = {
   groups: {
@@ -144,11 +145,13 @@ export const contactForm = {
     },
   },
   optionalTag: "Optional",
+  requiredHint: "Fields marked * are required.",
   fields: {
-    name: { label: "Name" },
-    email: { label: "Email" },
-    phone: { label: "Phone" },
-    company: { label: "Company" },
+    name: { label: "Name", placeholder: "Alex Rivera" },
+    email: { label: "Email", placeholder: "you@company.com" },
+    // 555-01XX is the reserved fictional range; the office's own area code.
+    phone: { label: "Phone", placeholder: "(424) 555-0134" },
+    company: { label: "Company", placeholder: "Company or organization" },
     services: {
       legend: "What does the project involve?",
       help: "Choose everything that applies.",
@@ -160,6 +163,7 @@ export const contactForm = {
     message: {
       label: "Anything else we should know?",
       help: "Where the property is, what you're hoping to do, and roughly when.",
+      placeholder: "The site address is a good start.",
     },
   },
   errorSummary: "Please check the highlighted fields.",
@@ -169,6 +173,7 @@ export const contactForm = {
     eyebrow: "Enquiry received",
     urgentPrefix: "If it's urgent, call",
     urgentSuffix: "during office hours.",
+    again: "Send another enquiry",
   },
 } as const;
 
