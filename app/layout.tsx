@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Archivo } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 
-import { MotionProvider } from "@/components/motion/motion-provider";
 import { ThemeColorSync } from "@/components/site/theme-color-sync";
 import { ThemeProvider } from "@/components/site/theme-provider";
 import { site } from "@/lib/site";
@@ -78,12 +77,6 @@ export default function RootLayout({
       className={`${archivo.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        {/* Reveal wrappers server-render hidden; without JS they must not
-            stay that way. A stylesheet !important beats motion's inline
-            styles. */}
-        <noscript>
-          <style>{`[data-reveal]{opacity:1!important;transform:none!important;translate:none!important}`}</style>
-        </noscript>
         {/* defaultTheme="light" with no enableSystem: light is the default
             for everyone; the header toggle writes explicit light/dark. */}
         <ThemeProvider
@@ -92,7 +85,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ThemeColorSync />
-          <MotionProvider>{children}</MotionProvider>
+          {children}
         </ThemeProvider>
         {/* Cookieless platform measurement; /privacy documents exactly what
             it sees and must stay truthful if this changes. */}
