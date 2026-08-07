@@ -58,6 +58,7 @@ export const privacyPolicy: LegalDoc = {
       paragraphs: [
         "The site counts its visits with Vercel Web Analytics, the measurement built into the platform that hosts it. It runs without cookies: nothing is planted on your device, and no profile of you is built or carried between sites.",
         "What reaches us is aggregate. We can see which pages get viewed, what country visits come from, and what kind of device and browser they arrive on. None of it is tied to your name, your email, or anything you type into the contact form.",
+        "When the contact form reports that an enquiry went through, we also count that it happened. That event is a bare count in the same cookieless aggregate: it records that the form was submitted, never who submitted it or what it said.",
       ],
     },
     {

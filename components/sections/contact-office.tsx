@@ -1,5 +1,6 @@
 "use client";
 
+import { track } from "@vercel/analytics";
 import { ArrowRight } from "lucide-react";
 import { useActionState, useEffect, useRef, useState } from "react";
 
@@ -214,6 +215,16 @@ export function ContactOffice({
       // The draft dies with the tab anyway.
     }
   }, [showSuccess]);
+
+  // One submission, one event, no properties. Same identity trick as
+  // `acknowledged`: each round trip deserializes a fresh state object, so
+  // marking the counted one means re-renders never double-fire.
+  const tracked = useRef<ContactState | null>(null);
+  useEffect(() => {
+    if (state.status !== "success" || tracked.current === state) return;
+    tracked.current = state;
+    track("Enquiry submitted");
+  }, [state]);
 
   function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     if (mountedAt.current !== null && paceRef.current) {
