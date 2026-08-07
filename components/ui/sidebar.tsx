@@ -97,12 +97,22 @@ function SidebarProvider({
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (
-        event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
-        (event.metaKey || event.ctrlKey)
+        event.key !== SIDEBAR_KEYBOARD_SHORTCUT ||
+        !(event.metaKey || event.ctrlKey)
       ) {
-        event.preventDefault()
-        toggleSidebar()
+        return
       }
+      // Never steal the shortcut from a field the user is typing in
+      // (Ctrl+B is also an emacs-style cursor motion in text inputs).
+      const target = event.target
+      if (
+        target instanceof HTMLElement &&
+        (target.isContentEditable || target.matches("input, textarea, select"))
+      ) {
+        return
+      }
+      event.preventDefault()
+      toggleSidebar()
     }
 
     window.addEventListener("keydown", handleKeyDown)
@@ -484,8 +494,10 @@ const sidebarMenuButtonVariants = cva(
           "bg-background shadow-[0_0_0_1px_var(--sidebar-border)] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_var(--sidebar-accent)]",
       },
       size: {
-        default: "h-8 text-sm",
-        sm: "h-7 text-xs",
+        // The icon-mode size-8!/p-2! in the base string out-cascade these
+        // coarse bumps by design: a 44px target cannot fit the 48px rail.
+        default: "h-8 pointer-coarse:h-11 text-sm",
+        sm: "h-7 pointer-coarse:h-11 text-xs",
         lg: "h-12 text-sm group-data-[collapsible=icon]:p-0!",
       },
     },

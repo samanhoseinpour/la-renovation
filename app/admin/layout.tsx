@@ -19,5 +19,5 @@ export const metadata: Metadata = {
  * data-admin scopes the native-scrollbar restore in globals.css.
  */
 export default function AdminLayout({ children }: { children: ReactNode }) {
-  return <div data-admin className="flex min-h-dvh flex-1 flex-col">{children}</div>;
+  return <div data-admin className="flex min-h-svh flex-1 flex-col">{children}</div>;
 }
