@@ -1,11 +1,11 @@
 "use client";
 
 import { ArrowUp } from "lucide-react";
-import { useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
 import { getLenis } from "@/components/motion/smooth-scroll";
 import { Button } from "@/components/ui/button";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { cn } from "@/lib/utils";
 
 /**
