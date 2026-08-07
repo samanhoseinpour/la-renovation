@@ -1,59 +1,32 @@
-"use client";
-
-import { useRef } from "react";
-import { m, useScroll } from "motion/react";
-
-import { Reveal } from "@/components/motion/reveal";
 import type { ProcessPhase } from "@/content/office";
 
 /**
  * Adapted from @shadcnblocks/timeline4 over the timeline19 rows it replaces:
- * a left rail with a scroll-scrubbed brand fill, index roundels sitting on
- * the rail, and the hairline editorial grid kept for each phase. The rail
- * pours as the sequence crosses the viewport center; each roundel lights
- * its ring as its row reaches the center band, so fill and markers agree
- * regardless of row height.
+ * a left brand rail with index roundels sitting on it, and the hairline
+ * editorial grid kept for each phase. The scroll-scrubbed pour retired with
+ * the motion runtime (PSI, 2026-08): rail and rings render lit, and the
+ * timeline is server markup with no JavaScript.
  */
 export function ProcessTimeline({ phases }: { phases: ProcessPhase[] }) {
-  const trackRef = useRef<HTMLOListElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: trackRef,
-    offset: ["start center", "end center"],
-  });
-
   return (
     <div className="relative">
-      <div aria-hidden className="absolute inset-y-0 left-4 w-px bg-border">
-        <m.div
-          className="h-full w-full origin-top bg-brand"
-          style={{ scaleY: scrollYProgress }}
-        />
-      </div>
+      <div aria-hidden className="absolute inset-y-0 left-4 w-px bg-brand" />
 
-      <ol ref={trackRef} role="list">
-        {phases.map((phase, index) => (
+      <ol role="list">
+        {phases.map((phase) => (
           <li
             key={phase.index}
             className="relative border-t border-border py-8 pl-12 lg:py-10 lg:pl-16"
           >
-            <span className="absolute left-4 top-7 grid size-8 -translate-x-1/2 place-items-center rounded-full border border-border bg-background text-eyebrow text-muted-foreground lg:top-10">
-              <m.span
-                aria-hidden
-                className="absolute -inset-px rounded-full border border-brand"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true, margin: "-45% 0px -45% 0px" }}
-              />
+            <span className="absolute left-4 top-7 grid size-8 -translate-x-1/2 place-items-center rounded-full border border-brand bg-background text-eyebrow text-muted-foreground lg:top-10">
               {phase.index}
             </span>
-            <Reveal delay={Math.min(index * 0.05, 0.2)}>
-              <div className="grid gap-3 lg:grid-cols-11 lg:gap-8">
-                <h3 className="text-h3 lg:col-span-4">{phase.title}</h3>
-                <p className="max-w-xl text-muted-foreground lg:col-span-6 lg:col-start-6">
-                  {phase.description}
-                </p>
-              </div>
-            </Reveal>
+            <div className="grid gap-3 lg:grid-cols-11 lg:gap-8">
+              <h3 className="text-h3 lg:col-span-4">{phase.title}</h3>
+              <p className="max-w-xl text-muted-foreground lg:col-span-6 lg:col-start-6">
+                {phase.description}
+              </p>
+            </div>
           </li>
         ))}
       </ol>
