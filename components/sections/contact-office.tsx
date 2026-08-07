@@ -10,6 +10,7 @@ import {
   readContactForm,
   type ContactField,
   type ContactState,
+  type ContactValues,
 } from "@/app/(site)/contact/schema";
 import { ArrowLink } from "@/components/layout/arrow-link";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,10 @@ import type { ContactFormCopy, ContactPageCopy } from "@/content/office";
 import { site } from "@/lib/site";
 
 const initialContactState: ContactState = { status: "idle" };
+
+// Per-tab draft of an unsent enquiry. readContactForm is the serializer, so
+// the honeypot and pace fields can never enter the draft.
+const DRAFT_KEY = "contact-draft";
 
 // Checkbox- and radio-backed pill. The input is sr-only, so the label wears
 // both states: checked = filled brand, focus = the quiet ring treatment via
@@ -132,13 +137,12 @@ export function ContactOffice({
     mountedAt.current = performance.now();
   }, []);
 
-  // Seed the fresh form once per page load with the chip a division CTA
-  // named in ?service=. Ref-guarded rather than dep-driven because a
-  // send-another reset must not re-apply anything, and idle-only because a
-  // pre-hydration POST mounts with a server echo that already holds the
-  // visitor's own choices. The chip values are titles, so the services prop
-  // is the slug lookup; an unknown slug falls through silently, and property
-  // writes fire no React events, so revalidation stays quiet.
+  // Seed the fresh form once per page load: restore any unsent draft, then
+  // check the chip a division CTA named in ?service=. Ref-guarded rather than
+  // dep-driven because a send-another reset must not re-apply anything, and
+  // idle-only because a pre-hydration POST mounts with a server echo that
+  // already holds the visitor's own choices. Property writes fire no React
+  // events, so revalidation stays quiet and no draft is written back.
   const formRef = useRef<HTMLFormElement>(null);
   const seeded = useRef(false);
   useEffect(() => {
@@ -148,6 +152,48 @@ export function ContactOffice({
     const form = formRef.current;
     if (!form) return;
 
+    let draft: ContactValues | null = null;
+    try {
+      const raw = sessionStorage.getItem(DRAFT_KEY);
+      if (raw) {
+        const parsed: unknown = JSON.parse(raw);
+        if (parsed && typeof parsed === "object") {
+          draft = parsed as ContactValues;
+        }
+      }
+    } catch {
+      // Storage unavailable or the draft unparseable: start blank.
+    }
+    if (draft) {
+      for (const field of [
+        "name",
+        "email",
+        "phone",
+        "company",
+        "message",
+      ] as const) {
+        const input = form.elements.namedItem(field);
+        if (
+          input instanceof HTMLInputElement ||
+          input instanceof HTMLTextAreaElement
+        ) {
+          input.value = draft[field] ?? "";
+        }
+      }
+      for (const chip of form.querySelectorAll<HTMLInputElement>(
+        'input[name="services"]',
+      )) {
+        chip.checked = draft.services?.includes(chip.value) ?? false;
+      }
+      for (const chip of form.querySelectorAll<HTMLInputElement>(
+        'input[name="stage"]',
+      )) {
+        chip.checked = draft.stage === chip.value;
+      }
+    }
+
+    // The chip values are titles, so the services prop is the slug lookup;
+    // an unknown slug falls through silently.
     const slug = new URLSearchParams(window.location.search).get("service");
     const title = services.find((service) => service.slug === slug)?.title;
     if (title) {
@@ -158,6 +204,16 @@ export function ContactOffice({
       }
     }
   }, [state.status, services]);
+
+  // A sent enquiry has nothing left to draft.
+  useEffect(() => {
+    if (!showSuccess) return;
+    try {
+      sessionStorage.removeItem(DRAFT_KEY);
+    } catch {
+      // The draft dies with the tab anyway.
+    }
+  }, [showSuccess]);
 
   function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     if (mountedAt.current !== null && paceRef.current) {
@@ -198,9 +254,28 @@ export function ContactOffice({
     });
   }
 
+  // Every change re-snapshots the whole form into the per-tab draft through
+  // the same reader the submit path uses. Best effort: private-mode quotas
+  // and disabled storage must never break typing.
+  function handleDraftChange(event: React.ChangeEvent<HTMLFormElement>) {
+    try {
+      sessionStorage.setItem(
+        DRAFT_KEY,
+        JSON.stringify(readContactForm(new FormData(event.currentTarget))),
+      );
+    } catch {
+      // The draft is a convenience; losing it is fine.
+    }
+  }
+
   function handleReset() {
     setClientErrors(null);
     setAcknowledged(state);
+    try {
+      sessionStorage.removeItem(DRAFT_KEY);
+    } catch {
+      // Already cleared on success; this is belt and braces.
+    }
   }
 
   return (
@@ -294,6 +369,7 @@ export function ContactOffice({
             ref={formRef}
             action={formAction}
             onSubmit={handleSubmit}
+            onChange={handleDraftChange}
             // noValidate: the zod messages under each field are the one error
             // voice; native bubbles would compete with them. The required and
             // type attributes stay for semantics, and a pre-hydration submit

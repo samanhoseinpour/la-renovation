@@ -16,7 +16,7 @@ export type LegalDoc = {
 export const privacyPolicy: LegalDoc = {
   slug: "privacy",
   title: "Privacy policy",
-  updated: "2026-08-06",
+  updated: "2026-08-07",
   intro:
     "This site is a brochure, not a platform. It collects almost nothing, and this page describes the little it does.",
   sections: [
@@ -64,6 +64,7 @@ export const privacyPolicy: LegalDoc = {
       heading: "What stays on your device",
       paragraphs: [
         "If you switch between the light and dark theme, that preference is saved in your browser's local storage. It never leaves your device and we never see it. Clearing your browser data resets it.",
+        "If you start filling in the contact form and leave the page, what you had typed is kept in your browser's session storage so it's still there when you come back. What you type stays on your device until you press send, and the draft clears on its own once the enquiry is sent or the tab is closed.",
       ],
     },
     {
