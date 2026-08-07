@@ -18,7 +18,9 @@ import { getDb } from "./index";
 import { submissions, type Submission } from "./schema";
 
 export type SubmissionStatus = "new" | "read" | "archived";
-export type InboxFilter = SubmissionStatus | "all";
+// "failed" is a delivery view, not a status: it filters on the delivery
+// column while riding the same ?status= param as the real statuses.
+export type InboxFilter = SubmissionStatus | "all" | "failed";
 
 export type NewEnquiry = {
   name: string;
@@ -113,9 +115,18 @@ function escapeLike(term: string): string {
   return term.replace(/[\\%_]/g, (char) => `\\${char}`);
 }
 
-function inboxConditions(filter: InboxFilter, q?: string): SQL[] {
+function inboxConditions(
+  filter: InboxFilter,
+  q?: string,
+  start?: Date | null,
+): SQL[] {
   const conds: SQL[] = [];
-  if (filter !== "all") conds.push(eq(submissions.status, filter));
+  if (filter === "failed") {
+    conds.push(eq(submissions.delivery, "failed"));
+  } else if (filter !== "all") {
+    conds.push(eq(submissions.status, filter));
+  }
+  if (start) conds.push(gte(submissions.createdAt, start));
   if (q) {
     const pattern = `%${escapeLike(q)}%`;
     const search = or(
@@ -139,11 +150,12 @@ function inboxConditions(filter: InboxFilter, q?: string): SQL[] {
 export async function listSubmissionsPage(args: {
   filter: InboxFilter;
   q?: string;
+  start?: Date | null;
   before?: InboxCursor;
   limit?: number;
 }): Promise<InboxPage> {
-  const { filter, q, before, limit = INBOX_PAGE_SIZE } = args;
-  const conds = inboxConditions(filter, q);
+  const { filter, q, start, before, limit = INBOX_PAGE_SIZE } = args;
+  const conds = inboxConditions(filter, q, start);
   if (before) {
     conds.push(
       sql`(${submissions.createdAt}, ${submissions.id}) < (${before.ts}::timestamptz, ${before.id}::uuid)`,
@@ -167,8 +179,7 @@ export async function listSubmissionsForExport(args: {
   q?: string;
   start?: Date | null;
 }): Promise<Submission[]> {
-  const conds = inboxConditions(args.filter, args.q);
-  if (args.start) conds.push(gte(submissions.createdAt, args.start));
+  const conds = inboxConditions(args.filter, args.q, args.start);
   return getDb()
     .select()
     .from(submissions)

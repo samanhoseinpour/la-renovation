@@ -7,7 +7,10 @@
 
 const LA = "America/Los_Angeles";
 
-export type RangePreset = "today" | "7d" | "30d" | "month" | "all";
+// Value-level list so the inbox page's whitelist, the toolbar's options and
+// the export route's zod enum all share one source.
+export const RANGE_PRESETS = ["today", "7d", "30d", "month", "all"] as const;
+export type RangePreset = (typeof RANGE_PRESETS)[number];
 
 // Offset of LA from UTC at a given instant: format the instant in LA,
 // reinterpret those wall-clock parts as UTC, diff the two.
