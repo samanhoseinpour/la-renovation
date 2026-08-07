@@ -35,9 +35,11 @@ export function AdminOverview({
       href: "/admin/submissions?status=new",
     },
     { label: adminOverview.tiles.week, value: week, href: "/admin/submissions" },
-    // No delivery filter exists in the inbox yet, so this tile stays a plain
-    // number; linking it somewhere that can't show the rows would mislead.
-    { label: adminOverview.tiles.failed, value: failed, href: null },
+    {
+      label: adminOverview.tiles.failed,
+      value: failed,
+      href: "/admin/submissions?status=failed",
+    },
   ];
 
   return (
