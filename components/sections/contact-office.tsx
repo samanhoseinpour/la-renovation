@@ -131,6 +131,33 @@ export function ContactOffice({
     mountedAt.current = performance.now();
   }, []);
 
+  // Seed the fresh form once per page load with the chip a division CTA
+  // named in ?service=. Ref-guarded rather than dep-driven because a
+  // send-another reset must not re-apply anything, and idle-only because a
+  // pre-hydration POST mounts with a server echo that already holds the
+  // visitor's own choices. The chip values are titles, so the services prop
+  // is the slug lookup; an unknown slug falls through silently, and property
+  // writes fire no React events, so revalidation stays quiet.
+  const formRef = useRef<HTMLFormElement>(null);
+  const seeded = useRef(false);
+  useEffect(() => {
+    if (seeded.current) return;
+    seeded.current = true;
+    if (state.status !== "idle") return;
+    const form = formRef.current;
+    if (!form) return;
+
+    const slug = new URLSearchParams(window.location.search).get("service");
+    const title = services.find((service) => service.slug === slug)?.title;
+    if (title) {
+      for (const chip of form.querySelectorAll<HTMLInputElement>(
+        'input[name="services"]',
+      )) {
+        if (chip.value === title) chip.checked = true;
+      }
+    }
+  }, [state.status, services]);
+
   function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     if (mountedAt.current !== null && paceRef.current) {
       paceRef.current.value = String(
@@ -254,6 +281,7 @@ export function ContactOffice({
           </div>
         ) : (
           <form
+            ref={formRef}
             action={formAction}
             onSubmit={handleSubmit}
             // noValidate: the zod messages under each field are the one error

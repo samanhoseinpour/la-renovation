@@ -110,7 +110,7 @@ export const services: Service[] = [
       heading: "Planning a charging installation?",
       lead: "Send us the site and the vehicle count. We'll model the load and the utility path before you commit to anything.",
       label: "Book a call",
-      href: "/contact",
+      href: "/contact?service=energy-infrastructure",
     },
   },
   {
@@ -169,7 +169,7 @@ export const services: Service[] = [
       heading: "Tell us about the building.",
       lead: "A site, a shell, or an existing facility: send us what you have and we'll tell you what it will take.",
       label: "Book a call",
-      href: "/contact",
+      href: "/contact?service=commercial-institutional",
     },
   },
   {
@@ -233,7 +233,7 @@ export const services: Service[] = [
       heading: "Send us the site.",
       lead: "We'll tell you what's underneath it, what it will take to prepare, and where the schedule risk actually sits.",
       label: "Book a site walk",
-      href: "/contact",
+      href: "/contact?service=civil-site-development",
     },
     statement:
       "We self-perform the ground: the scopes that set the schedule and carry the most carbon.",
@@ -299,7 +299,7 @@ export const services: Service[] = [
       heading: "Working on a site?",
       lead: "Send us the parcel and the program. We'll tell you what it supports and where the budget risk sits.",
       label: "Book a call",
-      href: "/contact",
+      href: "/contact?service=multifamily-mixed-use",
     },
   },
   {
@@ -358,7 +358,7 @@ export const services: Service[] = [
       heading: "Starting from the ground?",
       lead: "Send us the site and the structural drawings. We'll price the ground work against real conditions.",
       label: "Book a call",
-      href: "/contact",
+      href: "/contact?service=concrete-foundation-structural",
     },
     statement: "Instrumented, not assumed.",
   },
@@ -406,7 +406,7 @@ export const services: Service[] = [
       heading: "Know before you commit.",
       lead: "Bring us the site or the drawings before the numbers harden. Feasibility, budgeting, and permitting are cheapest to get right now.",
       label: "Book a call",
-      href: "/contact",
+      href: "/contact?service=preconstruction-program-management",
     },
   },
   {
@@ -453,7 +453,7 @@ export const services: Service[] = [
       heading: "Start with the lot, not the floor plan.",
       lead: "Tell us where you want to build. We'll tell you what the ground will hold, what the agency will approve, and what it takes to build there.",
       label: "Book a call",
-      href: "/contact",
+      href: "/contact?service=single-family",
     },
   },
 ];
