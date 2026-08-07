@@ -362,5 +362,38 @@ html.lenis body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
 
+/* The 404 / auth-panel plumb line, formerly a motion tween. CSS so the motif
+   costs no JavaScript and plays before hydration; both animations end visible,
+   so there is no hidden-without-JS state. The marker's hold is baked into the
+   keyframes rather than animation-delay: the clamp above zeroes durations but
+   not delays, and an in-keyframe hold collapses with the duration, leaving the
+   marker instantly visible under reduce. */
+.animate-plumb-line {
+  transform-origin: top;
+  animation: plumb-drop 0.9s var(--ease-editorial) both;
+}
+
+.animate-plumb-marker {
+  animation: plumb-land 0.9s var(--ease-editorial) both;
+}
+
+@keyframes plumb-drop {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes plumb-land {
+  0%,
+  83% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
