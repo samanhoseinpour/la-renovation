@@ -115,14 +115,14 @@ export function MegaNav({
                 >
                   {item.label}
                 </NavigationMenuTrigger>
-                {/* keepMounted: panel links reach the SSR HTML for crawlers
-                    and the first open skips the mount cost. Width comes from
-                    the header anchor, not the viewport, so it excludes the
-                    scrollbar and both panels morph height only. */}
-                <NavigationMenuContent
-                  keepMounted
-                  className="w-(--anchor-width,100vw)"
-                >
+                {/* Panels mount on open. keepMounted put every panel — photos
+                    and inline blur URIs included — into each page's HTML and
+                    hydration pass; the destinations are all real links in the
+                    triggers, footer and /sitemap, so crawlers lose nothing.
+                    Width comes from the header anchor, not the viewport, so
+                    it excludes the scrollbar and both panels morph height
+                    only. */}
+                <NavigationMenuContent className="w-(--anchor-width,100vw)">
                   <MegaPanel
                     items={panel.items}
                     allHref={panel.allHref}
