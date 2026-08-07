@@ -4,12 +4,13 @@ import { notFound } from "next/navigation";
 import { MarkReadOnOpen } from "@/components/admin/mark-read-on-open";
 import { SubmissionDetail } from "@/components/admin/submission-detail";
 import { requireAdmin } from "@/lib/admin-guard";
-import { getSubmission } from "@/lib/db/submissions";
+import {
+  getAdjacentSubmissionIds,
+  getSubmission,
+} from "@/lib/db/submissions";
+import { uuidSchema } from "@/lib/validation";
 
 export const metadata: Metadata = { title: "Submission" };
-
-const UUID =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export default async function SubmissionPage({
   params,
@@ -19,15 +20,18 @@ export default async function SubmissionPage({
   await requireAdmin();
 
   const { id } = await params;
-  if (!UUID.test(id)) notFound();
+  if (!uuidSchema.safeParse(id).success) notFound();
 
-  const submission = await getSubmission(id);
+  const [submission, adjacent] = await Promise.all([
+    getSubmission(id),
+    getAdjacentSubmissionIds(id),
+  ]);
   if (!submission) notFound();
 
   return (
     <>
       {submission.status === "new" && <MarkReadOnOpen id={submission.id} />}
-      <SubmissionDetail submission={submission} />
+      <SubmissionDetail submission={submission} adjacent={adjacent} />
     </>
   );
 }

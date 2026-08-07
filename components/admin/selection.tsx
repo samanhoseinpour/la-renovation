@@ -80,11 +80,16 @@ export function SelectAllCheckbox() {
     visibleIds.length > 0 && visibleIds.every((id) => selected.has(id));
   const some = !all && visibleIds.some((id) => selected.has(id));
   return (
-    <Checkbox
-      checked={all}
-      indeterminate={some}
-      onCheckedChange={() => (all ? clear() : setAll(visibleIds))}
-      aria-label={adminInbox.selection.selectAll}
-    />
+    // The visible text names the lone checkbox; aria-label stays as the
+    // guaranteed accessible name (label-over-button association is shaky).
+    <label className="flex w-fit cursor-pointer items-center gap-2 text-sm text-muted-foreground select-none">
+      <Checkbox
+        checked={all}
+        indeterminate={some}
+        onCheckedChange={() => (all ? clear() : setAll(visibleIds))}
+        aria-label={adminInbox.selection.selectAll}
+      />
+      {adminInbox.selection.selectAll}
+    </label>
   );
 }

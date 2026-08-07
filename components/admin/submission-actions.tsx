@@ -93,7 +93,7 @@ export function SubmissionActions({
       <DropdownMenu>
         <DropdownMenuTrigger
           aria-label={adminSubmission.actions.menu}
-          className="flex size-8 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          className="flex size-8 pointer-coarse:size-11 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
           <MoreHorizontal className="size-4" />
         </DropdownMenuTrigger>
@@ -134,7 +134,12 @@ export function SubmissionActions({
       </DropdownMenu>
 
       {failed && (
-        <span role="status" className="text-sm text-destructive">
+        // basis-full drops the message onto its own full-width line in both
+        // flex-wrap hosts (list row, detail header) instead of crushing them.
+        <span
+          role="status"
+          className="order-last basis-full pb-3 text-sm text-destructive"
+        >
           {adminSubmission.actions.error}
         </span>
       )}

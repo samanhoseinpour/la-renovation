@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, useTransition } from "react";
 
 import { inboxHref, type InboxView } from "@/components/admin/inbox-params";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -72,8 +72,9 @@ export function InboxToolbar({
     // Any navigation supersedes a pending debounce; without this a range
     // pick inside the window gets clobbered by the stale replace.
     clearTimeout(timer.current);
-    const href = inboxHref({ ...view.current, ...next, before: undefined });
-    if (href === inboxHref({ ...view.current, before: undefined })) return;
+    const cleared = { before: undefined, after: undefined };
+    const href = inboxHref({ ...view.current, ...next, ...cleared });
+    if (href === inboxHref({ ...view.current, ...cleared })) return;
     if ("q" in next) lastWritten.current = next.q ?? "";
     startTransition(() => {
       router[history](href, { scroll: false });
@@ -123,7 +124,10 @@ export function InboxToolbar({
         {q && (
           <Link
             href={inboxHref({ status: active, range })}
-            className="text-sm whitespace-nowrap text-muted-foreground transition-colors hover:text-foreground"
+            className={cn(
+              buttonVariants({ variant: "ghost", size: "sm" }),
+              "text-muted-foreground",
+            )}
           >
             {adminInbox.search.clear}
           </Link>

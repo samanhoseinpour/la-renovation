@@ -8,16 +8,23 @@ import {
   getSubmissionsByIds,
   listSubmissionsForExport,
 } from "@/lib/db/submissions";
-import { laDateStamp, RANGE_PRESETS, rangeStart } from "@/lib/la-ranges";
+import { laDateStamp, rangeStart } from "@/lib/la-ranges";
+import {
+  inboxFilterSchema,
+  rangeSchema,
+  uuidListSchema,
+} from "@/lib/validation";
 
+// Same primitives as the inbox page, opposite policy: malformed input 400s
+// here (a route handler answers machines), while the page degrades silently.
 const paramsSchema = z.object({
-  status: z.enum(["all", "new", "read", "archived", "failed"]).default("all"),
-  range: z.enum(RANGE_PRESETS).default("all"),
+  status: inboxFilterSchema.default("all"),
+  range: rangeSchema.default("all"),
   q: z.string().trim().max(200).optional(),
   ids: z
     .string()
     .transform((value) => value.split(","))
-    .pipe(z.array(z.string().uuid()).min(1).max(100))
+    .pipe(uuidListSchema)
     .optional(),
 });
 
@@ -31,7 +38,7 @@ function toRow(row: Submission): (string | null)[] {
     row.email,
     row.phone,
     row.company,
-    row.service,
+    row.services?.join("; ") ?? null,
     row.stage,
     row.message,
     row.status,

@@ -3,23 +3,25 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
+import { formatRelative } from "@/components/admin/dates";
 import { requireAdmin } from "@/lib/admin-guard";
 import {
   bulkDeleteSubmissions,
   bulkSetSubmissionStatus,
   deleteSubmission as deleteSubmissionRow,
   getSubmission,
+  listSubmissionsPage,
   markDelivered,
   markDeliveryFailed,
   setSubmissionStatus as setSubmissionStatusRow,
 } from "@/lib/db/submissions";
 import { DeliveryNotConfiguredError, deliverEnquiry } from "@/lib/delivery";
 import { site } from "@/lib/site";
-
-const idSchema = z.string().uuid();
-const statusSchema = z.enum(["new", "read", "archived"]);
-// The selection UI can only produce a page's worth of ids; 100 leaves slack.
-const idsSchema = z.array(z.string().uuid()).min(1).max(100);
+import {
+  submissionStatusSchema,
+  uuidListSchema,
+  uuidSchema,
+} from "@/lib/validation";
 
 // Server actions are plain POST endpoints: every one re-verifies the
 // session first (house rule; see lib/admin-guard.ts).
@@ -34,41 +36,68 @@ function revalidateInbox(id?: string) {
 
 export async function setSubmissionStatus(
   id: string,
-  status: z.infer<typeof statusSchema>,
+  status: z.infer<typeof submissionStatusSchema>,
 ): Promise<void> {
   await requireAdmin();
-  const parsed = idSchema.parse(id);
-  await setSubmissionStatusRow(parsed, statusSchema.parse(status));
+  const parsed = uuidSchema.parse(id);
+  await setSubmissionStatusRow(parsed, submissionStatusSchema.parse(status));
   revalidateInbox(parsed);
 }
 
 export async function deleteSubmission(id: string): Promise<void> {
   await requireAdmin();
-  await deleteSubmissionRow(idSchema.parse(id));
+  await deleteSubmissionRow(uuidSchema.parse(id));
   revalidateInbox();
 }
 
 export async function bulkSetStatus(
   ids: string[],
-  status: z.infer<typeof statusSchema>,
+  status: z.infer<typeof submissionStatusSchema>,
 ): Promise<void> {
   await requireAdmin();
   await bulkSetSubmissionStatus(
-    idsSchema.parse(ids),
-    statusSchema.parse(status),
+    uuidListSchema.parse(ids),
+    submissionStatusSchema.parse(status),
   );
   revalidateInbox();
 }
 
 export async function bulkDelete(ids: string[]): Promise<void> {
   await requireAdmin();
-  await bulkDeleteSubmissions(idsSchema.parse(ids));
+  await bulkDeleteSubmissions(uuidListSchema.parse(ids));
   revalidateInbox();
+}
+
+/** Top matches for the command palette; same cleaning as the inbox page. */
+export async function searchSubmissionsForPalette(
+  q: string,
+): Promise<
+  { id: string; name: string; company: string | null; when: string }[]
+> {
+  await requireAdmin();
+  const cleaned = z
+    .string()
+    .parse(q)
+    .replace(/\p{Cc}/gu, "")
+    .trim()
+    .slice(0, 200);
+  if (!cleaned) return [];
+  const page = await listSubmissionsPage({
+    filter: "all",
+    q: cleaned,
+    limit: 5,
+  });
+  return page.items.map((item) => ({
+    id: item.id,
+    name: item.name,
+    company: item.company,
+    when: formatRelative(item.createdAt),
+  }));
 }
 
 export async function retryDelivery(id: string): Promise<void> {
   await requireAdmin();
-  const submission = await getSubmission(idSchema.parse(id));
+  const submission = await getSubmission(uuidSchema.parse(id));
   // Only failed sends retry; a stale button after success lands here too.
   if (!submission || submission.delivery !== "failed") {
     throw new Error("Not retryable.");
@@ -79,9 +108,9 @@ export async function retryDelivery(id: string): Promise<void> {
       email: submission.email,
       phone: submission.phone ?? undefined,
       company: submission.company ?? undefined,
-      service: submission.service ?? undefined,
+      services: submission.services ?? undefined,
       stage: submission.stage ?? undefined,
-      message: submission.message,
+      message: submission.message ?? undefined,
       to: site.contact.email,
       submissionId: submission.id,
     });

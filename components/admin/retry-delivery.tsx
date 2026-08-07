@@ -28,7 +28,7 @@ export function RetryDelivery({ id }: { id: string }) {
   }
 
   return (
-    <span className="flex items-center gap-3">
+    <span className="flex flex-wrap items-center gap-x-3 gap-y-2">
       <Button
         type="button"
         variant="outline"

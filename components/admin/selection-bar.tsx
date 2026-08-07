@@ -23,9 +23,12 @@ import {
 } from "@/app/admin/(dashboard)/submissions/actions";
 
 /**
- * Bulk actions over the current selection. Feedback stays inline in the bar
- * per the admin's toast-free contract; the bar itself only exists while
- * something is selected, so an empty-selection action is unreachable.
+ * Bulk actions over the current selection, as a sticky bottom bar: it floats
+ * at the viewport edge while the 50-row list scrolls (checking a row never
+ * shifts the list), and rests in place after the pagination block on short
+ * pages. Feedback stays inline in the bar per the admin's toast-free
+ * contract; the bar only exists while something is selected, so an
+ * empty-selection action is unreachable.
  */
 export function SelectionBar() {
   const router = useRouter();
@@ -54,10 +57,16 @@ export function SelectionBar() {
 
   return (
     <>
-      <div className="flex min-w-0 flex-wrap items-center gap-2">
-        <span className="tabular text-sm text-muted-foreground">
-          {ids.length} {adminInbox.selection.selectedSuffix}
-        </span>
+      {/* Negative margins mirror the layout wrapper's px-4 md:px-8 so the
+          border-t runs edge to edge of the content column; z-30 sits under
+          the sheet, menus and dialogs at z-50. The safe-area pb keeps the
+          buttons above an iPhone home indicator. */}
+      <div className="sticky bottom-0 z-30 -mx-4 mt-6 border-t border-border bg-background px-4 py-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] md:-mx-8 md:px-8">
+        <div className="flex min-w-0 flex-wrap items-center gap-2">
+          {/* role=status announces the bar's appearance and each count. */}
+          <span role="status" className="tabular text-sm text-muted-foreground">
+            {ids.length} {adminInbox.selection.selectedSuffix}
+          </span>
         <Button
           type="button"
           variant="ghost"
@@ -110,11 +119,12 @@ export function SelectionBar() {
         >
           {adminInbox.selection.del}
         </Button>
-        {failed && (
-          <span role="status" className="text-sm text-destructive">
-            {adminInbox.selection.error}
-          </span>
-        )}
+          {failed && (
+            <span role="status" className="text-sm text-destructive">
+              {adminInbox.selection.error}
+            </span>
+          )}
+        </div>
       </div>
 
       <AlertDialog open={confirming} onOpenChange={setConfirming}>
