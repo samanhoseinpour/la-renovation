@@ -4,6 +4,7 @@ import { ArrowRight, KeyRound } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,12 +12,29 @@ import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/admin/password-input";
 import { adminLogin } from "@/content/admin";
 import { authClient } from "@/lib/auth-client";
+import { emailSchema } from "@/lib/validation";
+
+// No length floor at sign-in: the server rejects wrong passwords regardless,
+// so anything beyond presence would only nag.
+const loginSchema = z.object({
+  email: emailSchema,
+  password: z.string().min(1),
+});
+
+type LoginError = "email" | "password" | "credentials" | "passkey";
+
+const FEEDBACK: Record<LoginError, string> = {
+  email: adminLogin.errorEmail,
+  password: adminLogin.errorPassword,
+  credentials: adminLogin.error,
+  passkey: adminLogin.passkeyError,
+};
 
 export function LoginForm() {
   const router = useRouter();
   // Which surface failed, not a message: the slot maps it to copy, and the
   // generic credentials error flags both fields (no user enumeration).
-  const [error, setError] = useState<"credentials" | "passkey" | null>(null);
+  const [error, setError] = useState<LoginError | null>(null);
   const [pending, setPending] = useState(false);
 
   // Conditional UI: the browser offers saved passkeys inside the email
@@ -42,12 +60,18 @@ export function LoginForm() {
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-    setError(null);
-    setPending(true);
-    const { error: signInError } = await authClient.signIn.email({
+    const parsed = loginSchema.safeParse({
       email: String(form.get("email") ?? ""),
       password: String(form.get("password") ?? ""),
     });
+    if (!parsed.success) {
+      setError(parsed.error.flatten().fieldErrors.email ? "email" : "password");
+      return;
+    }
+    setError(null);
+    setPending(true);
+    // parsed.data carries the trimmed email.
+    const { error: signInError } = await authClient.signIn.email(parsed.data);
     setPending(false);
     if (signInError) {
       setError("credentials");
@@ -70,7 +94,10 @@ export function LoginForm() {
     <div>
       <h1 className="text-h2">{adminLogin.title}</h1>
       <p className="mt-4 text-muted-foreground">{adminLogin.lead}</p>
-      <form onSubmit={handleSubmit}>
+      {/* noValidate: this form is inert without JS anyway, so the native
+          bubble is not a fallback, just a second voice competing with the
+          reserved error slot. The attributes stay for semantics. */}
+      <form onSubmit={handleSubmit} noValidate>
         <div className="mt-10 grid gap-5">
           <div className="grid gap-2">
             <Label htmlFor="login-email">{adminLogin.emailLabel}</Label>
@@ -82,7 +109,9 @@ export function LoginForm() {
               autoFocus
               autoComplete="username webauthn"
               className="h-11"
-              aria-invalid={error === "credentials" || undefined}
+              aria-invalid={
+                error === "email" || error === "credentials" || undefined
+              }
             />
           </div>
           <div className="grid gap-2">
@@ -93,7 +122,9 @@ export function LoginForm() {
               required
               autoComplete="current-password"
               className="h-11"
-              aria-invalid={error === "credentials" || undefined}
+              aria-invalid={
+                error === "password" || error === "credentials" || undefined
+              }
             />
           </div>
         </div>
@@ -101,11 +132,7 @@ export function LoginForm() {
           {/* min-h reserves the line so an appearing error shifts nothing,
               the strength meter's trick. */}
           <p aria-live="polite" className="min-h-5 text-sm text-destructive">
-            {error === "credentials"
-              ? adminLogin.error
-              : error === "passkey"
-                ? adminLogin.passkeyError
-                : null}
+            {error ? FEEDBACK[error] : null}
           </p>
           <Button
             type="submit"

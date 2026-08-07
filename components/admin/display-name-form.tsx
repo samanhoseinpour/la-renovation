@@ -10,6 +10,7 @@ import { adminSettings } from "@/content/admin";
 import { authClient } from "@/lib/auth-client";
 import { NAME_MAX_LENGTH } from "@/lib/auth-shared";
 import { cn } from "@/lib/utils";
+import { displayNameSchema } from "@/lib/validation";
 
 type FormState = "idle" | "pending" | "saved" | "invalid" | "failed";
 
@@ -29,14 +30,21 @@ export function DisplayNameForm({ initialName }: { initialName: string }) {
 
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!trimmed || unchanged) return;
+    // The schema mirrors the server hook's rule (trim, 1 to 80); unchanged
+    // stays a silent no-op like the disabled button implies.
+    const parsed = displayNameSchema.safeParse(name);
+    if (!parsed.success) {
+      setState("invalid");
+      return;
+    }
+    if (parsed.data === initialName) return;
     setState("pending");
-    const { error } = await authClient.updateUser({ name: trimmed });
+    const { error } = await authClient.updateUser({ name: parsed.data });
     if (error) {
       setState(error.code === "INVALID_NAME" ? "invalid" : "failed");
       return;
     }
-    setName(trimmed);
+    setName(parsed.data);
     setState("saved");
     // The response already rewrote the session cookie, so the refresh
     // re-renders the layout and this page with the new name immediately.
@@ -68,8 +76,9 @@ export function DisplayNameForm({ initialName }: { initialName: string }) {
       </Button>
       <p
         aria-live="polite"
+        // min-h-5 reserves the line so feedback never shifts the card.
         className={cn(
-          "text-sm",
+          "min-h-5 text-sm",
           state === "saved" ? "text-muted-foreground" : "text-destructive",
         )}
       >

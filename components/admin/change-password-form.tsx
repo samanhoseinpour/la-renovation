@@ -10,18 +10,21 @@ import { adminSettings } from "@/content/admin";
 import { authClient } from "@/lib/auth-client";
 import { MIN_PASSWORD_LENGTH } from "@/lib/auth-shared";
 import { cn } from "@/lib/utils";
+import { passwordSchema } from "@/lib/validation";
 
 type FormState =
   | "idle"
   | "pending"
   | "saved"
   | "same"
+  | "tooShort"
   | "wrongCurrent"
   | "failed";
 
 const FEEDBACK: Partial<Record<FormState, string>> = {
   saved: adminSettings.password.success,
   same: adminSettings.password.errorSame,
+  tooShort: adminSettings.password.errorTooShort,
   wrongCurrent: adminSettings.password.errorCurrent,
   failed: adminSettings.password.error,
 };
@@ -36,9 +39,13 @@ export function ChangePasswordForm() {
     const data = new FormData(form);
     const currentPassword = String(data.get("current") ?? "");
     const newPassword = String(data.get("next") ?? "");
-    // Cheap local check first; the server hook enforces the same rule.
+    // Cheap local checks first; the server enforces both rules.
     if (currentPassword === newPassword) {
       setState("same");
+      return;
+    }
+    if (!passwordSchema.safeParse(newPassword).success) {
+      setState("tooShort");
       return;
     }
     setState("pending");
@@ -63,7 +70,9 @@ export function ChangePasswordForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid max-w-sm gap-4">
+    // noValidate: client-only form, so the native bubble is not a fallback,
+    // just a second voice competing with the reserved feedback line.
+    <form onSubmit={handleSubmit} noValidate className="grid max-w-sm gap-4">
       <div className="grid gap-2">
         <Label htmlFor="password-current">
           {adminSettings.password.currentLabel}
@@ -83,6 +92,7 @@ export function ChangePasswordForm() {
           required
           minLength={MIN_PASSWORD_LENGTH}
           autoComplete="new-password"
+          aria-invalid={state === "same" || state === "tooShort" || undefined}
           onChange={(event) => setNext(event.target.value)}
         />
       </div>
@@ -94,8 +104,9 @@ export function ChangePasswordForm() {
       </Button>
       <p
         aria-live="polite"
+        // min-h-5 reserves the line so feedback never shifts the card.
         className={cn(
-          "text-sm",
+          "min-h-5 text-sm",
           state === "saved" ? "text-muted-foreground" : "text-destructive",
         )}
       >

@@ -18,6 +18,12 @@ export const adminNav = {
     },
   ],
   signOut: "Sign out",
+  sidebar: {
+    collapse: "Collapse sidebar",
+    expand: "Expand sidebar",
+    shortcutMac: "⌘B",
+    shortcutOther: "Ctrl+B",
+  },
 } as const;
 
 /** The auth shell's brand panel and phone band. */
@@ -36,6 +42,8 @@ export const adminLogin = {
   passkey: "Sign in with a passkey",
   forgot: "Forgot your password?",
   error: "That email or password is incorrect.",
+  errorEmail: "That doesn't look like an email address.",
+  errorPassword: "Enter your password.",
   passkeyError: "That passkey didn't work. Try again or use your password.",
 } as const;
 
@@ -51,6 +59,8 @@ export const adminReset = {
   invalid: "That link has expired or was already used.",
   invalidCta: "Request a fresh link",
   samePassword: "That is already the current password. Choose a new one.",
+  tooShort: "At least twelve characters, please.",
+  emailInvalid: "That doesn't look like an email address.",
   requestTitle: "Reset your password",
   requestLead: "Enter your email and we'll send a link if the account exists.",
   emailLabel: "Email",
@@ -63,6 +73,8 @@ export const adminReset = {
 
 export const adminInbox = {
   title: "Submissions",
+  filtersLabel: "Filter submissions",
+  unread: "Unread",
   filters: {
     all: "All",
     new: "New",
@@ -78,6 +90,11 @@ export const adminInbox = {
     filtered: {
       title: "Nothing here.",
       body: "No submissions match this filter right now.",
+      cta: "Clear filters",
+    },
+    failed: {
+      title: "No failed emails.",
+      body: "Every notification email has gone out.",
     },
   },
   delivery: {
@@ -89,8 +106,11 @@ export const adminInbox = {
     placeholder: "Search name, email, company, or message",
     clear: "Clear search",
     searching: "Searching…",
+    matchOne: "match shown",
+    matchMany: "matches shown",
   },
   pagination: {
+    newer: "Load newer",
     older: "Load older",
     newest: "Back to newest",
   },
@@ -134,7 +154,7 @@ export const adminSubmission = {
     email: "Email",
     phone: "Phone",
     company: "Company",
-    service: "Project type",
+    services: "Project types",
     stage: "Project stage",
     message: "Message",
     received: "Received",
@@ -158,6 +178,10 @@ export const adminSubmission = {
     body: "This removes the enquiry outright. There is no undo.",
     confirm: "Delete submission",
     cancel: "Cancel",
+  },
+  nav: {
+    newer: "Newer",
+    older: "Older",
   },
   replySubject: "Re: your enquiry to Araz Construction Group",
 } as const;
@@ -185,6 +209,7 @@ export const adminSettings = {
     errorCurrent: "The current password is incorrect.",
     errorSame:
       "The new password matches the current one. Choose a different password.",
+    errorTooShort: "The new password needs at least twelve characters.",
   },
   passkeys: {
     title: "Passkeys",
@@ -195,6 +220,9 @@ export const adminSettings = {
     nameLabel: "Passkey name",
     namePrompt: "Something like Reza's MacBook or Dylan's iPhone.",
     rename: "Rename",
+    renameTitle: "Rename passkey",
+    renameSave: "Save",
+    renameCancel: "Cancel",
     remove: "Remove",
     unnamed: "Passkey",
     error: "That didn't work. Try again.",
@@ -231,6 +259,7 @@ export const adminPasswordField = {
 
 export const adminStrength = {
   label: "Password strength",
+  tooShort: "Too short",
   weak: "Weak",
   fair: "Fair",
   good: "Good",
@@ -277,6 +306,13 @@ export const adminOverview = {
     newCount: "New enquiries",
     week: "Last 7 days",
     failed: "Failed emails",
+    // Composed as "up 2 on the week before" / "level with the week before".
+    weekDelta: {
+      up: "up",
+      down: "down",
+      tail: "on the week before",
+      flat: "level with the week before",
+    },
   },
   latest: {
     title: "Latest submissions",
@@ -290,6 +326,23 @@ export const adminOverview = {
   },
 } as const;
 
+export const adminPalette = {
+  buttonLabel: "Search and commands",
+  shortcutMac: "⌘K",
+  shortcutOther: "Ctrl+K",
+  placeholder: "Type a command or search submissions",
+  empty: "Nothing matches.",
+  searching: "Searching…",
+  groups: {
+    pages: "Pages",
+    views: "Inbox views",
+    actions: "Actions",
+    results: "Submissions",
+  },
+  searchInbox: "Search the inbox for",
+  toggleTheme: "Toggle light or dark",
+} as const;
+
 export const adminExport = {
   // CSV column headers, mirroring adminSubmission.fields where one exists.
   columns: {
@@ -299,7 +352,7 @@ export const adminExport = {
     email: "Email",
     phone: "Phone",
     company: "Company",
-    service: "Project type",
+    services: "Project types",
     stage: "Project stage",
     message: "Message",
     status: "Status",

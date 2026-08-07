@@ -12,6 +12,7 @@ import { adminReset } from "@/content/admin";
 import { authClient } from "@/lib/auth-client";
 import { MIN_PASSWORD_LENGTH } from "@/lib/auth-shared";
 import { cn } from "@/lib/utils";
+import { emailSchema, passwordSchema } from "@/lib/validation";
 
 /** With a token: the invite/reset landing. Without: request a link. */
 export function ResetPasswordForm({ token }: { token?: string }) {
@@ -20,16 +21,21 @@ export function ResetPasswordForm({ token }: { token?: string }) {
 
 function SetPassword({ token }: { token: string }) {
   const [state, setState] = useState<
-    "idle" | "pending" | "saved" | "invalid" | "same"
+    "idle" | "pending" | "saved" | "invalid" | "same" | "tooShort"
   >("idle");
   const [password, setPassword] = useState("");
 
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
+    const parsed = passwordSchema.safeParse(String(form.get("password") ?? ""));
+    if (!parsed.success) {
+      setState("tooShort");
+      return;
+    }
     setState("pending");
     const { error } = await authClient.resetPassword({
-      newPassword: String(form.get("password") ?? ""),
+      newPassword: parsed.data,
       token,
     });
     if (error) {
@@ -60,7 +66,7 @@ function SetPassword({ token }: { token: string }) {
           </Link>
         </div>
       ) : (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           <div className="mt-10 grid gap-5">
             <div className="grid gap-2">
               <Label htmlFor="reset-password">{adminReset.passwordLabel}</Label>
@@ -72,7 +78,9 @@ function SetPassword({ token }: { token: string }) {
                 minLength={MIN_PASSWORD_LENGTH}
                 autoComplete="new-password"
                 className="h-11"
-                aria-invalid={state === "same" || undefined}
+                aria-invalid={
+                  state === "same" || state === "tooShort" || undefined
+                }
                 onChange={(event) => setPassword(event.target.value)}
               />
               <PasswordStrength password={password} />
@@ -84,7 +92,9 @@ function SetPassword({ token }: { token: string }) {
                 ? adminReset.invalid
                 : state === "same"
                   ? adminReset.samePassword
-                  : null}
+                  : state === "tooShort"
+                    ? adminReset.tooShort
+                    : null}
             </p>
             <Button
               type="submit"
@@ -112,18 +122,23 @@ function SetPassword({ token }: { token: string }) {
 }
 
 function RequestReset() {
-  const [state, setState] = useState<"idle" | "pending" | "sent" | "failed">(
-    "idle",
-  );
+  const [state, setState] = useState<
+    "idle" | "pending" | "sent" | "failed" | "invalidEmail"
+  >("idle");
 
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
+    const parsed = emailSchema.safeParse(String(form.get("email") ?? ""));
+    if (!parsed.success) {
+      setState("invalidEmail");
+      return;
+    }
     setState("pending");
     // Success copy is the same whether the account exists (no enumeration);
     // only a transport-level failure surfaces, so the form stays usable.
     const { error } = await authClient.requestPasswordReset({
-      email: String(form.get("email") ?? ""),
+      email: parsed.data,
       redirectTo: "/admin/reset-password",
     });
     setState(error ? "failed" : "sent");
@@ -149,7 +164,7 @@ function RequestReset() {
         </div>
       ) : (
         <>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} noValidate>
             <div className="mt-10 grid gap-5">
               <div className="grid gap-2">
                 <Label htmlFor="reset-email">{adminReset.emailLabel}</Label>
@@ -161,6 +176,7 @@ function RequestReset() {
                   autoFocus
                   autoComplete="email"
                   className="h-11"
+                  aria-invalid={state === "invalidEmail" || undefined}
                 />
               </div>
             </div>
@@ -169,7 +185,11 @@ function RequestReset() {
                 aria-live="polite"
                 className="min-h-5 text-sm text-destructive"
               >
-                {state === "failed" ? adminReset.requestError : null}
+                {state === "failed"
+                  ? adminReset.requestError
+                  : state === "invalidEmail"
+                    ? adminReset.emailInvalid
+                    : null}
               </p>
               <Button
                 type="submit"
