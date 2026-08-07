@@ -52,6 +52,21 @@ export const submissions = pgTable(
   (t) => [
     index("submissions_status_created_idx").on(t.status, t.createdAt.desc()),
     index("submissions_delivery_idx").on(t.delivery),
+    // Trigram GIN indexes carry the inbox's per-keystroke ILIKE '%…%'
+    // search; they need pg_trgm, created by drizzle/0002_pg_trgm.sql.
+    index("submissions_name_trgm_idx").using("gin", t.name.op("gin_trgm_ops")),
+    index("submissions_email_trgm_idx").using(
+      "gin",
+      t.email.op("gin_trgm_ops"),
+    ),
+    index("submissions_company_trgm_idx").using(
+      "gin",
+      t.company.op("gin_trgm_ops"),
+    ),
+    index("submissions_message_trgm_idx").using(
+      "gin",
+      t.message.op("gin_trgm_ops"),
+    ),
   ],
 );
 
