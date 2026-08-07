@@ -363,37 +363,4 @@ html.lenis body {
     scroll-behavior: auto !important;
   }
 
-  /* The * clamp cannot match view-transition pseudo-elements; without this
-     the route crossfade would be the one animation that survives reduce. */
-  ::view-transition-old(*),
-  ::view-transition-new(*),
-  ::view-transition-group(*) {
-    animation-duration: 0s !important;
-    animation-delay: 0s !important;
-  }
-}
-
-/* Route crossfade for the experimental viewTransition flag (next.config.ts).
-   Fade-only, no shared-element morphs; unsupported browsers just swap. */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 250ms;
-  animation-timing-function: var(--ease-editorial);
-}
-
-::view-transition-old(.page-fade) {
-  animation: 250ms var(--ease-editorial) both vt-page-fade reverse;
-}
-
-::view-transition-new(.page-fade) {
-  animation: 250ms var(--ease-editorial) both vt-page-fade;
-}
-
-@keyframes vt-page-fade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
