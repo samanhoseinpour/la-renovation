@@ -4,11 +4,13 @@ import { betterAuth } from "better-auth";
 import { APIError, createAuthMiddleware } from "better-auth/api";
 import { nextCookies } from "better-auth/next-js";
 import { admin as adminPlugin } from "better-auth/plugins";
+import { createAccessControl } from "better-auth/plugins/access";
+import { defaultStatements } from "better-auth/plugins/admin/access";
 import { drizzleAdapter } from "@better-auth/drizzle-adapter";
 import { passkey } from "@better-auth/passkey";
 import { and, eq, lt, or, sql } from "drizzle-orm";
 
-import { MIN_PASSWORD_LENGTH } from "./auth-shared";
+import { MIN_PASSWORD_LENGTH, NAME_MAX_LENGTH } from "./auth-shared";
 import { getDb } from "./db";
 import * as authSchema from "./db/auth-schema";
 import { hashClientIp } from "./db/submissions";
@@ -41,6 +43,16 @@ const ALLOWED_ADMINS = new Set([
   "dylan@arazconstructiongroup.com",
   "teamperseustudio@gmail.com",
 ]);
+
+// Every account is an admin running only its own profile; nobody manages
+// anyone else's. The plugin's default admin role grants set-email, ban,
+// impersonate, delete, set-password and update over OTHER users through
+// /api/auth/admin/*, so the role is redeclared with empty grants and those
+// endpoints 403 for every session. requireAdmin()'s role string check, the
+// banned check and defaultRole stamping are unaffected, and the seed
+// script's sessionless auth.api.createUser skips permission checks.
+const adminAccessControl = createAccessControl(defaultStatements);
+const adminRole = adminAccessControl.newRole({ user: [], session: [] });
 
 // better-auth keys its limiter `${ip}|${path}`, and the bundled "database"
 // storage persists that verbatim — raw addresses at rest, exactly what the
@@ -212,6 +224,7 @@ export const auth = betterAuth({
       "/request-password-reset": { window: 3600, max: 3 },
       "/reset-password": { window: 3600, max: 5 },
       "/change-password": { window: 3600, max: 5 },
+      "/update-user": { window: 3600, max: 10 },
     },
   },
   advanced: {
@@ -307,6 +320,44 @@ export const auth = betterAuth({
           return { data: user };
         },
       },
+      update: {
+        // /update-user validates nothing in 1.6.26 (its body schema is
+        // z.record(z.string(), z.any())), and this hook also backstops the
+        // emptied admin grants above: set-role, the admin update-user and
+        // ban-user all funnel through internalAdapter.updateUser. It sees
+        // the update payload only, never which row it targets, so every
+        // rule is blanket. Throwing is the only safe rejection: on a false
+        // return, /update-user still refreshes the session cookie and
+        // reports success.
+        before: async (data) => {
+          const locked =
+            data.email !== undefined ||
+            data.role !== undefined ||
+            data.image !== undefined ||
+            // Truthy-only so the plugin's expired-ban cleanup at sign-in
+            // ({ banned: false, banReason: null, ... }) stays legal.
+            Boolean(data.banned) ||
+            Boolean(data.banReason) ||
+            Boolean(data.banExpires);
+          if (locked) {
+            throw new APIError("FORBIDDEN", {
+              message: "This account field cannot be changed.",
+              code: "FIELD_LOCKED",
+            });
+          }
+          if (data.name !== undefined) {
+            const name =
+              typeof data.name === "string" ? data.name.trim() : "";
+            if (!name || name.length > NAME_MAX_LENGTH) {
+              throw new APIError("BAD_REQUEST", {
+                message: `Name must be 1 to ${NAME_MAX_LENGTH} characters.`,
+                code: "INVALID_NAME",
+              });
+            }
+            return { data: { ...data, name } };
+          }
+        },
+      },
     },
     session: {
       create: {
@@ -320,7 +371,12 @@ export const auth = betterAuth({
     },
   },
   plugins: [
-    adminPlugin({ defaultRole: "admin", adminRoles: ["admin"] }),
+    adminPlugin({
+      defaultRole: "admin",
+      adminRoles: ["admin"],
+      ac: adminAccessControl,
+      roles: { admin: adminRole },
+    }),
     passkey({
       rpID: new URL(baseURL).hostname,
       rpName: "Araz Construction Group Admin",
