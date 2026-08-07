@@ -2,6 +2,7 @@ import { createHmac } from "node:crypto";
 
 import {
   and,
+  asc,
   count,
   desc,
   eq,
@@ -9,6 +10,7 @@ import {
   gte,
   ilike,
   inArray,
+  lt,
   or,
   sql,
   type SQL,
@@ -27,9 +29,9 @@ export type NewEnquiry = {
   email: string;
   phone?: string;
   company?: string;
-  service?: string;
+  services?: string[];
   stage?: string;
-  message: string;
+  message?: string;
 };
 
 export function hashClientIp(ip: string): string {
@@ -76,9 +78,9 @@ export async function insertSubmission(data: NewEnquiry): Promise<string> {
       email: data.email,
       phone: data.phone || null,
       company: data.company || null,
-      service: data.service || null,
+      services: data.services?.length ? data.services : null,
       stage: data.stage || null,
-      message: data.message,
+      message: data.message || null,
     })
     .returning({ id: submissions.id });
   return row.id;
@@ -146,19 +148,30 @@ function inboxConditions(
  * neither skip nor repeat rows even when timestamps collide. The cursor is
  * created_at::text because a JS Date round-trip truncates Postgres's
  * microseconds and could skip sub-millisecond siblings at a page boundary.
+ *
+ * `after` pages in the newer direction: the query runs ascending from the
+ * cursor and the window is reversed so display stays newest-first. With
+ * `after`, hasMore means "rows newer than this page exist"; `before` wins if
+ * both cursors arrive.
  */
 export async function listSubmissionsPage(args: {
   filter: InboxFilter;
   q?: string;
   start?: Date | null;
   before?: InboxCursor;
+  after?: InboxCursor;
   limit?: number;
 }): Promise<InboxPage> {
-  const { filter, q, start, before, limit = INBOX_PAGE_SIZE } = args;
+  const { filter, q, start, before, after, limit = INBOX_PAGE_SIZE } = args;
   const conds = inboxConditions(filter, q, start);
+  const ascending = !before && Boolean(after);
   if (before) {
     conds.push(
       sql`(${submissions.createdAt}, ${submissions.id}) < (${before.ts}::timestamptz, ${before.id}::uuid)`,
+    );
+  } else if (after) {
+    conds.push(
+      sql`(${submissions.createdAt}, ${submissions.id}) > (${after.ts}::timestamptz, ${after.id}::uuid)`,
     );
   }
   const rows = await getDb()
@@ -168,10 +181,42 @@ export async function listSubmissionsPage(args: {
     })
     .from(submissions)
     .where(conds.length ? and(...conds) : undefined)
-    .orderBy(desc(submissions.createdAt), desc(submissions.id))
+    .orderBy(
+      ...(ascending
+        ? [asc(submissions.createdAt), asc(submissions.id)]
+        : [desc(submissions.createdAt), desc(submissions.id)]),
+    )
     // One extra row answers hasMore without a second count query.
     .limit(limit + 1);
-  return { items: rows.slice(0, limit), hasMore: rows.length > limit };
+  const page = rows.slice(0, limit);
+  return {
+    items: ascending ? page.reverse() : page,
+    hasMore: rows.length > limit,
+  };
+}
+
+/**
+ * Neighbors in global inbox order (no filter context, so the links behave
+ * the same from every view). Row-value subqueries against the row's own
+ * created_at avoid the JS Date round-trip that truncates microseconds.
+ */
+export async function getAdjacentSubmissionIds(
+  id: string,
+): Promise<{ newer: string | null; older: string | null }> {
+  const result = await getDb().execute(sql`
+    SELECT
+      (SELECT id FROM submissions
+        WHERE (created_at, id) > (s.created_at, s.id)
+        ORDER BY created_at ASC, id ASC LIMIT 1) AS newer,
+      (SELECT id FROM submissions
+        WHERE (created_at, id) < (s.created_at, s.id)
+        ORDER BY created_at DESC, id DESC LIMIT 1) AS older
+    FROM submissions s WHERE s.id = ${id}::uuid
+  `);
+  const row = result.rows[0] as
+    | { newer: string | null; older: string | null }
+    | undefined;
+  return { newer: row?.newer ?? null, older: row?.older ?? null };
 }
 
 export async function listSubmissionsForExport(args: {
@@ -218,6 +263,20 @@ export async function bulkSetSubmissionStatus(
 export async function bulkDeleteSubmissions(ids: string[]): Promise<void> {
   if (ids.length === 0) return;
   await getDb().delete(submissions).where(inArray(submissions.id, ids));
+}
+
+/** Rows in [start, end): the overview's prior-week comparison window. */
+export async function countSubmissionsBetween(
+  start: Date,
+  end: Date,
+): Promise<number> {
+  const [row] = await getDb()
+    .select({ total: count() })
+    .from(submissions)
+    .where(
+      and(gte(submissions.createdAt, start), lt(submissions.createdAt, end)),
+    );
+  return row.total;
 }
 
 export async function countSubmissionsSince(start: Date): Promise<number> {

@@ -5,6 +5,7 @@ import { Section } from "@/components/layout/section";
 import { ContactOffice } from "@/components/sections/contact-office";
 import { WhatHappensNext } from "@/components/sections/what-happens-next";
 import {
+  contactForm,
   contactPage,
   contactSteps,
   projectStages,
@@ -47,10 +48,8 @@ export default function ContactPage() {
       <Section size="default">
         <Container>
           <ContactOffice
-            title={contactPage.title}
-            lead={contactPage.lead}
-            commitment={contactPage.commitment}
-            formIntro={contactPage.formIntro}
+            page={contactPage}
+            copy={contactForm}
             services={services}
             serviceFallback={projectTypeFallback}
             stages={projectStages}

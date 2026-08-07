@@ -28,8 +28,8 @@ export const privacyPolicy: LegalDoc = {
       ],
       items: [
         "Your name and email address",
-        "A phone number, company, project type, and project stage, all optional",
-        "Your message",
+        "A phone number, company, project types, and project stage, all optional",
+        "Your message, if you choose to add one",
       ],
     },
     {

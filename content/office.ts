@@ -104,23 +104,75 @@ export const contactSteps: ProcessPhase[] = [
 ];
 
 export type ContactPageCopy = {
+  eyebrow: string;
   title: string;
   lead: string;
   /** Sits above the form fields: what to send for a specific first answer. */
   formIntro: string;
   /** The response promise under the lead. Client-authored; flagged in the spec. */
   commitment: string;
+  officeHeading: string;
 };
 
 /** /contact page copy. Title and lead moved out of the route unchanged. */
 export const contactPage: ContactPageCopy = {
+  eyebrow: "Contact",
   title: "Tell us about the project.",
   lead: "Every project starts with a site visit. Send a few details and we'll arrange one.",
   formIntro:
     "The more you can tell us about the site and the program, the more useful our first response will be. If you have drawings, a survey, or a soils report, send them. We'd rather answer specifically than generally.",
   commitment:
     "We respond to every enquiry. If the project isn't a fit for us, we'll say so and point you toward someone better suited rather than taking the meeting anyway.",
+  officeHeading: "Office",
 };
+
+/**
+ * Every string the contact form renders: group headings, field labels,
+ * legends, helper lines, the submit pair and the confirmation panel. The
+ * zod error messages stay beside the schema in app/(site)/contact/schema.ts;
+ * the server-only outcome messages stay in the action.
+ */
+export const contactForm = {
+  groups: {
+    about: {
+      heading: "About you",
+      note: "Name and email are all we need to reply. The rest helps us come prepared.",
+    },
+    project: {
+      heading: "The project",
+      note: "Tell us as much or as little as you know at this point.",
+    },
+  },
+  optionalTag: "Optional",
+  fields: {
+    name: { label: "Name" },
+    email: { label: "Email" },
+    phone: { label: "Phone" },
+    company: { label: "Company" },
+    services: {
+      legend: "What does the project involve?",
+      help: "Choose everything that applies.",
+    },
+    stage: {
+      legend: "Where does it stand?",
+      help: "Skip this if you aren't sure yet.",
+    },
+    message: {
+      label: "Anything else we should know?",
+      help: "Where the property is, what you're hoping to do, and roughly when.",
+    },
+  },
+  errorSummary: "Please check the highlighted fields.",
+  submit: "Send enquiry",
+  submitting: "Sending…",
+  success: {
+    eyebrow: "Enquiry received",
+    urgentPrefix: "If it's urgent, call",
+    urgentSuffix: "during office hours.",
+  },
+} as const;
+
+export type ContactFormCopy = typeof contactForm;
 
 /** Project-stage options on the contact form. */
 export const projectStages = [

@@ -29,6 +29,13 @@
       "when": 1786062870358,
       "tag": "0003_thick_mauler",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1786099774868,
+      "tag": "0004_services_array",
+      "breakpoints": true
     }
   ]
 }

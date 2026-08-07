@@ -63,9 +63,9 @@ export type Enquiry = {
   email: string;
   phone?: string;
   company?: string;
-  service?: string;
+  services?: string[];
   stage?: string;
-  message: string;
+  message?: string;
   /** Office inbox the enquiry is sent to. */
   to: string;
   /** Stored row id; optional so the DB-down fallback path still sends. */
@@ -79,11 +79,14 @@ export async function deliverEnquiry(enquiry: Enquiry): Promise<void> {
     `Email: ${enquiry.email}`,
     enquiry.phone ? `Phone: ${enquiry.phone}` : null,
     enquiry.company ? `Company: ${enquiry.company}` : null,
-    enquiry.service ? `Project type: ${enquiry.service}` : null,
+    enquiry.services?.length
+      ? `Project types: ${enquiry.services.join(", ")}`
+      : null,
     enquiry.stage ? `Stage: ${enquiry.stage}` : null,
-    "",
-    enquiry.message,
   ].filter((line): line is string => line !== null);
+
+  // The message is optional now; the labeled lines read fine on their own.
+  if (enquiry.message) lines.push("", enquiry.message);
 
   if (enquiry.submissionId) {
     lines.push(
@@ -92,11 +95,16 @@ export async function deliverEnquiry(enquiry: Enquiry): Promise<void> {
     );
   }
 
+  // Subject keeps one title and counts the rest: scannable in a phone inbox,
+  // and bounded no matter how many types are picked.
+  const [firstService, ...moreServices] = enquiry.services ?? [];
   await sendEmail({
     to: enquiry.to,
     replyTo: enquiry.email,
-    subject: enquiry.service
-      ? `Enquiry from ${enquiry.name} · ${enquiry.service}`
+    subject: firstService
+      ? `Enquiry from ${enquiry.name} · ${firstService}${
+          moreServices.length ? ` +${moreServices.length} more` : ""
+        }`
       : `Enquiry from ${enquiry.name}`,
     text: lines.join("\n"),
   });

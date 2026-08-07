@@ -20,7 +20,7 @@ export const deliveryStatus = pgEnum("delivery_status", [
   "failed",
 ]);
 
-// Column caps mirror the zod maxes in app/(site)/contact/actions.ts one for
+// Column caps mirror the zod maxes in app/(site)/contact/schema.ts one for
 // one; the action validates before anything reaches an INSERT. No IP and no
 // user agent on purpose: /privacy promises the enquiry row holds only what
 // the form asked for.
@@ -34,9 +34,11 @@ export const submissions = pgTable(
     email: varchar("email", { length: 254 }).notNull(),
     phone: varchar("phone", { length: 40 }),
     company: varchar("company", { length: 200 }),
-    service: varchar("service", { length: 80 }),
+    // varchar(80)[] keeps the per-title cap at the DB level; the cap of 8
+    // entries is zod-only, since Postgres arrays carry no length constraint.
+    services: varchar("services", { length: 80 }).array(),
     stage: varchar("stage", { length: 40 }),
-    message: text("message").notNull(),
+    message: text("message"),
     status: submissionStatus("status").notNull().default("new"),
     delivery: deliveryStatus("delivery").notNull().default("pending"),
     deliveryError: text("delivery_error"),

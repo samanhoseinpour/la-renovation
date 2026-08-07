@@ -3,6 +3,8 @@
 import { headers } from "next/headers";
 import { z } from "zod";
 
+import { projectTypeFallback } from "@/content/office";
+import { getAllServices } from "@/content/services";
 import { DatabaseNotConfiguredError } from "@/lib/db";
 import { DeliveryNotConfiguredError, deliverEnquiry } from "@/lib/delivery";
 import {
@@ -13,85 +15,34 @@ import {
   markDeliveryFailed,
 } from "@/lib/db/submissions";
 import { site } from "@/lib/site";
+import {
+  CONTACT_FIELDS,
+  contactSchema,
+  readContactForm,
+  type ContactState,
+} from "./schema";
 
-const FIELDS = [
-  "name",
-  "email",
-  "phone",
-  "company",
-  "service",
-  "stage",
-  "message",
-] as const;
+// z.enum needs a non-empty tuple: the canonical division titles plus the
+// fallback, assembled once at module load (the trailing fallback guarantees
+// the non-empty part).
+const serviceOptions = [
+  ...getAllServices().map((service) => service.title),
+  projectTypeFallback,
+];
 
-export type ContactField = (typeof FIELDS)[number];
-
-export type ContactState = {
-  status: "idle" | "success" | "error";
-  message?: string;
-  fieldErrors?: Partial<Record<ContactField, string>>;
-  /** Echoed back so a failed submission never wipes what was typed. */
-  values?: Partial<Record<ContactField, string>>;
-};
-
-// NOTE: a "use server" module may only export async functions, so the initial
-// state lives with the form component rather than here.
-
-// Every single-line field is printed as a labeled line of the notification
-// email, and name also feeds its subject; interior control characters would
-// let a hand-rolled POST forge extra lines there, so they collapse to spaces.
-// The message keeps its newlines — it is the one intentionally multiline field.
-const singleLine = (value: string) =>
-  value.replace(/[\p{Cc}\u2028\u2029]+/gu, " ").trim();
-
-const schema = z.object({
-  // name feeds the delivery subject line and email becomes a mail header, so
-  // both are bounded here where the failure is actionable — an oversized value
-  // reaching Resend would surface as the generic delivery error instead.
-  name: z
-    .string()
-    .trim()
-    .min(1, "Please tell us your name.")
-    .max(200, "That name looks too long.")
-    .transform(singleLine),
-  email: z
-    .string()
-    .trim()
-    .min(1, "We need an email to reply to.")
-    .max(254, "That email looks too long.")
-    .email("That email looks wrong."),
-  phone: z
-    .string()
-    .trim()
-    .max(40, "That number looks too long.")
-    .transform(singleLine)
+// The shared schema stays shape-only so content/services.ts never enters the
+// client chunk; the title enum lands here, where a crafted POST is the
+// audience — the chips cannot produce an unknown value.
+const serverContactSchema = contactSchema.extend({
+  services: z
+    .array(
+      z.enum(serviceOptions as [string, ...string[]], {
+        errorMap: () => ({ message: "Please pick project types from the list." }),
+      }),
+    )
+    .max(8, "Please pick project types from the list.")
+    .transform((list) => [...new Set(list)])
     .optional(),
-  company: z
-    .string()
-    .trim()
-    .max(200, "That company name looks too long.")
-    .transform(singleLine)
-    .optional(),
-  // The selects can't produce an over-long value, but a hand-rolled POST can,
-  // and every field error has to be renderable somewhere — see the messages
-  // under both selects in contact-office.tsx.
-  service: z
-    .string()
-    .trim()
-    .max(80, "Please choose a project type from the list.")
-    .transform(singleLine)
-    .optional(),
-  stage: z
-    .string()
-    .trim()
-    .max(40, "Please choose a project stage from the list.")
-    .transform(singleLine)
-    .optional(),
-  message: z
-    .string()
-    .trim()
-    .min(10, "A sentence or two about the project, please.")
-    .max(5000, "That's a bit long for a first message. The key points will do."),
 });
 
 const SUCCESS: ContactState = {
@@ -116,9 +67,7 @@ export async function submitContact(
   _prevState: ContactState,
   formData: FormData,
 ): Promise<ContactState> {
-  const values = Object.fromEntries(
-    FIELDS.map((field) => [field, String(formData.get(field) ?? "").trim()]),
-  ) as Record<ContactField, string>;
+  const values = readContactForm(formData);
 
   // Honeypot: the display:none "form_hint" field (a name no browser autofill
   // heuristic classifies — never a real token like "company"). Bots that fill
@@ -137,11 +86,11 @@ export async function submitContact(
     return SUCCESS;
   }
 
-  const parsed = schema.safeParse(values);
+  const parsed = serverContactSchema.safeParse(values);
   if (!parsed.success) {
     const flat = parsed.error.flatten().fieldErrors;
     const fieldErrors: ContactState["fieldErrors"] = {};
-    for (const field of FIELDS) {
+    for (const field of CONTACT_FIELDS) {
       const first = flat[field]?.[0];
       if (first) fieldErrors[field] = first;
     }
