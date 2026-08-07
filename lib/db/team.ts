@@ -1,4 +1,4 @@
-import { eq, max } from "drizzle-orm";
+import { eq, max, sql } from "drizzle-orm";
 
 import { session, user } from "./auth-schema";
 import { getDb } from "./index";
@@ -29,5 +29,9 @@ export async function listTeamLastSignIns(): Promise<TeamLastSignIn[]> {
     .where(eq(user.role, "admin"))
     // user.id is the pk, so name and email are functionally dependent.
     .groupBy(user.id)
-    .orderBy(user.name);
+    // Most recent sign-in first. Postgres DESC defaults to NULLS FIRST and
+    // drizzle's desc() emits no nulls clause, hence the raw fragment; the
+    // cap mirrors the overview's listRecentSubmissions(8).
+    .orderBy(sql`${max(session.createdAt)} desc nulls last`, user.name)
+    .limit(8);
 }
